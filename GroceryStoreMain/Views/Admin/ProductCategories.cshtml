@@ -1,0 +1,89 @@
+﻿@model IEnumerable<GroceryStoreMain.Models.Product_Category>
+
+@{
+    ViewBag.Title = "Product Categories";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<div class="table-responsive">
+    <table class="table table-bordered table-condensed table-striped table-hover sortable caption-top">
+           <caption><button >Add New Product Category</button></caption>
+        @if (Model.Count() == 0)
+        {
+            <tr>
+                <td colspan="10">No Record's found.</td>
+            </tr>
+        }
+        else
+        {
+            <thead>
+                <tr class="danger">
+                    <th data-defaultsign="_19">Product Category ID</th>
+                    <th data-defaultsign="AZ">Name</th>
+                    <th data-defaultsign="AZ">Description</th>
+                    <th data-defaultsign="month">Effective Start Date</th>
+                    <th data-defaultsign="month">Effective End Date</th>
+                    <th data-defaultsign="month">Total Product's</th>
+                </tr>
+            </thead>
+            foreach (var pc in Model)
+            {
+                <tr>
+                    <td>@pc.pc_id</td>
+                    <td>@pc.name</td>
+                    <td>@pc.description</td>
+                    <td>@pc.eff_start_dtm</td>
+                    <td>@pc.eff_end_dtm</td>
+                    <td>@pc.Products.Count</td>
+                </tr>
+
+            }
+
+        }
+    </table>
+</div>
+
+<h2>ProductCategories</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.description)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.eff_start_dtm)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.eff_end_dtm)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.eff_start_dtm)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.eff_end_dtm)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.pc_id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.pc_id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.pc_id })
+        </td>
+    </tr>
+}
+
+</table>

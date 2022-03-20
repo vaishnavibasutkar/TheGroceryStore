@@ -1,4 +1,4 @@
-﻿
+﻿@model GroceryStoreMain.Models.Login
 @{
     Layout = null;
 }
@@ -20,49 +20,48 @@
             justify-content: center;
             margin-right: auto;
             margin-left: auto;
-            margin-top: 20%;
+            margin-top: 10%;
             margin-bottom: 20%;
             position: relative;
             align-items: stretch;
             box-sizing: border-box;
-            height:max-content;
-            width:min-content;
+            height: max-content;
+            width: min-content;
         }
     </style>
-    <div class="container login" style="border:double;border-color:red">
+    <div class="container login" style="width:max-content">
         <div class="col-md-6 left" style="background-color:white;width:stretch">
-            <div class="row" align="center">
+            <div class="row" style="height:300px" align="center">
                 <img src="~/Images/grocerystorelogo.png" />
             </div>
-            <div class="row">
-                
-            </div>
-            <div class="row">
-                
-            </div>
+
         </div>
-        <div class="col-md-6"  style="background-color:tomato;color:green;width:stretch">
+        <div class="col-md-6" style="background-color:tomato;color:green;width:stretch">
             <h1 class="page-header">Login</h1>
-            <form>
+            @using (@Html.BeginForm(null, null, FormMethod.Post))
+            {
+                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
                 <div class="form-group">
-                    <label class="control-lab"> UserName: </label>
-                    <input type="text" class="form-control " placeholder="Enter UserName"/>
+                    <label class="control-lab"> User Name: </label>
+                    @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Enter Username" })
                 </div>
                 <div class="form-group">
                     <label class="control-label"> Password: </label>
-                    <input type="password" class="form-control" placeholder="Enter Password"/>
+                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
                 </div>
+                <div class='text-danger'>@ViewBag.Message</div>
                 <div class="form-group">
                     <input type="submit" class="btn-primary" />
                     <input type="reset" class="btn-primary" />
                 </div>
-            </form>
+            }
         </div>
     </div>
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
 </body>
 
 </html>

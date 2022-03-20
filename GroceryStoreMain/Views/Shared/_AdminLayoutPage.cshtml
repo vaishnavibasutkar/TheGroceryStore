@@ -1,0 +1,84 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <style>
+body {
+  font-family: "Lato", sans-serif;
+}
+
+.sidenav {
+  height: 100%;
+  width: 300PX;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: rebeccapurple;
+  overflow-x: hidden;
+  padding-top: 20px;
+}
+
+.sidenav a {
+  padding: 6px 6px 6px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: whitesmoke;
+  display: block;
+}
+
+        .sidenav a:hover {
+            color: antiquewhite;
+            text-decoration: none;
+        }
+
+.main {
+  margin-left: 305PX; /* Same as the width of the sidenav */
+}
+
+@@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+    </style>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>@ViewBag.Title</title>
+</head>
+<body style="background-color: lightgrey;">
+    <div class="sidenav">
+        <img src="~/Images/AdminLoginIcon.jpg" class="rounded-circle" />
+        <h1 style="color:darkgrey;background-color:purple">
+            <a href="#">
+                <span class="glyphicon glyphicon-user"></span>
+                @Session["Username"].ToString()
+            </a>
+        </h1>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Clients</a>
+        <a href="@Url.Action("Products","Admin")">
+            <span class="glyphicon glyphicon-th-list"></span>
+            Products
+        </a>
+        <a href="@Url.Action("ProductCategories","Admin")">
+            <span class="glyphicon glyphicon-th"></span>
+            Product Categories
+        </a>
+        <a href="@Url.Action("Contact", "Admin")">
+            <span class="glyphicon glyphicon-earphone"></span>
+            Contact Developer
+        </a>
+        <a href="@Url.Action("Logout", "Admin")">
+            <span class="glyphicon glyphicon-log-out"></span>
+            Logout
+        </a>
+    </div>
+    <div class="main" style="background-color: white;">
+        @RenderBody()
+    </div>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</body>
+</html>
