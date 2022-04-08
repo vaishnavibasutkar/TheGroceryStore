@@ -4,7 +4,7 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="1177edd25a784fd78e36332b893e6e26" Name="Diagram1">
+      <Diagram DiagramId="51d28bfdc66847cca063ca2c694d3074" Name="Diagram1">
         <EntityTypeShape EntityType="GroceryStoreDBModel.Admin" Width="1.5" PointX="8.75" PointY="10.125" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Batch" Width="1.5" PointX="3" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Cart" Width="1.5" PointX="3" PointY="2.375" IsExpanded="true" />
@@ -26,7 +26,6 @@
         <EntityTypeShape EntityType="GroceryStoreDBModel.Recipe" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Recipe_Step" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Unit_Of_Measurement" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDBModel.feedback_test" Width="1.5" PointX="10.75" PointY="5.125" IsExpanded="true" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Batch_Distributor" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Batch_Product" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Cart_Product_Assoc_Cart_Product_Assoc" ManuallyRouted="false" />
@@ -50,6 +49,7 @@
         <AssociationConnector Association="GroceryStoreDBModel.FK_Product_Unit_Of_Measurement" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Product" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Recipe" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="GroceryStoreDBModel.Feedback_test" Width="1.5" PointX="10.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

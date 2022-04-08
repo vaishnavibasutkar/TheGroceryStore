@@ -12,7 +12,7 @@ namespace GroceryStoreMain.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class feedback_test
+    public partial class Feedback_test
     {
         public int f_id { get; set; }
         public Nullable<int> c_id { get; set; }

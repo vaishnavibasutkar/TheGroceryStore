@@ -46,6 +46,6 @@ namespace GroceryStoreMain.Models
         public virtual DbSet<Recipe> Recipes { get; set; }
         public virtual DbSet<Recipe_Step> Recipe_Step { get; set; }
         public virtual DbSet<Unit_Of_Measurement> Unit_Of_Measurement { get; set; }
-        public virtual DbSet<feedback_test> feedback_test { get; set; }
+        public virtual DbSet<Feedback_test> Feedback_test { get; set; }
     }
 }

@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="GroceryStoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="GroceryStoreDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Admin">
           <Key>
             <PropertyRef Name="a_id" />
@@ -120,9 +120,7 @@
           <Property Name="feedback" Type="varchar" MaxLength="50" />
           <Property Name="rating" Type="int" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
-        <EntityType Name="feedback_test">
+        <EntityType Name="Feedback_test">
           <Key>
             <PropertyRef Name="f_id" />
           </Key>
@@ -336,14 +334,14 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="c_id" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="c_id" />
+              <PropertyRef Name="o_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -527,6 +525,7 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
           <EntitySet Name="Distributor" EntityType="Self.Distributor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="FAQ" EntityType="Self.FAQ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Feedback" EntityType="Self.Feedback" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Feedback_test" EntityType="Self.Feedback_test" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Details" EntityType="Self.Order_Details" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Order_Status" EntityType="Self.Order_Status" Schema="dbo" store:Type="Tables" />
@@ -537,15 +536,6 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
           <EntitySet Name="Recipe" EntityType="Self.Recipe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Recipe_Step" EntityType="Self.Recipe_Step" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Unit_Of_Measurement" EntityType="Self.Unit_Of_Measurement" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="feedback_test" EntityType="Self.feedback_test" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [feedback_test].[f_id] AS [f_id], 
-    [feedback_test].[c_id] AS [c_id], 
-    [feedback_test].[p_id] AS [p_id], 
-    [feedback_test].[feedback] AS [feedback], 
-    [feedback_test].[rating] AS [rating]
-    FROM [dbo].[feedback_test] AS [feedback_test]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Batch_Distributor" Association="Self.FK_Batch_Distributor">
             <End Role="Distributor" EntitySet="Distributor" />
             <End Role="Batch" EntitySet="Batch" />
@@ -639,8 +629,7 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
             <End Role="Recipe_Step" EntitySet="Recipe_Step" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="GroceryStoreDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -698,7 +687,7 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
           <Property Name="ca_id" Type="Int32" />
           <NavigationProperty Name="Customer_Address" Relationship="Self.FK_Customer_Customer" FromRole="Customer" ToRole="Customer_Address" />
           <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedback_Feedback" FromRole="Customer" ToRole="Feedback" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
+          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
           <NavigationProperty Name="OTP_History" Relationship="Self.FK_OTP_History_OTP_History" FromRole="Customer" ToRole="OTP_History" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Payment" FromRole="Customer" ToRole="Payment" />
         </EntityType>
@@ -912,16 +901,6 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_Unit_Of_Measurement" FromRole="Unit_Of_Measurement" ToRole="Product" />
         </EntityType>
-        <EntityType Name="feedback_test">
-          <Key>
-            <PropertyRef Name="f_id" />
-          </Key>
-          <Property Name="f_id" Type="Int32" Nullable="false" />
-          <Property Name="c_id" Type="Int32" />
-          <Property Name="p_id" Type="Int32" />
-          <Property Name="feedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="rating" Type="Int32" />
-        </EntityType>
         <Association Name="FK_Batch_Distributor">
           <End Role="Distributor" Type="Self.Distributor" Multiplicity="0..1" />
           <End Role="Batch" Type="Self.Batch" Multiplicity="*" />
@@ -995,14 +974,14 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Order_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
+          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="c_id" />
             </Principal>
             <Dependent Role="Order">
-              <PropertyRef Name="c_id" />
+              <PropertyRef Name="o_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1220,7 +1199,6 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
           <EntitySet Name="Recipes" EntityType="Self.Recipe" />
           <EntitySet Name="Recipe_Step" EntityType="Self.Recipe_Step" />
           <EntitySet Name="Unit_Of_Measurement" EntityType="Self.Unit_Of_Measurement" />
-          <EntitySet Name="feedback_test" EntityType="Self.feedback_test" />
           <AssociationSet Name="FK_Batch_Distributor" Association="Self.FK_Batch_Distributor">
             <End Role="Distributor" EntitySet="Distributors" />
             <End Role="Batch" EntitySet="Batches" />
@@ -1313,7 +1291,18 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
             <End Role="Recipe" EntitySet="Recipes" />
             <End Role="Recipe_Step" EntitySet="Recipe_Step" />
           </AssociationSet>
+          <EntitySet Name="Feedback_test" EntityType="GroceryStoreDBModel.Feedback_test" />
         </EntityContainer>
+        <EntityType Name="Feedback_test">
+          <Key>
+            <PropertyRef Name="f_id" />
+          </Key>
+          <Property Name="f_id" Type="Int32" Nullable="false" />
+          <Property Name="c_id" Type="Int32" />
+          <Property Name="p_id" Type="Int32" />
+          <Property Name="feedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rating" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1563,14 +1552,14 @@ warning 6002: The table/view 'GroceryStoreDB.dbo.feedback_test' does not have a 
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="feedback_test">
-            <EntityTypeMapping TypeName="GroceryStoreDBModel.feedback_test">
-              <MappingFragment StoreEntitySet="feedback_test">
-                <ScalarProperty Name="f_id" ColumnName="f_id" />
-                <ScalarProperty Name="c_id" ColumnName="c_id" />
-                <ScalarProperty Name="p_id" ColumnName="p_id" />
-                <ScalarProperty Name="feedback" ColumnName="feedback" />
+          <EntitySetMapping Name="Feedback_test">
+            <EntityTypeMapping TypeName="GroceryStoreDBModel.Feedback_test">
+              <MappingFragment StoreEntitySet="Feedback_test">
                 <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="feedback" ColumnName="feedback" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

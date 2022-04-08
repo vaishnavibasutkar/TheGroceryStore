@@ -1,0 +1,74 @@
+﻿@model GroceryStoreMain.Models.ProductCategoryModel
+
+@{
+    ViewBag.Title = "EditProductCategory";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<div style="margin-left:10px">
+    <h2>EditProductCategory</h2>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>Product_Category</h4>
+            <hr />
+            @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.pc_id)
+            @Html.HiddenFor(model => model.eff_start_dtm)
+
+            <div class="form-group">
+                <div class="fw-bold">
+                    Name :
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="fw-bold">
+                    Description :
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!--<div class="form-group">-->
+            @*@Html.LabelFor(model => model.eff_start_dtm, htmlAttributes: new { @class = "control-label col-md-2" })*@
+            <!--<div class="fw-bold">
+                    Effective Start Date and Time:
+                </div>
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.eff_start_dtm, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.eff_start_dtm, "", new { @class = "text-danger" })
+                </div>
+            </div>-->
+
+            <div class="form-group">
+                <div class="fw-bold">
+                    Effective End Date and Time:
+                </div>
+                @*@Html.LabelFor(model => model.eff_end_dtm, htmlAttributes: new { @class = "control-label col-md-2" })*@
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.eff_end_dtm, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.eff_end_dtm, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Save" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to Product Category List", "ProductCategories")
+    </div>
+</div>
