@@ -10,15 +10,16 @@ namespace GroceryStoreMain.Models
     {
         [Required(ErrorMessage = "Id is Required")]
         [Display(Name = "ID")]
-        public string id { 
+        public int id { 
             get {
                 return  _id;
             }
             set {
-                _id = usertype+ " - "+value;
+                // _id = usertype+ " - "+value;
+                _id = value;
             } 
         }
-        private string _id;
+        private int _id;
         
         [Required(ErrorMessage = "User Name is Required")]
         [Display(Name = "User Name")]

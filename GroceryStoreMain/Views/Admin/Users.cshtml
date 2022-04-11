@@ -14,14 +14,14 @@
         <table class="table table-bordered table-condensed table-striped table-hover caption-top">
             <caption>
                 <div class="col-sm-2">
-                    <a href="@Url.Action("AddNewAdminUser","Admin")"
+                    <a href="@Url.Action("AdminAddEditUser","Admin",new { id = 0 })"
                        class="btn btn-toolbar btn-outline-success btn-lg">Add New Admin User <span class="glyphicon glyphicon-plus-sign"></span></a>
 
                 </div>
                 <div class="col-sm-2">
                 </div>
                 <div class="col-sm-2">
-                    <a href="@Url.Action("AddNewDistributorUser","Admin")"
+                    <a href="@Url.Action("DistributorAddEditUser","Admin" , new { id = 0 })"
                        class="btn btn-toolbar btn-outline-success btn-lg">Add New Distributor User <span class="glyphicon glyphicon-plus-sign"></span></a>
 
                 </div>
@@ -69,9 +69,21 @@
                                     <span></span>
                                 </button>
                                 <div>
-                                    @Html.ActionLink("Edit", "EditUser", new { id = item.id})
+                                    @if ((int)item.usertype == 1)
+                                    {
+                                        @Html.ActionLink("Edit", "AdminAddEditUser", new { id = item.id })
+                                    }
+                                    @if ((int)item.usertype == 2)
+                                    {
 
-                                    @Html.ActionLink("Remove", "RemoveUser", new { id = item.id })
+                                        @Html.ActionLink("Edit", "CustomerEditUser", new { id = item.id })
+                                    }
+                                    @if ((int)item.usertype == 3)
+                                    {
+                                        @Html.ActionLink("Edit", "DistributorAddEditUser", new { id = item.id })
+                                    }
+
+                                    @Html.ActionLink("Remove", "RemoveUser", new { id = item.usertype + " - " + item.id })
 
                                 </div>
                             </div>

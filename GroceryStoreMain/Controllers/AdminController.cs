@@ -536,7 +536,7 @@ namespace GroceryStoreMain.Controllers
                     email = d.email_id,
                     username = d.username,
                     usertype = UserTypeEnum.Distributor,
-                    id = d.d_id.ToString(),
+                    id = d.d_id
                 });
             });
             distributors = users;
@@ -552,7 +552,7 @@ namespace GroceryStoreMain.Controllers
                     email = c.email_id,
                     username = c.email_id,
                     usertype = UserTypeEnum.Customer,
-                    id = c.c_id.ToString()
+                    id = c.c_id
                 });
             });
             customers = users;
@@ -569,7 +569,7 @@ namespace GroceryStoreMain.Controllers
                     email = "",
                     username = a.username,
                     usertype = UserTypeEnum.Admin,
-                    id = a.a_id.ToString()
+                    id = a.a_id
                 });
             });
 
@@ -609,35 +609,59 @@ namespace GroceryStoreMain.Controllers
         //    }
         //}
 
-        public ActionResult EditUser(string id)
+        //public ActionResult EditUser(string id)
+        //{
+        //    if (Session["Username"] != null)
+        //    {
+        //        string viewName = "";
+        //        object modelName = null;
+        //        var userdetail = id.Split('-');
+        //        int user_id = Convert.ToInt32(userdetail[1].Trim());
+        //        switch (userdetail[0].Trim())
+        //        {
+        //            case nameof(UserTypeEnum.Admin):
+        //                viewName = "AdminEditUser";
+        //                modelName = context.Admins.Where(a => a.a_id == user_id).FirstOrDefault();
+        //                break;
+
+        //            case nameof(UserTypeEnum.Customer):
+        //                viewName = "CustomerEditUser";
+        //                modelName = context.Customers.Where(c => c.c_id == user_id).FirstOrDefault();
+        //                break;
+
+        //            case nameof(UserTypeEnum.Distributor):
+        //                viewName = "DistributorEditUser";
+        //                modelName = context.Distributors.Where(d => d.d_id == user_id).FirstOrDefault();
+        //                break;
+
+        //            default:
+        //                break;
+        //        }
+        //        return View(viewName, modelName);
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+        //}
+
+
+        public ActionResult AdminAddEditUser(int id)
         {
             if (Session["Username"] != null)
             {
-                string viewName = "";
-                object modelName = null;
-                var userdetail = id.Split('-');
-                int user_id = Convert.ToInt32(userdetail[1].Trim());
-                switch (userdetail[0].Trim())
+                if (Convert.ToInt32(id) == 0)
                 {
-                    case nameof(UserTypeEnum.Admin):
-                        viewName = "AdminEditUser";
-                        modelName = context.Admins.Where(a => a.a_id == user_id).FirstOrDefault();
-                        break;
-
-                    case nameof(UserTypeEnum.Customer):
-                        viewName = "CustomerEditUser";
-                        modelName = context.Customers.Where(c => c.c_id == user_id).FirstOrDefault();
-                        break;
-
-                    case nameof(UserTypeEnum.Distributor):
-                        viewName = "DistributorEditUser";
-                        modelName = context.Distributors.Where(d => d.d_id == user_id).FirstOrDefault();
-                        break;
-
-                    default:
-                        break;
+                    return View(new AdminModel() { a_id = id });
                 }
-                return View(viewName, modelName);
+                else
+                {
+                    //var userdetail = id.Split('-');
+                    //int user_id = Convert.ToInt32(userdetail[1].Trim());
+                    Admin admin = context.Admins.Where(a => a.a_id == id).FirstOrDefault();
+                    AdminModel adminModel = new AdminModel(admin);
+                    return View(adminModel);
+                }
             }
             else
             {
@@ -645,17 +669,128 @@ namespace GroceryStoreMain.Controllers
             }
         }
 
-
         [HttpPost]
-        public ActionResult AdminEditUser(Admin admin)
+        public ActionResult AdminAddEditUser(AdminModel adminModel)
         {
             if (Session["Username"] != null)
             {
                 if (ModelState.IsValid)
                 {
-                    context.Entry(admin).State = EntityState.Modified;
+                    if (adminModel.a_id == 0)
+                    {
+
+                        Admin admin = AdminModel.GetAdmin(adminModel);
+                        admin.password_lastmodified_dtm = DateTime.Now;
+                        context.Admins.Add(admin);
+                        TempData["Message"] = "Admin - " + adminModel.name + " Added.";
+                    }
+                    else
+                    {
+                        Admin admin = AdminModel.GetAdmin(adminModel);
+                        //check password change
+                        context.Entry(admin).State = EntityState.Modified;
+                        TempData["Message"] = "Admin - " + adminModel.name + " is Updated.";
+                    }
                     context.SaveChanges();
-                    TempData["Message"] = "Admin - " + admin.name + " is Updated.";
+
+                }
+                return RedirectToAction("Users");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        public ActionResult DistributorAddEditUser(int id)
+        {
+            if (Session["Username"] != null)
+            {
+                if (Convert.ToInt32(id) == 0)
+                {
+                    return View(new DistributorModel() { d_id = id });
+                }
+                else
+                {
+                    //var userdetail = id.Split('-');
+                    //int user_id = Convert.ToInt32(userdetail[1].Trim());
+                    Distributor distributor = context.Distributors.Where(d => d.d_id == id).FirstOrDefault();
+                    DistributorModel distributorModel = new DistributorModel(distributor);
+                    return View(distributorModel);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult DistributorAddEditUser(DistributorModel distributorModel)
+        {
+            if (Session["Username"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    if (distributorModel.d_id == 0)
+                    {
+
+                        Distributor distributor = DistributorModel.GetDistributor(distributorModel);
+                        distributor.password_lastmodified_dtm = DateTime.Now;
+                        context.Distributors.Add(distributor);
+                        TempData["Message"] = "Distributor - " + distributorModel.company_name + " Added.";
+                    }
+                    else
+                    {
+                        Distributor distributor = DistributorModel.GetDistributor(distributorModel);
+                        //check password change
+                        distributor.password_lastmodified_dtm = DateTime.Now;
+                        context.Entry(distributor).State = EntityState.Modified;
+                        TempData["Message"] = "Distributor - " + distributorModel.company_name + " is Updated.";
+                    }
+                    context.SaveChanges();
+
+                }
+                return RedirectToAction("Users");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        public ActionResult CustomerEditUser(int id)
+        {
+            if (Session["Username"] != null)
+            {
+                Customer customer = context.Customers.FirstOrDefault(c => c.c_id == id);
+                CustomerModel customerModel = new CustomerModel(customer);
+                return View(customerModel);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult CustomerEditUser(CustomerModel customerModel)
+        {
+            if (Session["Username"] != null)
+            {
+                if (ModelState.IsValid)
+                {
+                    Customer customer = CustomerModel.GetCustomer(customerModel);
+                    Customer_Address customer_Address = Customer_AddressModel.GetCustomer_Address(customerModel.Customer_Address);
+                    //check password change
+
+                    context.Entry(customer).State = EntityState.Modified;
+
+                    context.Entry(customer_Address).State = EntityState.Modified;
+                    context.SaveChanges();
+
+                    TempData["Message"] = "Customer - " + customer.full_name + " is Updated.";
+
                 }
                 return RedirectToAction("Users");
             }
@@ -693,13 +828,16 @@ namespace GroceryStoreMain.Controllers
                 switch (userdetail[0].Trim())
                 {
                     case nameof(UserTypeEnum.Admin):
-                        context.Admins.ToList().RemoveAll(a => a.a_id == user_id);
+                        Admin admin = context.Admins.FirstOrDefault(a => a.a_id == user_id);
+                        context.Admins.Remove(admin);
                         break;
                     case nameof(UserTypeEnum.Customer):
-                        context.Customers.ToList().RemoveAll(c => c.c_id == user_id);
+                        Customer customer = context.Customers.FirstOrDefault(c => c.c_id == user_id);
+                        context.Customers.Remove(customer);
                         break;
                     case nameof(UserTypeEnum.Distributor):
-                        context.Distributors.ToList().RemoveAll(d => d.d_id == user_id);
+                        Distributor distributor = context.Distributors.FirstOrDefault(d => d.d_id == user_id);
+                        context.Distributors.Remove(distributor);
                         break;
                     default:
                         break;
@@ -712,6 +850,194 @@ namespace GroceryStoreMain.Controllers
             {
                 return RedirectToAction("Login");
             }
+        }
+
+        #endregion
+
+        #region Add Schedule
+
+
+        public ActionResult DeliveryTimeSlotList()
+        {
+            if (Session["Username"] != null)
+            {
+                List<Delivery_Time_SlotModel> delivery_Time_SlotModels = new List<Delivery_Time_SlotModel>();
+                context.Delivery_Time_Slot.ToList().ForEach(d =>
+                {
+                    delivery_Time_SlotModels.Add(new Delivery_Time_SlotModel(d));
+                });
+                return View(delivery_Time_SlotModels);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+
+        /// <summary>
+        /// Schedule Time to Delivery
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult AddEditSchedule(int id)
+        {
+            if (Session["Username"] != null)
+            {
+                if (id == 0)
+                {
+                    return View(new Delivery_Time_SlotModel());
+                }
+                else
+                {
+                    Delivery_Time_Slot delivery_Time_Slot = context.Delivery_Time_Slot.FirstOrDefault(d => d.dts_id == id);
+                    Delivery_Time_SlotModel delivery_Time_SlotModel = new Delivery_Time_SlotModel(delivery_Time_Slot);
+                    return View(delivery_Time_SlotModel);
+                }
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        [HttpPost]
+        public ActionResult AddEditSchedule(Delivery_Time_SlotModel delivery_Time_SlotModel)
+        {
+            if (Session["Username"] != null)
+            {
+                if (delivery_Time_SlotModel.dts_id == 0)
+                {
+
+
+                    Delivery_Time_Slot delivery_Time_Slot = Delivery_Time_SlotModel.GetDelivery_Time_Slot(delivery_Time_SlotModel);
+                    context.Delivery_Time_Slot.Add(delivery_Time_Slot);
+                   
+                    TempData["Message"] = "Delivery Time Slot - " + delivery_Time_SlotModel.name + " Added.";
+                }
+                else
+                {
+                    Delivery_Time_Slot delivery_Time_Slot = Delivery_Time_SlotModel.GetDelivery_Time_Slot(delivery_Time_SlotModel);
+                    context.Entry(delivery_Time_Slot).State = EntityState.Modified;
+                    TempData["Message"] = "Delivery Time Slot - " + delivery_Time_Slot.name + " is Updated.";
+                }
+                context.SaveChanges();
+                return RedirectToAction("DeliveryTimeSlotList");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+
+        public ActionResult DeleteDTS(int id)
+        {
+            if (Session["Username"] != null)
+            {
+                Delivery_Time_Slot deliveryTimeSlot = context.Delivery_Time_Slot.FirstOrDefault(d => d.dts_id == id);
+                context.Delivery_Time_Slot.Remove(deliveryTimeSlot);
+                context.SaveChanges();
+                TempData["Message"] = "Delivery Time Slot Deleted.";
+                return RedirectToAction("DeliveryTimeSlotList");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+
+        #endregion
+
+        #region Order - Order Details
+
+        public ActionResult OrderList()
+        {
+            if (Session["Username"] != null)
+            {
+                var orders = context.Orders.ToList();
+                ViewBag.OrderStatus = this.context.Order_Status.ToList();
+                return View(orders);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        [HttpPost]
+        public ActionResult OrderList(IEnumerable<Order> orders)
+        {
+            if (Session["Username"] != null)
+            {
+
+                //var _order = context.Orders.FirstOrDefault(o => o.o_id == order.o_id);
+
+                //_order.os_id = order.os_id;
+
+
+                //context.Entry(_order).State = EntityState.Modified;
+                //context.SaveChanges();
+               return RedirectToAction("OrderList");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        public ActionResult ViewOrderDetails(int id)
+        {
+            if (Session["Username"] != null)
+            {
+                ViewBag.OrderStatus = this.context.Order_Status.ToList();
+                var order=context.Orders.FirstOrDefault(o => o.o_id==id);
+                
+                return View(order);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpPost]
+        public ActionResult ViewOrderDetails(Order order)
+        {
+            if (Session["Username"] != null)
+            {
+
+                var _order = context.Orders.FirstOrDefault(o => o.o_id == order.o_id);
+
+                _order.os_id = order.os_id;
+
+
+                context.Entry(_order).State = EntityState.Modified;
+                context.SaveChanges();
+                return RedirectToAction("OrderList");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+
+        public ActionResult ChangeOrderStatus(int i, int os_id)
+        {
+            if (Session["Username"] != null)
+            {
+                var _order = context.Orders.FirstOrDefault();
+
+                _order.os_id = os_id;
+
+
+                context.Entry(_order).State = EntityState.Modified;
+                context.SaveChanges();
+                return RedirectToAction("OrderList");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
         }
 
         #endregion
