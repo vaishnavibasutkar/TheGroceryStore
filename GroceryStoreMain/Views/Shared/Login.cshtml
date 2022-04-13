@@ -8,7 +8,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>The Grocery Store - Admin</title>
+    <title>@ViewBag.Title</title>
 </head>
 
 
@@ -31,23 +31,25 @@
     </style>
     <div class="container login" style="width:max-content">
         <div class="col-md-6 left" style="background-color:white;width:stretch">
-            <div class="row" style="height:300px" align="center">
+            <div class="row" style="height:330px" align="center">
                 <img src="~/Images/grocerystorelogo.png" />
             </div>
 
         </div>
-        <div class="col-md-6" style="background-color:tomato;color:green;width:stretch">
+        <div class="col-md-6" style="background-color:tomato;color:green;width:stretch; height:330px"">
             <h1 class="page-header">Login</h1>
             @using (@Html.BeginForm(null, null, FormMethod.Post))
             {
-                @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                 <div class="form-group">
                     <label class="control-lab"> User Name: </label>
                     @Html.TextBoxFor(m => m.UserName, new { @class = "form-control", placeholder = "Enter Username" })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                 </div>
                 <div class="form-group">
                     <label class="control-label"> Password: </label>
                     @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter Password" })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                 </div>
                 <div class='text-danger'>@ViewBag.Message</div>
                 <div class="form-group">

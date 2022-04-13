@@ -3,43 +3,48 @@
 <html>
 <head>
     <style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 300PX;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rebeccapurple;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.sidenav a {
-  padding: 6px 6px 6px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: whitesmoke;
-  display: block;
-}
-
-        .sidenav a:hover {
-            color: antiquewhite;
-            text-decoration: none;
+        body {
+            font-family: "Lato", sans-serif;
         }
 
-.main {
-  margin-left: 305PX; /* Same as the width of the sidenav */
-}
+        .sidenav {
+            height: 100%;
+            width: 300PX;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rebeccapurple;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
 
-@@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+            .sidenav a {
+                padding: 6px 6px 6px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: whitesmoke;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: antiquewhite;
+                    text-decoration: none;
+                }
+
+        .main {
+            margin-left: 305PX; /* Same as the width of the sidenav */
+        }
+
+        @@media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+                .sidenav a {
+                    font-size: 18px;
+                }
+        }
     </style>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>@ViewBag.Title</title>
@@ -53,39 +58,22 @@ body {
                 @Session["Username"].ToString()
             </a>
         </h1>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
-
-        <a href="@Url.Action("Home","Admin")">
+        <a href="@Url.Action("Home","Distributor")">
             <span class="glyphicon glyphicon-th"></span>
             Home// todo
         </a>
-        @*<a href="@Url.Action("Products","Admin")">
+        <a href="@Url.Action("Products","Distributor")">
             <span class="glyphicon glyphicon-th-list"></span>
             Products
-        </a>*@
-        <a href="@Url.Action("ProductCategories","Admin")">
-            <span class="glyphicon glyphicon-th"></span>
-            Product Categories
         </a>
-      
-        <a href="@Url.Action("FAQ","Admin")">
+        <a href="@Url.Action("OrderList","Distributor")">
             <span class="glyphicon glyphicon-qrcode"></span>
-            Manage FAQ
+            View Order//todo
         </a>
-        <a href="@Url.Action("Users","Admin")">
+        //add recipe
+        <a href="@Url.Action("ManageDiscount","Distributor")">
             <span class="glyphicon glyphicon-qrcode"></span>
-            Manage User
-        </a>
-
-        <a href="@Url.Action("DeliveryTimeSlotList","Admin")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            Delivery Time Slot
-        </a>
-        <a href="@Url.Action("OrderList","Admin")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            Manage Order
+            Manage Discounts
         </a>
         <a href="@Url.Action("Contact", "Admin")">
             <span class="glyphicon glyphicon-earphone"></span>

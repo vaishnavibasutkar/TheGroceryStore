@@ -1,11 +1,12 @@
 ﻿@model GroceryStoreMain.Models.ProductModel
 
 @{
-    ViewBag.Title = "AddNewProduct";
-    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+    ViewBag.Title = "EditProduct";
+    Layout = "~/Views/Shared/_DistributorLayoutPage.cshtml";
 }
+
 <div style="margin-left:10px">
-    <h2>AddNewProduct</h2>
+    <h2>EditProduct</h2>
 
     @using (Html.BeginForm())
     {
@@ -15,6 +16,8 @@
             <h4>Product</h4>
             <hr />
             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            @Html.HiddenFor(model => model.p_id)
+
             <div class="form-group">
                 @Html.LabelFor(model => model.name, htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
@@ -34,7 +37,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.pc_id, "pc_id", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name",Model.pc_id), htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.pc_id, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -42,7 +45,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.uom_id, "uom_id", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("uom_id", new SelectList(ViewBag.UOM,"uom_id","name"), htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("uom_id", new SelectList(ViewBag.UOM, "uom_id", "name",Model.uom_id), htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.uom_id, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -50,7 +53,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.d_id, "d_id", htmlAttributes: new { @class = "control-label col-md-2" })
                 <div class="col-md-10">
-                    @Html.DropDownList("d_id", new SelectList(ViewBag.Distributor,"d_id", "company_name"), htmlAttributes: new { @class = "form-control" })
+                    @Html.DropDownList("d_id", new SelectList(ViewBag.Distributor, "d_id", "company_name",Model.d_id), htmlAttributes: new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.d_id, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -65,7 +68,7 @@
 
             <div class="form-group">
                 <div class="col-md-offset-2 col-md-10">
-                    <input type="submit" value="Create" class="btn btn-default" />
+                    <input type="submit" value="Save" class="btn btn-default" />
                 </div>
             </div>
         </div>

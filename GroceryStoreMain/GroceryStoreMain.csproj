@@ -469,21 +469,21 @@
     <Content Include="Views\Home\Contact.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Admin\About.cshtml" />
-    <Content Include="Views\Admin\Contact.cshtml" />
+    <Content Include="Views\Shared\Contact.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Distributor\About.cshtml" />
     <Content Include="Views\Distributor\Contact.cshtml" />
     <Content Include="Views\Distributor\Index.cshtml" />
-    <Content Include="Views\Admin\Login.cshtml" />
+    <Content Include="Views\Shared\Login.cshtml" />
     <Content Include="Views\Shared\_AdminLayoutPage.cshtml" />
     <Content Include="Views\Admin\ProductCategories.cshtml" />
-    <Content Include="Views\Admin\Products.cshtml" />
+    <Content Include="Views\Distributor\Products.cshtml" />
     <Content Include="Views\Admin\EditProductCategory.cshtml" />
     <Content Include="Views\Admin\AddNewProductCategory.cshtml" />
-    <Content Include="Views\Admin\AddNewProduct.cshtml" />
-    <Content Include="Views\Admin\EditProduct.cshtml" />
-    <Content Include="Views\Admin\ManageDiscount.cshtml" />
-    <Content Include="Views\Admin\CreateNewDiscount.cshtml" />
+    <Content Include="Views\Distributor\AddNewProduct.cshtml" />
+    <Content Include="Views\Distributor\EditProduct.cshtml" />
+    <Content Include="Views\Distributor\ManageDiscount.cshtml" />
+    <Content Include="Views\Distributor\CreateNewDiscount.cshtml" />
     <Content Include="Views\Admin\FAQ.cshtml" />
     <Content Include="Views\Admin\AddNewFAQ.cshtml" />
     <Content Include="Views\Admin\EditFAQ.cshtml" />
@@ -495,6 +495,9 @@
     <Content Include="Views\Admin\DeliveryTimeSlotList.cshtml" />
     <Content Include="Views\Admin\OrderList.cshtml" />
     <Content Include="Views\Admin\ViewOrderDetails.cshtml" />
+    <Content Include="Views\Shared\_DistributorLayoutPage.cshtml" />
+    <Content Include="Views\Distributor\OrderList.cshtml" />
+    <Content Include="Views\Distributor\ViewOrderDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
