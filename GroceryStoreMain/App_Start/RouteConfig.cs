@@ -26,7 +26,7 @@ namespace GroceryStoreMain
             routes.MapRoute(
                 name: "Distributor",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Distributor", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Distributor", action = "Login", id = UrlParameter.Optional }
             );
         }
     }

@@ -510,6 +510,8 @@ namespace GroceryStoreMain.Controllers
         [HttpPost]
         public ActionResult DistributorAddEditUser(DistributorModel distributorModel)
         {
+
+            //check for email id if it is duplicate
             if (Session["Username"] != null)
             {
                 if (ModelState.IsValid)
