@@ -51,38 +51,55 @@
 </head>
 <body style="background-color: lightgrey;">
     <div class="sidenav">
-        <img src="~/Images/AdminLoginIcon.jpg" class="rounded-circle" />
-        <h1 style="color:darkgrey;background-color:purple">
-            <a href="#">
-                <span class="glyphicon glyphicon-user"></span>
-                @Session["Username"].ToString()
+        <ul class="navbar-nav  ">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("DistributorProfile","Distributor")">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3"> @Session["Username"].ToString()</div>
             </a>
-        </h1>
-        <a href="@Url.Action("Home","Distributor")">
-            <span class="glyphicon glyphicon-th"></span>
-            Home// todo
-        </a>
-        <a href="@Url.Action("Products","Distributor")">
-            <span class="glyphicon glyphicon-th-list"></span>
-            Products
-        </a>
-        <a href="@Url.Action("OrderList","Distributor")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            View Order//todo
-        </a>
-        //add recipe
-        <a href="@Url.Action("ManageDiscount","Distributor")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            Manage Discounts
-        </a>
-        <a href="@Url.Action("Contact", "Admin")">
-            <span class="glyphicon glyphicon-earphone"></span>
-            Contact Developer
-        </a>
-        <a href="@Url.Action("Logout", "Admin")">
-            <span class="glyphicon glyphicon-log-out"></span>
-            Logout
-        </a>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <li class="nav-item">
+                <a href="@Url.Action("Home","Distributor")">
+                    <span class="glyphicon glyphicon-th"></span>
+                    Home// todo
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("Products","Distributor")">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    Products
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("OrderList","Distributor")">
+                    <span class="glyphicon glyphicon-qrcode"></span>
+                    View Order//todo
+                </a>
+            </li>
+            <li class="nav-item ">
+                //add recipe
+                <a href="@Url.Action("ManageDiscount","Distributor")">
+                    <span class="glyphicon glyphicon-qrcode"></span>
+                    Manage Discounts
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("Contact", "Distributor")">
+                    <span class="glyphicon glyphicon-earphone"></span>
+                    Contact Developer
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("Logout", "Distributor")">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    Logout
+                </a>
+            </li>
+        </ul>
+
     </div>
     <div class="main" style="background-color: white;">
         @RenderBody()
@@ -97,5 +114,8 @@
     <script src="/Scripts/jquery.validate.js"></script>
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
     @Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css");
+
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+    <link href="~/Content/CustomCss/sb-admin-2.min.css" rel="stylesheet" />
 </body>
 </html>

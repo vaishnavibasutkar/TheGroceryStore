@@ -12,14 +12,45 @@ namespace GroceryStoreMain.Controllers
     {
 
         GroceryStoreDBEntities context = new GroceryStoreDBEntities();
-        public ActionResult Index()
+     
+
+        public ActionResult Home()
         {
-            return View();
+            if (Session["Username"] != null)
+            {
+                ViewBag.Message = "Your application description page.";
+                ViewBag.TotalOpenOrder = context.Orders.Where(o=>o.os_id==1).Count();
+                ViewBag.TotalConfirmedOrder = context.Orders.Where(o=>o.os_id==2).Count();
+                ViewBag.TotalCancelledOrder = context.Orders.Where(o=>o.os_id==3).Count();
+                ViewBag.TotalCompletedOrder = context.Orders.Where(o=>o.os_id==4).Count();
+               
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
+        }
+        public ActionResult DistributorProfile()
+        {
+            if (Session["Username"] != null)
+            {
+                int id = (int)(Session["id"]);
+                var distributor = context.Distributors.FirstOrDefault(d => d.d_id == id);
+                DistributorModel distributorModel = new DistributorModel(distributor);
+                return View(distributorModel);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
         }
 
-    
 
-        
+
+
 
         #region Product - Admin
         public ActionResult Products()
@@ -345,7 +376,7 @@ namespace GroceryStoreMain.Controllers
             ViewBag.Message = "Your contact page.";
             ViewBag.Layout = "~/Views/Shared/_DistributorLayoutPage.cshtml";
             return View();
-        } 
+        }
         #endregion
 
         #region Login - Logout - Admin
@@ -368,6 +399,7 @@ namespace GroceryStoreMain.Controllers
                     ViewBag.Message = string.Format("Login Successfull");
                     Session["Username"] = result.username;
                     Session["Name"] = result.company_name;
+                    Session["id"] = result.d_id;
                     return RedirectToAction("Contact");
                     //return RedirectToAction('EmployeeDetails', 'Employee);//I m returning to My Employee Action Method');
                 }

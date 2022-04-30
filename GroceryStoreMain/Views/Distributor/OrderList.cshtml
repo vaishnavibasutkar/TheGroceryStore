@@ -8,108 +8,111 @@
 
 <div style="margin-left:10px">
     <br />
-    <h2>OrderList</h2>
-    <h5 class="text-info"> @TempData["Message"]</h5>
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+    <div class="card-header ">
+        <h2>OrderList</h2>
+    </div>
+    <div class="card-body">
+        <h5 class="text-info"> @TempData["Message"]</h5>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
 
 
-        <div class="table-responsive form-group">
+            <div class="table-responsive form-group">
 
-            <table class="table table-bordered table-condensed table-striped table-hover caption-top">
+                <table class="table table-bordered table-condensed table-striped table-hover caption-top">
 
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.o_id)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.c_id)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.ca_id)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.dts_id)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.os_id)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.order_date)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.delivery_charge)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.tax)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.total_amount)
-                        </th>
-                        <th></th>
-                        <th></th>
-                    </tr>
-                </thead>
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayName("Order Id")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Customer Name")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Customer Address")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Delivery Time Slot")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Status")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Order Date")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Delivery Charge")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Tax")
+                            </th>
+                            <th>
+                                @Html.DisplayName("Total Amount")
+                            </th>
+                            <th></th>
+                        </tr>
+                    </thead>
 
 
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.o_id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.c_id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ca_id)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.dts_id)
-                        </td>
-                        <td>
-                               @Html.DisplayFor(modelItem => item.os_id)
-                            @*@Html.DropDownList("os_id", new SelectList(ViewBag.OrderStatus, "os_id", "code"), htmlAttributes: new { @class = "form-control" })
-                            @Html.HiddenFor(m => item.os_id)
-                            <script type="text/javascript">
-                                $(function () {
-                                    $("#os_id").on("change", function {
-                                        $("#item.os_id").val($(this).text());
-                                    });
-                                });
-                            </script>*@
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.order_date)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.delivery_charge)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.tax)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.total_amount)
-                        </td>
-                        <td>
-                            @Html.ActionLink("View Order Details", "ViewOrderDetails", new { id = item.o_id })
-                            @*<a href="@Url.Action("ChangeOrderStatus","Admin", new { os_id=item.os_id})"
-                                   class="btn btn-toolbar btn-outline-info btn-lg">Change Order Status <span class="glyphicon glyphicon-plus-sign"></span></a>
-                                <button type="submit" class="btn btn-toolbar btn-outline-info btn-lg">Change Order Status <span class="glyphicon glyphicon-plus-sign"></span></button>
-                                @Html.ActionLink("Click Me!", "ChangeOrderStatus", new { i = item.o_id, os_id = item.os_id })*@
-                        </td>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.o_id)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Customer.full_name)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Customer_Address.address1)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Delivery_Time_Slot.start_datetime)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Order_Status.description)
+                                @*@Html.DropDownList("os_id", new SelectList(ViewBag.OrderStatus, "os_id", "code"), htmlAttributes: new { @class = "form-control" })
+                                    @Html.HiddenFor(m => item.os_id)
+                                    <script type="text/javascript">
+                                        $(function () {
+                                            $("#os_id").on("change", function {
+                                                $("#item.os_id").val($(this).text());
+                                            });
+                                        });
+                                    </script>*@
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.order_date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.delivery_charge)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.tax)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.total_amount)
+                            </td>
+                            <td>
+                                @Html.ActionLink("View Order Details", "ViewOrderDetails", new { id = item.o_id })
+                                @*<a href="@Url.Action("ChangeOrderStatus","Admin", new { os_id=item.os_id})"
+                                       class="btn btn-toolbar btn-outline-info btn-lg">Change Order Status <span class="glyphicon glyphicon-plus-sign"></span></a>
+                                    <button type="submit" class="btn btn-toolbar btn-outline-info btn-lg">Change Order Status <span class="glyphicon glyphicon-plus-sign"></span></button>
+                                    @Html.ActionLink("Click Me!", "ChangeOrderStatus", new { i = item.o_id, os_id = item.os_id })*@
+                            </td>
 
-                    </tr>
-                }
+                        </tr>
+                    }
 
-            </table>
-        </div>
-        @*<div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <button type="submit" class="btn btn-toolbar btn-outline-info btn-lg">Change Order Status <span class="glyphicon glyphicon-plus-sign"></span></button>
+                </table>
             </div>
-        </div>*@
-    }
+            @*<div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-toolbar btn-outline-info btn-lg">Change Order Status <span class="glyphicon glyphicon-plus-sign"></span></button>
+                    </div>
+                </div>*@
+        }
+    </div>
 </div>

@@ -3,102 +3,159 @@
 <html>
 <head>
     <style>
-body {
-  font-family: "Lato", sans-serif;
-}
-
-.sidenav {
-  height: 100%;
-  width: 300PX;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: rebeccapurple;
-  overflow-x: hidden;
-  padding-top: 20px;
-}
-
-.sidenav a {
-  padding: 6px 6px 6px 32px;
-  text-decoration: none;
-  font-size: 25px;
-  color: whitesmoke;
-  display: block;
-}
-
-        .sidenav a:hover {
-            color: antiquewhite;
-            text-decoration: none;
+        body {
+            font-family: "Lato", sans-serif;
         }
 
-.main {
-  margin-left: 305PX; /* Same as the width of the sidenav */
-}
+        .sidenav {
+            height: 100%;
+            width: 300PX;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: rebeccapurple;
+            overflow-x: hidden;
+            padding-top: 20px;
+        }
 
-@@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
+            .sidenav a {
+                padding: 6px 6px 6px 32px;
+                text-decoration: none;
+                font-size: 25px;
+                color: whitesmoke;
+                display: block;
+            }
+
+                .sidenav a:hover {
+                    color: antiquewhite;
+                    text-decoration: none;
+                }
+
+        .main {
+            margin-left: 305PX; /* Same as the width of the sidenav */
+        }
+
+        @@media screen and (max-height: 450px) {
+            .sidenav {
+                padding-top: 15px;
+            }
+
+                .sidenav a {
+                    font-size: 18px;
+                }
+        }
     </style>
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <title>@ViewBag.Title</title>
 </head>
 <body style="background-color: lightgrey;">
+
     <div class="sidenav">
-        <img src="~/Images/AdminLoginIcon.jpg" class="rounded-circle" />
-        <h1 style="color:darkgrey;background-color:purple">
-            <a href="#">
-                <span class="glyphicon glyphicon-user"></span>
-                @Session["Username"].ToString()
+        <ul class="navbar-nav  ">
+
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="@Url.Action("AdminProfile","Admin")">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-3"> @Session["Username"].ToString()</div>
             </a>
-        </h1>
-        <a href="#">About</a>
-        <a href="#">Services</a>
-        <a href="#">Clients</a>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
 
-        <a href="@Url.Action("Home","Admin")">
-            <span class="glyphicon glyphicon-th"></span>
-            Home// todo
-        </a>
-        @*<a href="@Url.Action("Products","Admin")">
-            <span class="glyphicon glyphicon-th-list"></span>
-            Products
-        </a>*@
-        <a href="@Url.Action("ProductCategories","Admin")">
-            <span class="glyphicon glyphicon-th"></span>
-            Product Categories
-        </a>
-      
-        <a href="@Url.Action("FAQ","Admin")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            Manage FAQ
-        </a>
-        <a href="@Url.Action("Users","Admin")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            Manage User
-        </a>
 
-        <a href="@Url.Action("DeliveryTimeSlotList","Admin")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            Delivery Time Slot
-        </a>
-        <a href="@Url.Action("OrderList","Admin")">
-            <span class="glyphicon glyphicon-qrcode"></span>
-            Manage Order
-        </a>
-        <a href="@Url.Action("Contact", "Admin")">
-            <span class="glyphicon glyphicon-earphone"></span>
-            Contact Developer
-        </a>
-        <a href="@Url.Action("Logout", "Admin")">
-            <span class="glyphicon glyphicon-log-out"></span>
-            Logout
-        </a>
+
+            <li class="nav-item">
+                <a href="@Url.Action("Home","Admin")">
+                    <span class="fas fa-tachometer-alt"></span>
+                    Dashboard
+                </a>
+            </li>
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            @*<a href="@Url.Action("Products","Admin")">
+                    <span class="glyphicon glyphicon-th-list"></span>
+                    Products
+                </a>*@
+            <li class="nav-item ">
+                <a href="@Url.Action("ProductCategories","Admin")">
+                    <span class="glyphicon glyphicon-th"></span>
+                    Product Categories
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("FAQ","Admin")">
+                    <span class="glyphicon glyphicon-qrcode"></span>
+                    Manage FAQ
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("Users","Admin")">
+                    <span class="glyphicon glyphicon-qrcode"></span>
+                    Manage User
+                </a>
+            </li>
+            <li class="nav-item">
+
+                <a href="@Url.Action("DeliveryTimeSlotList","Admin")">
+                    <span class="glyphicon glyphicon-qrcode"></span>
+                    Delivery Time Slot
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("OrderList","Admin")">
+                    <span class="glyphicon glyphicon-qrcode"></span>
+                    Manage Order
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("Contact", "Admin")">
+                    <span class="glyphicon glyphicon-earphone"></span>
+                    Contact Developer
+                </a>
+            </li>
+            <li class="nav-item ">
+                <a href="@Url.Action("Logout", "Admin")">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    Logout
+                </a>
+                @*<a href="#" data-bs-toggle="modal" data-bs-target="#logoutModal">
+                    <span class="glyphicon glyphicon-log-out"></span>
+                    Logout
+                </a>*@
+            </li>
+        </ul>
     </div>
+
     <div class="main" style="background-color: white;">
         @RenderBody()
     </div>
+
+    <ul>
+        <li>
+            <!-- Logout Modal-->
+            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        dmnf
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                            <a class="btn btn-primary" href="@Url.Action("Logout", "Admin")">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Styles.Render("~/Content/css")
@@ -109,5 +166,8 @@ body {
     <script src="/Scripts/jquery.validate.js"></script>
     <script src="/Scripts/jquery.validate.unobtrusive.js"></script>
     @Styles.Render("https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css");
+    <link href="~/Content/CustomCss/sb-admin-2.min.css" rel="stylesheet" />
+    <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
+
 </body>
 </html>

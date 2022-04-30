@@ -6,285 +6,290 @@
 }
 <div style="margin-left:10px">
     <br />
-    <h2>Product Categories</h2>
-    <h5 class="text-info"> @TempData["Message"]</h5>
-    <div class="table-responsive">
+    <div class="card-header ">
+        <h2>Product Categories</h2>
+    </div>
+    <div class="card-body">
 
-        <table class="table table-bordered table-condensed table-striped table-hover caption-top">
-            <caption>
-                <div class="col-sm-2">
-                    <a href="@Url.Action("AddNewProductCategory","Admin")"
-                       class="btn btn-toolbar btn-outline-success btn-lg">Add New Product Category <span class="glyphicon glyphicon-plus-sign"></span></a>
-
-                </div>
-                <br />
-            </caption>
-            @if (Model.Count() == 0)
-            {
-                <tr>
-                    <td colspan="10">No Record's found.</td>
-                </tr>
-            }
-            else
-            {
-                <thead>
-                    <tr>
-                        <th data-defaultsign="_19">Product Category ID</th>
-                        <th data-defaultsign="AZ">Name</th>
-                        <th data-defaultsign="AZ">Description</th>
-                        <th data-defaultsign="month">Effective Start Date</th>
-                        <th data-defaultsign="month">Effective End Date</th>
-                        <th data-defaultsign="month">Total Product's</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                foreach (var pc in Model)
+        <h5 class="text-info"> @TempData["Message"]</h5>
+        <div class="table-responsive">
+            <div>
+                <a href="@Url.Action("AddNewProductCategory","Admin")" class="btn btn-outline-info btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class=" glyphicon glyphicon-plus-sign"></i>
+                    </span>
+                    <span class="text">Add New Product Category</span>
+                </a>
+            </div>
+            <div><br /></div>
+            <table class="table table-bordered table-condensed table-striped table-hover caption-top">
+               
+                @if (Model.Count() == 0)
                 {
                     <tr>
-                        <td>@pc.pc_id</td>
-                        <td>@pc.name</td>
-                        <td>@pc.description</td>
-                        <td>@pc.eff_start_dtm</td>
-                        <td>@pc.eff_end_dtm</td>
-                        <td>@pc.Products.Count</td>
-                        <td>
-                            @*<div class="dropdown">
-            <a onclick="myFunction()" class="dropbtn">&#8942;</a>
-            <div id="myDropdown" class="dropdown-content">
-                @Html.ActionLink("Edit", "EditProductCategory", new { id = pc.pc_id })
-                @Html.ActionLink("Remove", "RemoveProductCategory", new { id = pc.pc_id })
-            </div>
-        </div>*@
-
-                            <div class="dropout">
-                                <button class="more">
-                                    <span></span>
-                                    <span></span>
-                                    <span></span>
-                                </button>
-                                <div>
-                                        @Html.ActionLink("Edit", "EditProductCategory", new { id = pc.pc_id })
-                                    
-                                        @Html.ActionLink("Remove", "RemoveProductCategory", new { id = pc.pc_id })
-                                    
+                        <td colspan="10">No Record's found.</td>
+                    </tr>
+                }
+                else
+                {
+                    <thead>
+                        <tr>
+                            <th data-defaultsign="_19">Product Category ID</th>
+                            <th data-defaultsign="AZ">Name</th>
+                            <th data-defaultsign="AZ">Description</th>
+                            <th data-defaultsign="month">Effective Start Date</th>
+                            <th data-defaultsign="month">Effective End Date</th>
+                            <th data-defaultsign="month">Total Product's</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    foreach (var pc in Model)
+                    {
+                        <tr>
+                            <td>@pc.pc_id</td>
+                            <td>@pc.name</td>
+                            <td>@pc.description</td>
+                            <td>@pc.eff_start_dtm</td>
+                            <td>@pc.eff_end_dtm</td>
+                            <td>@pc.Products.Count</td>
+                            <td>
+                                @*<div class="dropdown">
+                                <a onclick="myFunction()" class="dropbtn">&#8942;</a>
+                                <div id="myDropdown" class="dropdown-content">
+                                    @Html.ActionLink("Edit", "EditProductCategory", new { id = pc.pc_id })
+                                    @Html.ActionLink("Remove", "RemoveProductCategory", new { id = pc.pc_id })
                                 </div>
-                            </div>
-                            <style>
-                                .more {
-                                    cursor: pointer;
-                                    border: none;
-                                    background: transparent;
-                                }
+                            </div>*@
 
-                                    .more span {
-                                        display: block;
-                                        width: .25rem;
-                                        height: .25rem;
-                                        background: #363636;
-                                        border-radius: 50%;
-                                        pointer-events: none;
+                                <div class="dropout">
+                                    <button class="more">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </button>
+                                    <div>
+                                        @Html.ActionLink("Edit", "EditProductCategory", new { id = pc.pc_id })
+
+                                        @Html.ActionLink("Remove", "RemoveProductCategory", new { id = pc.pc_id })
+
+                                    </div>
+                                </div>
+                                <style>
+                                    .more {
+                                        cursor: pointer;
+                                        border: none;
+                                        background: transparent;
                                     }
 
-                                        .more span:not(:last-child) {
-                                            margin-bottom: .125rem;
+                                        .more span {
+                                            display: block;
+                                            width: .25rem;
+                                            height: .25rem;
+                                            background: #363636;
+                                            border-radius: 50%;
+                                            pointer-events: none;
                                         }
 
-                                .dropout {
-                                    z-index: 9001;
-                                    width: fit-content;
-                                    position: relative;
-                                    margin-left: auto;
-                                    margin-right: auto;
-                                }
+                                            .more span:not(:last-child) {
+                                                margin-bottom: .125rem;
+                                            }
 
-                                    .dropout div {
-                                        position: absolute;
-                                        top: -1.1rem;
-                                        right: 1.5rem;
-                                        transform: scaleX(0);
-                                        transform-origin: right;
-                                        transition: transform 0.12s ease;
+                                    .dropout {
+                                        z-index: 9001;
+                                        width: fit-content;
+                                        position: relative;
+                                        margin-left: auto;
+                                        margin-right: auto;
                                     }
 
-                                    .dropout.active div {
-                                        transform: scaleX(1);
+                                        .dropout div {
+                                            position: absolute;
+                                            top: -1.1rem;
+                                            right: 1.5rem;
+                                            transform: scaleX(0);
+                                            transform-origin: right;
+                                            transition: transform 0.12s ease;
+                                        }
+
+                                        .dropout.active div {
+                                            transform: scaleX(1);
+                                        }
+                                </style>
+                                <script>
+                                    document.querySelector('table').onclick = ({
+                                        target
+                                    }) => {
+                                        if (!target.classList.contains('more')) return
+                                        document.querySelectorAll('.dropout.active').forEach(
+                                            (d) => d !== target.parentElement && d.classList.remove('active')
+                                        )
+                                        target.parentElement.classList.toggle('active')
                                     }
-                            </style>
-                            <script>
-                                document.querySelector('table').onclick = ({
-                                    target
-                                }) => {
-                                    if (!target.classList.contains('more')) return
-                                    document.querySelectorAll('.dropout.active').forEach(
-                                        (d) => d !== target.parentElement && d.classList.remove('active')
-                                    )
-                                    target.parentElement.classList.toggle('active')
-                                }
-                            </script>
+                                </script>
 
 
 
 
-                            @*<button class="dropdown-toggle" onclick="showDropdown()">&#8942;</button>
-        <div id="myDropdown" class="dropdown-content">
-            @Html.ActionLink("Edit", "Edit", new { id = pc.pc_id })
-            @Html.ActionLink("Remove", "Remove", new { id = pc.pc_id })
-            <a href="#home">Edit</a>
-            <a href="#about">Remove</a>
-            <a href="#contact">Contact</a>
-        </div>*@
-                            <!--<div class="dropdown">-->
-                            <!--Trigger-->
-                            <!--<a class="btn-floating btn-lg black dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown"
-       aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
-    <br>-->
-                            <!--Menu-->
-                            <!--<div class="dropdown-menu dropdown-primary">
-            <a class="dropdown-item" href="#"><i class="fab fa-apple-pay"></i>&nbsp;&nbsp;Pay</a>
-            <a class="dropdown-item" href="#"><i class="fas fa-bell-slash"></i>&nbsp;&nbsp;Disable alertss</a>
-            <a class="dropdown-item" href="#"><i class="far fa-envelope"></i>&nbsp;&nbsp;Check mail</a>
-        </div>
-    </div>-->
+                                @*<button class="dropdown-toggle" onclick="showDropdown()">&#8942;</button>
+                            <div id="myDropdown" class="dropdown-content">
+                                @Html.ActionLink("Edit", "Edit", new { id = pc.pc_id })
+                                @Html.ActionLink("Remove", "Remove", new { id = pc.pc_id })
+                                <a href="#home">Edit</a>
+                                <a href="#about">Remove</a>
+                                <a href="#contact">Contact</a>
+                            </div>*@
+                                <!--<div class="dropdown">-->
+                                <!--Trigger-->
+                                <!--<a class="btn-floating btn-lg black dropdown-toggle" type="button" id="dropdownMenu3" data-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false"><i class="fas fa-ellipsis-v"></i></a>
+                        <br>-->
+                                <!--Menu-->
+                                <!--<div class="dropdown-menu dropdown-primary">
+                                <a class="dropdown-item" href="#"><i class="fab fa-apple-pay"></i>&nbsp;&nbsp;Pay</a>
+                                <a class="dropdown-item" href="#"><i class="fas fa-bell-slash"></i>&nbsp;&nbsp;Disable alertss</a>
+                                <a class="dropdown-item" href="#"><i class="far fa-envelope"></i>&nbsp;&nbsp;Check mail</a>
+                            </div>
+                        </div>-->
 
-                        </td>
-                    </tr>
+                            </td>
+                        </tr>
+
+                    }
 
                 }
-
+            </table>
+        </div>
+        <script type="text/javascript">
+            function myFunction() {
+                document.getElementById("myDropdown").classList.toggle("show");
             }
-        </table>
-    </div>
-    <script type="text/javascript">
-        function myFunction() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
 
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
+            // Close the dropdown if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
                     }
                 }
             }
-        }
-    </script>
-    <style>
-        .dropbtn {
-            color: white;
-            padding: 16px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-
-            .dropbtn:hover, .dropbtn:focus {
-                background-color: #2980B9;
+        </script>
+        <style>
+            .dropbtn {
+                color: white;
+                padding: 16px;
+                font-size: 16px;
+                border: none;
+                cursor: pointer;
             }
 
-        .dropdown {
-            position: relative;
-            display: inline-block;
-        }
+                .dropbtn:hover, .dropbtn:focus {
+                    background-color: #2980B9;
+                }
 
-        .dropdown-content {
-            display: none;
-            position: absolute;
-            background-color: #f1f1f1;
-            min-width: 160px;
-            overflow: auto;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
 
-            .dropdown-content a {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f1f1f1;
+                min-width: 160px;
+                overflow: auto;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+
+                .dropdown-content a {
+                    color: black;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    display: block;
+                }
+
+            .dropdown a:hover {
+                background-color: #ddd;
+            }
+
+            .show {
                 display: block;
             }
 
-        .dropdown a:hover {
-            background-color: #ddd;
-        }
-
-        .show {
-            display: block;
-        }
-
-        .dropdown-content {
-            display: none;
-            position: relative;
-            margin-top: 60px;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            overflow: auto;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
-        }
-
-            .dropdown-content a {
-                color: black;
-                padding: 12px 16px;
-                text-decoration: none;
-                display: block;
+            .dropdown-content {
+                display: none;
+                position: relative;
+                margin-top: 60px;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                overflow: auto;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
             }
 
-        .dropdown a:hover {
-            background-color: #f1f1f1
-        }
-    </style>
+                .dropdown-content a {
+                    color: black;
+                    padding: 12px 16px;
+                    text-decoration: none;
+                    display: block;
+                }
 
-    @*<h2>ProductCategories</h2>
+            .dropdown a:hover {
+                background-color: #f1f1f1
+            }
+        </style>
 
-        <p>
-            @Html.ActionLink("Create New", "Create")
-        </p>
-        <table class="table">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.name)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.description)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.eff_start_dtm)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.eff_end_dtm)
-                </th>
-                <th></th>
-            </tr>
+        @*<h2>ProductCategories</h2>
 
-        @foreach (var item in Model) {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.eff_start_dtm)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.eff_end_dtm)
-                </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", new { id=item.pc_id }) |
-                    @Html.ActionLink("Details", "Details", new { id=item.pc_id }) |
-                    @Html.ActionLink("Delete", "Delete", new { id=item.pc_id })
-                </td>
-            </tr>
-        }
+            <p>
+                @Html.ActionLink("Create New", "Create")
+            </p>
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.name)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.description)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.eff_start_dtm)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.eff_end_dtm)
+                    </th>
+                    <th></th>
+                </tr>
 
-        </table>*@
+            @foreach (var item in Model) {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.name)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.eff_start_dtm)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.eff_end_dtm)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id=item.pc_id }) |
+                        @Html.ActionLink("Details", "Details", new { id=item.pc_id }) |
+                        @Html.ActionLink("Delete", "Delete", new { id=item.pc_id })
+                    </td>
+                </tr>
+            }
 
+            </table>*@
+    </div>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")

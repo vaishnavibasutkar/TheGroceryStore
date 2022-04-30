@@ -1,0 +1,97 @@
+﻿@model GroceryStoreMain.Models.DistributorModel
+
+@{
+    ViewBag.Title = "DistributorProfile";
+    Layout = "~/Views/Shared/_DistributorLayoutPage.cshtml";
+}
+<div style="margin-left:10px">
+    <br />
+    <h2>DistributorProfile</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.d_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.d_id)
+            </dd>
+            <hr class="sidebar-divider my-0">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.company_name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.company_name)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.address)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.address)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.city)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.city)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.postal_code)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.postal_code)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.email_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.email_id)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.phone_no)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.phone_no)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.username)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.password)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.password)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.password_lastmodified_dtm)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.password_lastmodified_dtm)
+            </dd>
+
+        </dl>
+    </div>
+</div>

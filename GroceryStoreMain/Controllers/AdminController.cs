@@ -10,16 +10,40 @@ namespace GroceryStoreMain.Controllers
     public class AdminController : Controller
     {
         GroceryStoreDBEntities context = new GroceryStoreDBEntities();
-        public ActionResult Index()
+        
+
+        public ActionResult Home()
         {
-            return View();
+            if (Session["Username"] != null)
+            {
+                ViewBag.Message = "Your application description page.";
+                ViewBag.TotalCustomer = context.Customers.Count();
+                ViewBag.TotalDistributor = context.Distributors.Count();
+                ViewBag.TotalProduct = context.Products.Count();
+                ViewBag.TotalProductCategory = context.Product_Category.Count();
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+
         }
 
-        public ActionResult About()
+        public ActionResult AdminProfile()
         {
-            ViewBag.Message = "Your application description page.";
+            if (Session["Username"] != null)
+            {
+                int id = (int)(Session["id"]);
+                var admin = context.Admins.FirstOrDefault(a => a.a_id == id);
+                AdminModel adminModel = new AdminModel(admin);
+                return View(adminModel);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
 
-            return View();
         }
 
         public ActionResult Contact()
@@ -156,9 +180,9 @@ namespace GroceryStoreMain.Controllers
 
         #endregion
 
-     
 
-       
+
+
 
         #region FAQ - Admin
         public ActionResult FAQ()
@@ -428,7 +452,7 @@ namespace GroceryStoreMain.Controllers
         //}
 
 
-        public ActionResult AdminAddEditUser(int id)
+        public ActionResult AdminAddEditUser(int id = 0)
         {
             if (Session["Username"] != null)
             {
@@ -484,7 +508,7 @@ namespace GroceryStoreMain.Controllers
             }
         }
 
-        public ActionResult DistributorAddEditUser(int id)
+        public ActionResult DistributorAddEditUser(int id = 0)
         {
             if (Session["Username"] != null)
             {
@@ -663,7 +687,7 @@ namespace GroceryStoreMain.Controllers
         /// Schedule Time to Delivery
         /// </summary>
         /// <returns></returns>
-        public ActionResult AddEditSchedule(int id)
+        public ActionResult AddEditSchedule(int id = 0)
         {
             if (Session["Username"] != null)
             {
@@ -694,7 +718,7 @@ namespace GroceryStoreMain.Controllers
 
                     Delivery_Time_Slot delivery_Time_Slot = Delivery_Time_SlotModel.GetDelivery_Time_Slot(delivery_Time_SlotModel);
                     context.Delivery_Time_Slot.Add(delivery_Time_Slot);
-                   
+
                     TempData["Message"] = "Delivery Time Slot - " + delivery_Time_SlotModel.name + " Added.";
                 }
                 else
@@ -760,7 +784,7 @@ namespace GroceryStoreMain.Controllers
 
                 //context.Entry(_order).State = EntityState.Modified;
                 //context.SaveChanges();
-               return RedirectToAction("OrderList");
+                return RedirectToAction("OrderList");
             }
             else
             {
@@ -773,8 +797,8 @@ namespace GroceryStoreMain.Controllers
             if (Session["Username"] != null)
             {
                 ViewBag.OrderStatus = this.context.Order_Status.ToList();
-                var order=context.Orders.FirstOrDefault(o => o.o_id==id);
-                
+                var order = context.Orders.FirstOrDefault(o => o.o_id == id);
+
                 return View(order);
             }
             else
@@ -846,7 +870,8 @@ namespace GroceryStoreMain.Controllers
                     ViewBag.Message = string.Format("Login Successfull");
                     Session["Username"] = result.username;
                     Session["Name"] = result.name;
-                    return RedirectToAction("Contact");
+                    Session["id"] = result.a_id;
+                    return RedirectToAction("Home");
                     //return RedirectToAction('EmployeeDetails', 'Employee);//I m returning to My Employee Action Method');
                 }
                 else

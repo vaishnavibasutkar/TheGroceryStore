@@ -1,0 +1,58 @@
+﻿@model GroceryStoreMain.Models.AdminModel
+
+@{
+    ViewBag.Title = "Profile";
+    Layout = "~/Views/Shared/_AdminLayoutPage.cshtml";
+}
+<div style="margin-left:10px">
+    <br />
+    <h2>Profile</h2>
+
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.a_id)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.a_id)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.username)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.username)
+            </dd>
+            <hr class="sidebar-divider my-0">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.password)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.password)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.name)
+            </dd>
+            <hr class="sidebar-divider my-0">
+            <dt>
+                @Html.DisplayNameFor(model => model.password_lastmodified_dtm)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.password_lastmodified_dtm)
+            </dd>
+
+        </dl>
+    </div>
+   
+    </div>
