@@ -194,6 +194,7 @@
           <Property Name="uom_id" Type="int" />
           <Property Name="d_id" Type="int" />
           <Property Name="price" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="imagepath" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Product_Category">
           <Key>
@@ -204,6 +205,7 @@
           <Property Name="description" Type="varchar(max)" />
           <Property Name="eff_start_dtm" Type="datetime" />
           <Property Name="eff_end_dtm" Type="datetime" />
+          <Property Name="imagepath" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -853,6 +855,7 @@
           <NavigationProperty Name="Product_Category" Relationship="Self.FK_Product_Product_Category" FromRole="Product" ToRole="Product_Category" />
           <NavigationProperty Name="Unit_Of_Measurement" Relationship="Self.FK_Product_Unit_Of_Measurement" FromRole="Product" ToRole="Unit_Of_Measurement" />
           <NavigationProperty Name="Recipe_Step" Relationship="Self.FK_Recipe_Step_Product" FromRole="Product" ToRole="Recipe_Step" />
+          <Property Name="imagepath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Product_Category">
           <Key>
@@ -864,6 +867,7 @@
           <Property Name="eff_start_dtm" Type="DateTime" Precision="3" />
           <Property Name="eff_end_dtm" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_Product_Category" FromRole="Product_Category" ToRole="Product" />
+          <Property Name="imagepath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityType Name="Recipe">
           <Key>
@@ -1496,6 +1500,7 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="GroceryStoreDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="imagepath" ColumnName="imagepath" />
                 <ScalarProperty Name="p_id" ColumnName="p_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />
@@ -1509,6 +1514,7 @@
           <EntitySetMapping Name="Product_Category">
             <EntityTypeMapping TypeName="GroceryStoreDBModel.Product_Category">
               <MappingFragment StoreEntitySet="Product_Category">
+                <ScalarProperty Name="imagepath" ColumnName="imagepath" />
                 <ScalarProperty Name="pc_id" ColumnName="pc_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="description" ColumnName="description" />

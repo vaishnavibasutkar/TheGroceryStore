@@ -32,6 +32,7 @@ namespace GroceryStoreMain.Models
         public Nullable<int> uom_id { get; set; }
         public Nullable<int> d_id { get; set; }
         public decimal price { get; set; }
+        public string imagepath { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Batch> Batches { get; set; }

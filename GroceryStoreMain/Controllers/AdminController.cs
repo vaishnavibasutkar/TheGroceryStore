@@ -1,8 +1,11 @@
 ﻿using GroceryStoreMain.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace GroceryStoreMain.Controllers
@@ -105,13 +108,45 @@ namespace GroceryStoreMain.Controllers
         {
             if (Session["Username"] != null)
             {
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetFileName(product_Category.ImageFile.FileName);
+                string UploadPath = ConfigurationManager.AppSettings["ProductCategoryImagePath"].ToString();
+                var path = Path.Combine(UploadPath, fileName);
+                // store the uploaded file on the file system
+                product_Category.ImageFile.SaveAs(path);
+
+
                 Product_Category pc = new Product_Category();
                 pc.name = product_Category.name;
                 pc.description = product_Category.description;
                 pc.eff_end_dtm = product_Category.eff_end_dtm;
                 pc.eff_start_dtm = DateTime.Now;
+                pc.imagepath = path;
                 context.Product_Category.Add(pc);
                 context.SaveChanges();
+
+         
+
+
+                ////Use Namespace called :  System.IO  
+                //string FileName = Path.GetFileNameWithoutExtension(product_Category.ImageFile.FileName);
+
+                ////To Get File Extension  
+                //string FileExtension = Path.GetExtension(product_Category.ImageFile.FileName);
+
+                ////Add Current Date To Attached File Name  
+                //FileName = DateTime.Now.ToString("yyyyMMdd") + "-" + FileName.Trim() + FileExtension;
+
+                ////Get Upload path from Web.Config file AppSettings.  
+                //
+
+                ////Its Create complete path to store in server.  
+                //product_Category.ImagePath = UploadPath + FileName;
+
+                ////To copy and save file into server.  
+                //product_Category.ImageFile.SaveAs(product_Category.ImagePath);
+
+
                 TempData["Message"] = "Added New Record in Product Categories.";
                 return RedirectToAction("ProductCategories");
             }
@@ -120,7 +155,32 @@ namespace GroceryStoreMain.Controllers
                 return RedirectToAction("Login");
             }
         }
+        [HttpPost]
+        public ActionResult UploadFiles(HttpPostedFileBase file)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
 
+
+                    if (file != null)
+                    {
+                        string path = Path.Combine(Server.MapPath("~/Images/ProductCategories"), Path.GetFileName(file.FileName));
+                        file.SaveAs(path);
+
+                    }
+                    ViewBag.FileStatus = "File uploaded successfully.";
+                }
+                catch (Exception)
+                {
+
+                    ViewBag.FileStatus = "Error while file uploading.";
+                }
+
+            }
+            return View("Index");
+        }
         public ActionResult EditProductCategory(int id)
         {
             if (Session["Username"] != null)

@@ -33,7 +33,7 @@
     <OutputPath>bin\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+    <WarningLevel>1</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -273,6 +273,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\Delivery_Time_SlotModel.cs" />
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
@@ -391,6 +392,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\bootstrap.rtl.css" />
     <Content Include="Content\bootstrap.rtl.min.css" />
+    <Content Include="Content\CustomCss\Customer\style.css" />
+    <Content Include="Content\CustomCss\Customer\style.min.css" />
     <Content Include="Content\CustomCss\sb-admin-2.css" />
     <Content Include="Content\CustomCss\sb-admin-2.min.css" />
     <Content Include="favicon.ico" />
@@ -451,6 +454,12 @@
     <Content Include="Scripts\Charts\Chart.bundle.min.js" />
     <Content Include="Scripts\Charts\Chart.js" />
     <Content Include="Scripts\Charts\Chart.min.js" />
+    <Content Include="Scripts\CustomerScript\easing.js" />
+    <Content Include="Scripts\CustomerScript\easing.min.js" />
+    <Content Include="Scripts\CustomerScript\main.js" />
+    <Content Include="Scripts\CustomerScript\owl.carousel.js" />
+    <Content Include="Scripts\CustomerScript\owl.carousel.min.js" />
+    <Content Include="Scripts\CustomScript\CustomJS.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -507,9 +516,16 @@
     <Content Include="Views\Admin\AdminProfile.cshtml" />
     <Content Include="Views\Distributor\DistributorProfile.cshtml" />
     <Content Include="Views\Distributor\Home.cshtml" />
+    <Content Include="Views\Shared\_CustomerLayoutPage.cshtml" />
+    <Content Include="Views\Customer\Home.cshtml" />
+    <Content Include="Views\Customer\Blank.cshtml" />
+    <Content Include="Views\Customer\ProductByProductCategory.cshtml" />
+    <Content Include="Views\Customer\ProductDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\ProductCategories\" />
+    <Folder Include="Images\Products\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

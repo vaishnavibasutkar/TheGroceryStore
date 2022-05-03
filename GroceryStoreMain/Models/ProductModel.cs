@@ -40,5 +40,7 @@ namespace GroceryStoreMain.Models
         [Display(Name ="Price")]
         public decimal price { get; set; }
 
+        public HttpPostedFileBase ImageFile { get; set; }
+
     }
 }

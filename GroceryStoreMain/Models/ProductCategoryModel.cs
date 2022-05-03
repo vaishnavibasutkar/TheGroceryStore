@@ -24,6 +24,9 @@ namespace GroceryStoreMain.Models
         [DataType(DataType.DateTime,ErrorMessage ="Enter Valid Date and Time.")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd HH:mm:ss}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> eff_end_dtm { get; set; }
+       // [Display(Name="Upload File")]
+        //public string ImagePath { get; set; }   
+        public HttpPostedFileBase ImageFile { get; set; }
         public virtual ICollection<Product> Products { get; set; }
     }
 }

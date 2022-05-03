@@ -1,7 +1,9 @@
 ﻿using GroceryStoreMain.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -104,6 +106,14 @@ namespace GroceryStoreMain.Controllers
         {
             if (Session["Username"] != null)
             {
+
+                var fileName = Guid.NewGuid().ToString() + Path.GetFileName(productModel.ImageFile.FileName);
+                string UploadPath = ConfigurationManager.AppSettings["ProductImagePath"].ToString();
+                var path = Path.Combine(UploadPath, fileName);
+                // store the uploaded file on the file system
+                productModel.ImageFile.SaveAs(path);
+
+
                 Product product = new Product();
                 product.name = productModel.name;
                 product.description = productModel.description;
@@ -111,6 +121,7 @@ namespace GroceryStoreMain.Controllers
                 product.uom_id = productModel.uom_id;
                 product.d_id = productModel.d_id;
                 product.price = productModel.price;
+                product.imagepath = path;
                 context.Products.Add(product);
                 context.SaveChanges();
                 TempData["Message"] = "Added New Record in Product.";
