@@ -33,6 +33,7 @@
           <Property Name="cart_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="name" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="comment" Type="varchar" MaxLength="50" />
+          <Property Name="c_id" Type="int" />
         </EntityType>
         <EntityType Name="Cart_Product_Assoc">
           <Key>
@@ -260,6 +261,18 @@
             </Principal>
             <Dependent Role="Batch">
               <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Cart_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="Cart" Type="Self.Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="c_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -546,6 +559,10 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Batch" EntitySet="Batch" />
           </AssociationSet>
+          <AssociationSet Name="FK_Cart_Customer" Association="Self.FK_Cart_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="Cart" EntitySet="Cart" />
+          </AssociationSet>
           <AssociationSet Name="FK_Cart_Product_Assoc_Cart_Product_Assoc" Association="Self.FK_Cart_Product_Assoc_Cart_Product_Assoc">
             <End Role="Cart" EntitySet="Cart" />
             <End Role="Cart_Product_Assoc" EntitySet="Cart_Product_Assoc" />
@@ -666,6 +683,8 @@
           <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="comment" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Cart_Product_Assoc" Relationship="Self.FK_Cart_Product_Assoc_Cart_Product_Assoc" FromRole="Cart" ToRole="Cart_Product_Assoc" />
+          <Property Name="c_id" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="GroceryStoreDBModel.FK_Cart_Customer" FromRole="Cart" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Cart_Product_Assoc">
           <Key>
@@ -692,6 +711,7 @@
           <NavigationProperty Name="Order" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
           <NavigationProperty Name="OTP_History" Relationship="Self.FK_OTP_History_OTP_History" FromRole="Customer" ToRole="OTP_History" />
           <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Payment" FromRole="Customer" ToRole="Payment" />
+          <NavigationProperty Name="Carts" Relationship="GroceryStoreDBModel.FK_Cart_Customer" FromRole="Customer" ToRole="Cart" />
         </EntityType>
         <EntityType Name="Customer_Address">
           <Key>
@@ -1296,6 +1316,10 @@
             <End Role="Recipe_Step" EntitySet="Recipe_Step" />
           </AssociationSet>
           <EntitySet Name="Feedback_test" EntityType="GroceryStoreDBModel.Feedback_test" />
+          <AssociationSet Name="FK_Cart_Customer" Association="GroceryStoreDBModel.FK_Cart_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Cart" EntitySet="Carts" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Feedback_test">
           <Key>
@@ -1307,6 +1331,18 @@
           <Property Name="feedback" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="rating" Type="Int32" />
         </EntityType>
+        <Association Name="FK_Cart_Customer">
+          <End Type="GroceryStoreDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Cart" Role="Cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="Cart">
+              <PropertyRef Name="c_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1339,6 +1375,7 @@
           <EntitySetMapping Name="Carts">
             <EntityTypeMapping TypeName="GroceryStoreDBModel.Cart">
               <MappingFragment StoreEntitySet="Cart">
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
                 <ScalarProperty Name="cart_id" ColumnName="cart_id" />
                 <ScalarProperty Name="name" ColumnName="name" />
                 <ScalarProperty Name="comment" ColumnName="comment" />

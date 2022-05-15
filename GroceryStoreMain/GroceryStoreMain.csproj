@@ -460,6 +460,7 @@
     <Content Include="Scripts\CustomerScript\owl.carousel.js" />
     <Content Include="Scripts\CustomerScript\owl.carousel.min.js" />
     <Content Include="Scripts\CustomScript\CustomJS.js" />
+    <Content Include="Scripts\CustomScript\JavaScript.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
@@ -521,6 +522,8 @@
     <Content Include="Views\Customer\Blank.cshtml" />
     <Content Include="Views\Customer\ProductByProductCategory.cshtml" />
     <Content Include="Views\Customer\ProductDetails.cshtml" />
+    <Content Include="Views\Customer\LoginCustomer.cshtml" />
+    <Content Include="Views\Customer\ViewCart.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -1,6 +1,8 @@
 ﻿@{
     Layout = null;
+
 }
+
 <!DOCTYPE html>
 
 <html>
@@ -11,6 +13,7 @@
 </head>
 <body>
 
+    <input type="hidden" id="sessionUser" value="@Session["Name"]" />
     <div class="container-fluid">
         <div class="row align-items-center py-3 px-xl-5">
             <div class="col-lg-3 d-none d-lg-block">
@@ -35,10 +38,46 @@
                     <i class="fas fa-heart text-primary"></i>
                     <span class="badge">0</span>
                 </a>
-                <a href="" class="btn border">
-                    <i class="fas fa-shopping-cart text-primary"></i>
-                    <span class="badge">0</span>
-                </a>
+                <div class="btn dropdown ">
+                    <a href="#" class=" dropdown-toggle btn border" data-toggle="dropdown">
+                        <i class="fas fa-shopping-cart text-primary"></i>
+
+                    </a>
+                    <div class="dropdown-menu  rounded-0 m-0" id="cart">
+                        @if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]) == null)
+                        {
+                            <p class="nav-item nav-link" href="#" id="blankcart">
+
+                                No Cart Added. Please login to add :)
+                            </p>
+                        }
+                        else
+                        {
+                            if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count > 0)
+                            {
+                                foreach (var cart in (List<GroceryStoreMain.Models.Cart>)Session["Cart"])
+                                {
+                                    <a class="nav-item nav-link " href="@Url.Action("ViewCart", "Customer", new { id = cart.cart_id })" id=@cart.cart_id>
+                                        @if (@cart.Cart_Product_Assoc.Count == 0)
+                                        {
+                                            @cart.name
+                                        }
+                                        else
+                                        {
+                                            @cart.name<span class="badge">(@cart.Cart_Product_Assoc.Count)</span>
+                                        }
+                                    </a>
+
+                                }
+                            }
+                            if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count < 5)
+                            {
+                                <p id="AddNewCart" class="dropdown-item">Add New Cart</p>
+                            }
+                        }
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -132,9 +171,19 @@
                             </div>
                             <a href="contact.html" class="nav-item nav-link active">Contact</a>
                         </div>
-                        <div class="navbar-nav ml-auto py-0">
-                            <a href="" class="nav-item nav-link">Login</a>
-                            <a href="" class="nav-item nav-link">Register</a>
+                        <div class="navbar-nav ml-auto py-0" id="menulogin">
+                            @if (Session["Name"] == null)
+                            {
+
+
+                                <a href="#mgsmodal1" data-toggle="modal" data-target="#mgsmodal1" class="nav-item nav-link" id="loginLink">Login</a>
+                                <a href="" class="nav-item nav-link">Register</a>
+                            }
+                            else
+                            {
+                                <a href="" class="nav-item nav-link">@Session["Name"]</a>
+                                <a href="@Url.Action("Logout", "Customer")" class="nav-item nav-link">Logout</a>
+                            }
                         </div>
                     </div>
                 </nav>
@@ -177,6 +226,47 @@
         </div>
     </div>
     <!-- Navbar End -->
+
+    <div class="modal fade" id="mgsmodal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content" id="modelcontent">
+                <div class="modal-header text-center">
+                    <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
+                    <button type="button" class="close" id="closeloginmodel" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body mx-5" id="modelbody">
+                    <div class="md-form mb-6 text-lg-center">
+                        Enter your phone number to
+                        Login/Sign up
+                        <br />
+                        <i class="fas fa-mobile-alt prefix grey-text"></i>
+                        <input type="text" id="customerLogin" class="form-control-sm ">
+                    </div>
+                    @*<div class="md-form mb-5">
+                            <i class="fas fa-envelope prefix grey-text"></i>
+                            <input type="email" id="orangeForm-email" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
+                        </div>
+
+                        <div class="md-form mb-4">
+                            <i class="fas fa-lock prefix grey-text"></i>
+                            <input type="password" id="orangeForm-pass" class="form-control validate">
+                            <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
+                        </div>*@
+
+                </div>
+                <div class="modal-footer d-flex justify-content-center" id="modelfooter">
+                    <button class="btn btn-deep-orange" id="CustomerLogin">Sign up</button>
+                    <br />
+                    <a id="LoginUsingEmail" class="nav-item nav-link">Login Using Email ID</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Featured Start -->
     <div class="container-fluid pt-5">
         <div class="row px-xl-5 pb-3">
@@ -742,7 +832,7 @@
     <!-- Template Javascript -->
     <script src="~/Scripts/CustomerScript/main.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-
+    <script src="~/Scripts/CustomScript/CustomJS.js"></script>
 </body>
 </html>
 

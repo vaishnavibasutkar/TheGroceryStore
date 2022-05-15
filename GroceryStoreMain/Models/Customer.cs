@@ -20,6 +20,7 @@ namespace GroceryStoreMain.Models
             this.Feedbacks = new HashSet<Feedback>();
             this.OTP_History = new HashSet<OTP_History>();
             this.Payments = new HashSet<Payment>();
+            this.Carts = new HashSet<Cart>();
         }
     
         public int c_id { get; set; }
@@ -37,5 +38,7 @@ namespace GroceryStoreMain.Models
         public virtual ICollection<OTP_History> OTP_History { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Payment> Payments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Cart> Carts { get; set; }
     }
 }

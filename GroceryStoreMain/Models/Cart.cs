@@ -23,8 +23,10 @@ namespace GroceryStoreMain.Models
         public int cart_id { get; set; }
         public string name { get; set; }
         public string comment { get; set; }
+        public Nullable<int> c_id { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Cart_Product_Assoc> Cart_Product_Assoc { get; set; }
+        public virtual Customer Customer { get; set; }
     }
 }

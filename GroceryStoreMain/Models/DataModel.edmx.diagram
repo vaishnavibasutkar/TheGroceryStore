@@ -50,6 +50,7 @@
         <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Product" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Recipe" ManuallyRouted="false" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Feedback_test" Width="1.5" PointX="10.375" PointY="4.75" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Cart_Customer" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
