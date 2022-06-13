@@ -3,10 +3,10 @@
     ViewBag.Title = "ViewCart";
     Layout = "~/Views/Shared/_CustomerLayoutPage.cshtml";
     var totalcartprice = Convert.ToDecimal(0);
-    }
+}
 
-    @Model.cart_id
-    <!-- Page Header Start -->
+@Model.cart_id
+<!-- Page Header Start -->
 <div class="container-fluid bg-secondary mb-5">
     <div class="d-flex flex-column align-items-center justify-content-center" style="min-height: 300px">
         <h1 class="font-weight-semi-bold text-uppercase mb-3">Shopping Cart</h1>
@@ -19,7 +19,7 @@
 </div>
 <!-- Page Header End -->
 <!-- Cart Start -->
-<div class="container-fluid pt-5">
+<div class="container-fluid pt-5" id="cartdisplay">
     <div class="row px-xl-5">
         <div class="col-lg-8 table-responsive mb-5">
             <table class="table table-bordered text-center mb-0">
@@ -33,37 +33,38 @@
                     </tr>
                 </thead>
                 <tbody class="align-middle">
-                    @foreach (var product in Model.Cart_Product_Assoc.GroupBy(p=>p.Product))
+                    @foreach (var product in Model.Cart_Product_Assoc.GroupBy(p => p.Product))
                     {
 
 
-                    <tr id="@product.Key.p_id">
-                        <td class="align-middle">
-                        <img src="img/product-1.jpg" alt="" style="width: 50px;"> @*//todo image add*@ 
-                       @product.Key.name </td>
-                        <td class="align-middle"><i class="fas fa-rupee"></i>@product.Key.price</td>
-                        <td class="align-middle">
-                            <div class="input-group quantity mx-auto" style="width: 100px;">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-minus">
-                                        <i class="fa fa-minus"></i>
-                                    </button>
+                        <tr id="@product.Key.p_id">
+                            <td class="align-middle">
+                                <img src="img/product-1.jpg" alt="" style="width: 50px;"> @*//todo image add*@
+                                @product.Key.name
+                            </td>
+                            <td class="align-middle"><i class="fas fa-rupee"></i>@product.Key.price</td>
+                            <td class="align-middle">
+                                <div class="input-group quantity mx-auto" style="width: 100px;">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-minus">
+                                            <i class="fa fa-minus"></i>
+                                        </button>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm bg-secondary text-center" value="@product.Count()">
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-primary btn-plus">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <input type="text" class="form-control form-control-sm bg-secondary text-center" value="@product.Count()">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-sm btn-primary btn-plus">
-                                        <i class="fa fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        </td>
-                        @{ 
-                            var totalprice = product.Count() * product.Key.price;
-                            totalcartprice = totalcartprice + totalprice;
-                        }
-                        <td class="align-middle">@totalprice</td>
-                        <td class="align-middle"><button class="btn btn-sm btn-primary" onclick="RemoveProductFromCart(this)" id="@product.Key.p_id" cartid="@Model.cart_id" cartname="@Model.name"><i class="fa fa-times"></i></button></td>
-                    </tr>
+                            </td>
+                            @{
+                                var totalprice = product.Count() * product.Key.price;
+                                totalcartprice = totalcartprice + totalprice;
+                            }
+                            <td class="align-middle">@totalprice</td>
+                            <td class="align-middle"><button class="btn btn-sm btn-primary" onclick="RemoveProductFromCart(this)" id="@product.Key.p_id" cartid="@Model.cart_id" cartname="@Model.name"><i class="fa fa-times"></i></button></td>
+                        </tr>
                     }
                     <tr>
                         <td class="align-middle"><img src="img/product-2.jpg" alt="" style="width: 50px;"> Colorful Stylish Shirt</td>
@@ -180,10 +181,29 @@
                         <h5 class="font-weight-bold">Total</h5>
                         <h5 class="font-weight-bold">@totalcartprice</h5>
                     </div>
-                    <button class="btn btn-block btn-primary my-3 py-3">Proceed To Checkout</button>
+                    @{
+                        if (Model.Cart_Product_Assoc.Any())
+                        {
+                          
+                                var ids1 = new GroceryStoreMain.Models.myObjectWrapper();
+                                ids1.Data=Model.Cart_Product_Assoc.Select(p => p.p_id).ToList();
+                            @Html.HiddenFor(c=>c.Cart_Product_Assoc);       
+                            <input type="hidden" value="@Model.Cart_Product_Assoc" id="cpa"/>
+                             //"@Url.Action("ProceedToCheckoutFromCart", "Customer", new { ids = (List<int?>)ids1 });
+                                <button class="btn btn-block btn-primary my-3 py-3" onclick="ProceedToCheckoutFromCart(this)" id="@Model">Proceed To Checkout</button>
+                                @*<a class="btn btn-block btn-primary my-3 py-3" href="@Url.Action("ProceedToCheckoutFromCart", "Customer", new { ids =ids1 })" id="@Model">Proceed To Checkout</a>*@
+                    }
+                    }
                 </div>
             </div>
         </div>
+    </div>
+</div>
+
+
+<div class="container-fluid pt-5 collapse" id="nocartdisplay">
+    <div class="row px-xl-5">
+        <center><h1>Your cart is empty!</h1></center>
     </div>
 </div>
 <!-- Cart End -->

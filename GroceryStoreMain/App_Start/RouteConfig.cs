@@ -13,11 +13,12 @@ namespace GroceryStoreMain
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+
             routes.MapRoute(
-                name: "Default",
-                url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Contact", id = UrlParameter.Optional }
-            );
+            name: "Default",
+            url: "{controller}/{action}/{id}",
+            defaults: new { controller = "Customer", action = "Home", id = UrlParameter.Optional }
+        );
             routes.MapRoute(
                 name: "Admin",
                 url: "{controller}/{action}/{id}",
@@ -28,6 +29,12 @@ namespace GroceryStoreMain
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Distributor", action = "Login", id = UrlParameter.Optional }
             );
+            routes.MapRoute(
+               name: "Recipe",
+               url: "{controller}/{action}/{id}",
+               defaults: new { controller = "Recipe", action = "RecipeHome", id = UrlParameter.Optional }
+           );
+
         }
     }
 }

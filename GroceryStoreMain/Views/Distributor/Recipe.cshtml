@@ -1,0 +1,148 @@
+﻿@model IEnumerable<GroceryStoreMain.Models.Recipe>
+
+@{
+    ViewBag.Title = "Recipe";
+    Layout = "~/Views/Shared/_DistributorLayoutPage.cshtml";
+}
+
+
+<div style="margin-left:10px">
+    <br />
+    <div class="card-header ">
+        <h2>Recipe</h2>
+    </div>
+    <div class="card-body">
+        <h5 class="text-info"> @TempData["Message"]</h5>
+        <div class="table-responsive">
+            <div>
+                <a href="@Url.Action("AddNewRecipe","Recipe")" class="btn btn-outline-info btn-icon-split">
+                    <span class="icon text-white-50">
+                        <i class=" glyphicon glyphicon-plus-sign"></i>
+                    </span>
+                    <span class="text">Add New Recipe </span>
+                </a>
+            </div>
+            <div><br /></div>
+            <table class="table table-bordered table-condensed table-striped table-hover caption-top">
+
+                @if (Model.Count() == 0)
+                {
+                    <tr>
+                        <td colspan="10">No Record's found.</td>
+                    </tr>
+                }
+                else
+                {
+                    <thead>
+                        <tr>
+                            <th>Image Recipe</th>
+                            <th data-defaultsign="_19">Recipe Id</th>
+                            <th data-defaultsign="AZ">Name</th>
+                            <th data-defaultsign="AZ">Description</th>
+                            <th data-defaultsign="AZ">Comment</th>
+                            <th data-defaultsign="AZ">Create dtm</th>
+                            <th data-defaultsign="AZ">Create By</th>
+                            <th data-defaultsign="AZ">Modified dtm</th>
+                            <th data-defaultsign="AZ">Modified By</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    foreach (var r in Model)
+                    {
+                        <tr>
+                            <td>Image</td>
+                            <td>@r.r_id</td>
+                            <td>@r.name</td>
+                            <td>@r.description</td>
+                            <td>@r.comment</td>
+                            <td>@r.created_by</td>
+                            <td>@r.created_dtm</td>
+                            <td>@r.modified_by</td>
+                            <td>@r.modified_dtm</td>
+                            
+                            <td>
+                                <div class="dropout">
+                                    <button class="more">
+                                        <span></span>
+                                        <span></span>
+                                        <span></span>
+                                    </button>
+                                    <div>
+                                        @Html.ActionLink("Edit", "EditRecipe","Recipe",new { rid = r.r_id }, new { id = r.r_id })
+
+                                        @Html.ActionLink("Remove", "RemoveRecipe","Recipe",new { rid = r.r_id }, new { id = r.r_id })
+
+                                    </div>
+                                </div>
+                                <style>
+                                    .more {
+                                        cursor: pointer;
+                                        border: none;
+                                        background: transparent;
+                                    }
+
+                                        .more span {
+                                            display: block;
+                                            width: .25rem;
+                                            height: .25rem;
+                                            background: #363636;
+                                            border-radius: 50%;
+                                            pointer-events: none;
+                                        }
+
+                                            .more span:not(:last-child) {
+                                                margin-bottom: .125rem;
+                                            }
+
+                                    .dropout {
+                                        z-index: 9001;
+                                        width: fit-content;
+                                        position: relative;
+                                        margin-left: auto;
+                                        margin-right: auto;
+                                    }
+
+                                        .dropout div {
+                                            position: absolute;
+                                            top: -1.1rem;
+                                            right: 1.5rem;
+                                            transform: scaleX(0);
+                                            transform-origin: right;
+                                            transition: transform 0.12s ease;
+                                            background-color: cornsilk;
+                                            border-color: antiquewhite
+                                        }
+
+                                        .dropout.active div {
+                                            transform: scaleX(1);
+                                        }
+                                </style>
+                                <script>
+                                    document.querySelector('table').onclick = ({
+                                        target
+                                    }) => {
+                                        if (!target.classList.contains('more')) return
+                                        document.querySelectorAll('.dropout.active').forEach(
+                                            (d) => d !== target.parentElement && d.classList.remove('active')
+                                        )
+                                        target.parentElement.classList.toggle('active')
+                                    }
+                                </script>
+                            </td>
+                        </tr>
+
+                    }
+
+                }
+            </table>
+        </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        @Scripts.Render("~/bundles/bootstrap")
+        @Styles.Render("~/Content/css")
+        @Scripts.Render("~/bundles/modernizr")
+
+    </div>
+</div>
+
+

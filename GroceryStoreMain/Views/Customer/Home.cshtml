@@ -58,6 +58,7 @@
                                 foreach (var cart in (List<GroceryStoreMain.Models.Cart>)Session["Cart"])
                                 {
                                     <a class="nav-item nav-link " href="@Url.Action("ViewCart", "Customer", new { id = cart.cart_id })" id=@cart.cart_id>
+
                                         @if (@cart.Cart_Product_Assoc.Count == 0)
                                         {
                                             @cart.name
@@ -67,7 +68,6 @@
                                             @cart.name<span class="badge">(@cart.Cart_Product_Assoc.Count)</span>
                                         }
                                     </a>
-
                                 }
                             }
                             if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count < 5)
@@ -159,7 +159,7 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                         <div class="navbar-nav mr-auto py-0">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
+                            <a href="#" class="nav-item nav-link">Home</a>
                             <a href="shop.html" class="nav-item nav-link">Shop</a>
                             <a href="detail.html" class="nav-item nav-link">Shop Detail</a>
                             <div class="nav-item dropdown">
@@ -226,46 +226,7 @@
         </div>
     </div>
     <!-- Navbar End -->
-
-    <div class="modal fade" id="mgsmodal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content" id="modelcontent">
-                <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Sign up</h4>
-                    <button type="button" class="close" id="closeloginmodel" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body mx-5" id="modelbody">
-                    <div class="md-form mb-6 text-lg-center">
-                        Enter your phone number to
-                        Login/Sign up
-                        <br />
-                        <i class="fas fa-mobile-alt prefix grey-text"></i>
-                        <input type="text" id="customerLogin" class="form-control-sm ">
-                    </div>
-                    @*<div class="md-form mb-5">
-                            <i class="fas fa-envelope prefix grey-text"></i>
-                            <input type="email" id="orangeForm-email" class="form-control validate">
-                            <label data-error="wrong" data-success="right" for="orangeForm-email">Your email</label>
-                        </div>
-
-                        <div class="md-form mb-4">
-                            <i class="fas fa-lock prefix grey-text"></i>
-                            <input type="password" id="orangeForm-pass" class="form-control validate">
-                            <label data-error="wrong" data-success="right" for="orangeForm-pass">Your password</label>
-                        </div>*@
-
-                </div>
-                <div class="modal-footer d-flex justify-content-center" id="modelfooter">
-                    <button class="btn btn-deep-orange" id="CustomerLogin">Sign up</button>
-                    <br />
-                    <a id="LoginUsingEmail" class="nav-item nav-link">Login Using Email ID</a>
-                </div>
-            </div>
-        </div>
-    </div>
+    @Html.Partial("CustomerLoginPartial")
 
     <!-- Featured Start -->
     <div class="container-fluid pt-5">

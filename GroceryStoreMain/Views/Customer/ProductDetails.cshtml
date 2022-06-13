@@ -1,4 +1,5 @@
 ﻿@model GroceryStoreMain.Models.Product
+    
 
 @{
     ViewBag.Title = "ProductDetails";
@@ -21,7 +22,7 @@
     <div class="row px-xl-5">
         <div class="col-lg-5 pb-5">
             <div id="product-carousel" class="carousel slide" data-ride="carousel">
-                <img class="img-fluid w-100" src=@String.Format("/Images/Products/"+Model.imagepath.ToString()) alt="">
+                <img class="img-fluid w-100" src=@String.Format("/Images/Products/" + Model.imagepath.ToString()) alt="">
             </div>
         </div>
         <input type="hidden" value=@Model.p_id id="productID" />
@@ -90,62 +91,71 @@
                         </div>
                     </form>
                 </div>*@
-            <div class="d-flex align-items-center mb-4 pt-2">
-                <div class="input-group quantity mr-3" style="width: 130px;">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary btn-minus">
-                            <i class="fa fa-minus"></i>
-                        </button>
-                    </div>
-                    <input type="text" class="form-control bg-secondary text-center" value="1">
-                    <div class="input-group-btn">
-                        <button class="btn btn-primary btn-plus">
-                            <i class="fa fa-plus"></i>
-                        </button>
-                    </div>
+        <div class="d-flex align-items-center mb-4 pt-2">
+            <div class="input-group quantity mr-3" style="width: 130px;">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary btn-minus">
+                        <i class="fa fa-minus"></i>
+                    </button>
                 </div>
+                <input type="text" class="form-control bg-secondary text-center" value="1">
+                <div class="input-group-btn">
+                    <button class="btn btn-primary btn-plus">
+                        <i class="fa fa-plus"></i>
+                    </button>
+                </div>
+            </div>
 
-                <div class="btn dropdown ">
-                    <button class="btn dropdown-toggle btn-primary px-3" data-toggle="dropdown" id="AddToCart"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
-                    <div class="dropdown-menu  rounded-0 m-0">
-                        @if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]) == null)
+            <div class="btn dropdown ">
+                <button class="btn dropdown-toggle btn-primary px-3" data-toggle="dropdown" id="AddToCart"><i class="fa fa-shopping-cart mr-1"></i> Add To Cart</button>
+                <div class="dropdown-menu  rounded-0 m-0">
+                    @if (Session["Username"] == null)
+                    {
+                        <p class="nav-item nav-link" href="#" id="blankcart">
+
+                            No Cart Added. Please login to add :)
+                        </p>
+                    }
+                    else if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]) == null)
+                    {
+                        <p class="nav-item nav-link" href="#" id="blankcart">
+
+                            No Cart Added. Please add new cart:)
+                        </p>
+                    }
+                    else
+                    {
+                        if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count > 0)
+                        {
+                            foreach (var cart in ((List<GroceryStoreMain.Models.Cart>)Session["Cart"]))
+                            {
+                                @*<a class="nav-item nav-link" href="@Html.Raw(@Url.Action("AddToCart", "Customer", new { id = cart.cart_id ,pid=@Model.p_id}))" id=@cart.cart_id>
+                                @cart.name
+                            </a>*@
+
+                                <a class="nav-item nav-link" id=@cart.cart_id onclick="AddToCart(this)">
+                                    @cart.name
+                                </a>
+                            }
+
+                        }
+
+                        if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count == 0)
                         {
                             <p class="nav-item nav-link" href="#" id="blankcart">
 
-                                No Cart Added. Please login to add :)
+                                No Cart Added. Please add new cart:)
                             </p>
                         }
-                        else
-                        {
-                            if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count > 0)
-                            {
-                                foreach (var cart in ((List<GroceryStoreMain.Models.Cart>)Session["Cart"]))
-                                {
-                                    @*<a class="nav-item nav-link" href="@Html.Raw(@Url.Action("AddToCart", "Customer", new { id = cart.cart_id ,pid=@Model.p_id}))" id=@cart.cart_id>
-                        @cart.name
-                    </a>*@
+                    }
 
-                                    <a class="nav-item nav-link" id=@cart.cart_id onclick="AddToCart(this)">
-                                        @cart.name
-                                    </a>
-                                }
-
-                            }
-
-                            if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count == 0)
-                            {
-                                <p class="nav-item nav-link" href="#" id="blankcart">
-
-                                    No Cart Added. Please login to add :)
-                                </p>
-                            }
-                        }
-
-                    </div>
                 </div>
-
-                <button class="btn btn-primary px-3" id="ShopNow"><i class="fa fa-shop mr-1"></i>Order Now</button>
             </div>
+            @*@{var myObjectWrapper = new GroceryStoreMain.Models.myObjectWrapper() { Data = new List<int?>() { @ } };}*@
+
+            <a class="btn btn-primary px-3" id="ordernow" href="@Url.Action("ProceedToCheckout", "Customer", new { id=Model.p_id })" p_id="@Model.p_id"><i class="fa fa-shop mr-1"></i>Order Now</a>
+
+        </div>
             <div class="d-flex pt-2">
                 <p class="text-dark font-weight-medium mb-0 mr-2">Share on:</p>
                 <div class="d-inline-flex">

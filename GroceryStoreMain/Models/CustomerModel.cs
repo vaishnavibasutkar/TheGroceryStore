@@ -10,7 +10,7 @@ namespace GroceryStoreMain.Models
     {
         public CustomerModel()
         {
-                
+
         }
         public CustomerModel(Customer customer)
         {
@@ -20,8 +20,15 @@ namespace GroceryStoreMain.Models
             this.alternate_mobile_no = customer.alternate_mobile_no;
             this.email_id = customer.email_id;
             this.ca_id = customer.ca_id;
-            Customer_AddressModel customer_AddressModel = new Customer_AddressModel(customer.Customer_Address);
-            this.Customer_Address = customer_AddressModel;
+            if (this.ca_id == null)
+            {
+                this.Customer_Address = new Customer_AddressModel();
+            }
+            else
+            {
+                Customer_AddressModel customer_AddressModel = new Customer_AddressModel(customer.Customer_Address);
+                this.Customer_Address = customer_AddressModel;
+            }
 
         }
 
@@ -61,8 +68,8 @@ namespace GroceryStoreMain.Models
         [Display(Name = "Customer Address ID")]
         public Nullable<int> ca_id { get; set; }
 
-        public  Customer_AddressModel Customer_Address { get; set; }
+        public Customer_AddressModel Customer_Address { get; set; }
 
-        
+
     }
 }

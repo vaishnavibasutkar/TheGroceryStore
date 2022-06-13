@@ -1,0 +1,315 @@
+﻿@model IEnumerable<GroceryStoreMain.Models.Recipe>
+@{
+    ViewBag.Title = "The Grocery Store - Recipe";
+    Layout = null;
+}
+
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+</head>
+<body>
+    <!-- Preloader Starts Here -->
+
+    <div class="preloader" style="display: none;">
+        <div class="spinner">
+            <div class="double-bounce1"></div>
+            <div class="double-bounce2"></div>
+        </div>
+    </div>
+
+    <!-- Preloader Ends Here -->
+    <!-- Header Section Starts Here -->
+
+    <header>
+
+        <div class="container text-md-center">
+            <nav class="navbar navbar-expand-md d-md-block ">
+
+                <div class="navbar-brand col-lg-12 d-none d-lg-block justify-content-center">
+                    <a>
+                        <h3 class="m-0 display-5 font-weight-semi-bold justify-content-center"><span class="fa fa-shopping-cart"></span>The Grocery<br /> &nbsp; &nbsp; &nbsp;<span class="text-primary font-weight-bold border px-3 mr-1 " align="center">Store</span></h3>
+                    </a>
+
+                </div>
+                <a href="" class="text-decoration-none d-block d-lg-none">
+                    <h3 class="m-0 display-5 font-weight-semi-bold"><span class="fa fa-shopping-cart"></span>The Grocery<br /> &nbsp; &nbsp; &nbsp;<span class="text-primary font-weight-bold border px-3 mr-1 " align="center">Store</span></h3>
+                </a>
+                <hr />
+
+                <button class="navbar-toggler navbar-toggler-right hamburger-menu-btn ml-auto" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+
+                    <i class="fa fa-bars" style="font-size:24px"></i>
+                </button>
+
+                <div class="collapse navbar-collapse nav-border" id="navbarNavDropdown">
+
+                    <div class="col-lg-4"></div>
+                    <div class="col-lg-4">
+                        <ul class="navbar-nav justify-content-center">
+
+                            <li class="nav-item active">
+
+                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/index.html">Home</a>
+
+                            </li>
+
+                            <li class="nav-item dropdown">
+
+                                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+
+                                    Pages
+
+                                </a>
+
+                                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+
+                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/left-sidebar.html">Left Sidebar</a>
+
+                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/right-sidebar.html">Right Sidebar</a>
+
+                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html">Full Width</a>
+
+                                </div>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/about.html">About</a>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/contact.html">Contact</a>
+
+                            </li>
+
+                            <li class="nav-item">
+
+                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/components.html">Components</a>
+
+                            </li>
+
+                        </ul>
+
+                    </div>
+                    <div class="col-lg-4"></div>
+
+
+                </div>
+                <hr />
+            </nav>
+            <!-- Background image -->
+            <div id="intro-example" class="p-5 text-center bg-image"
+                 style="background-image: url('../../Images/Recipe/recipehome.png'); background-repeat: no-repeat; background-size: 100% 500px;  ">
+                <div class="mask">
+                    <div class="d-flex justify-content-center align-items-center h-100">
+                        <div class="text-white">
+
+                            <form class="form-wrapper">
+                                <h1 class="mb-3 font-weight-medium">Find a Recipe</h1>
+                                <input type="text" id="search" placeholder="Search for..." required>
+                                <input type="submit" class="btn-success" value="go" id="submit">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Background image -->
+        </div>
+
+
+    </header>
+
+    @* Body *@
+    <br />
+    <div class="container-fluid pt-5">
+        <div class="text-center mb-4">
+            <h2 class="section-title px-5"><span class="px-2">Trendy Recipe</span></h2>
+        </div>
+        <div class="row px-xl-5 pb-3">
+            @foreach (var recipe in Model)
+            {
+                <a href="@Url.Action("ViewRecipeDetails", "Recipe", new { id = recipe.r_id })" class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                    <div class="card product-item border-0 mb-4">
+                        <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                            <img class="img-fluid w-100" src="~/Images/Recipe/recipehome.png" alt="">
+                        </div>
+                        <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                            <h6 class="text-truncate mb-3">@recipe.name</h6>
+                        </div>
+                    </div>
+                </a>
+            }
+        </div>
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- Header Section Ends Here -->
+    <!--        Footer-->
+    <footer class="text-center text-white" style="background-color: tomato">
+        <!-- Grid container -->
+        <div class="container">
+            <!-- Section: Links -->
+            <section class="mt-5">
+                <!-- Grid row-->
+                <div class="row text-center d-flex justify-content-center pt-5">
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="#!" class="text-white">About us</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="#!" class="text-white">Products</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="#!" class="text-white">Awards</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="#!" class="text-white">Help</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+                    <!-- Grid column -->
+                    <div class="col-md-2">
+                        <h6 class="text-uppercase font-weight-bold">
+                            <a href="#!" class="text-white">Contact</a>
+                        </h6>
+                    </div>
+                    <!-- Grid column -->
+                </div>
+                <!-- Grid row-->
+            </section>
+            <!-- Section: Links -->
+
+            <hr class="my-5" />
+
+            <!-- Section: Text -->
+            <section class="mb-5">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-lg-8">
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt
+                            distinctio earum repellat quaerat voluptatibus placeat nam,
+                            commodi optio pariatur est quia magnam eum harum corrupti
+                            dicta, aliquam sequi voluptate quas.
+                        </p>
+                    </div>
+                </div>
+            </section>
+            <!-- Section: Text -->
+            <!-- Section: Social -->
+            <section class="text-center mb-5">
+                <a href="" class="text-white me-4">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="" class="text-white me-4">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="" class="text-white me-4">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="" class="text-white me-4">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="" class="text-white me-4">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="" class="text-white me-4">
+                    <i class="fab fa-github"></i>
+                </a>
+            </section>
+            <!-- Section: Social -->
+        </div>
+        <!-- Grid container -->
+        <!-- Copyright -->
+        <div class="text-center p-3"
+             style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2022 Copyright:
+            <a class="text-white" href="#">Vaishnavi Basutkar</a>
+        </div>
+        <!-- Copyright -->
+    </footer>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<link href="~/Content/CustomCss/Customer/style.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-3.4.1.slim.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+<script src="~/Scripts/CustomScript/CustomJS.js"></script>
+
+<!-- Template Javascript -->
+<script src="~/Scripts/CustomerScript/main.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+<!-- Plugins js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="~/Style/RecipeStyle.css" rel="stylesheet" />

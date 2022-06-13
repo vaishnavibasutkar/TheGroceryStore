@@ -51,7 +51,38 @@ namespace GroceryStoreMain.Controllers
         }
 
 
-
+        #region Recipe List
+        public ActionResult Recipe()
+        {
+            if (Session["Username"] != null)
+            {
+                List<Recipe> recipes = context.Recipes.ToList();
+                List<Recipe_Step> recipe_Steps = context.Recipe_Step.ToList();
+                //List<ProductModel> productModels = new List<ProductModel>();
+                //product.ForEach(p =>
+                //{
+                //    productModels.Add(new ProductModel()
+                //    {
+                //        p_id = p.p_id,
+                //        name = p.name,
+                //        description = p.description,
+                //        uom_id = (int)p.uom_id,
+                //        Unit_Of_Measurement = p.Unit_Of_Measurement,
+                //        pc_id = (int)p.pc_id,
+                //        Product_Category = p.Product_Category,
+                //        d_id = (int)p.d_id,
+                //        Distributor = p.Distributor,
+                //        price = p.price
+                //    });
+                //});
+                return View(recipes);
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+        }
+        #endregion
 
 
         #region Product - Admin

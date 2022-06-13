@@ -151,6 +151,9 @@
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.5.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
+    <Reference Include="PayPal, Version=1.9.1.0, Culture=neutral, PublicKeyToken=5b4afc1ccaef40fb, processorArchitecture=MSIL">
+      <HintPath>..\packages\PayPal.1.9.1\lib\net451\PayPal.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
@@ -278,6 +281,8 @@
     <Compile Include="Controllers\DistributorController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
+    <Compile Include="Controllers\RecipeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -294,6 +299,7 @@
     <Compile Include="Models\Cart_Product_Assoc.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\CheckoutModel.cs" />
     <Compile Include="Models\Customer.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -317,6 +323,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\DeliveryTime.cs" />
     <Compile Include="Models\Delivery_Time_Slot.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -338,6 +345,7 @@
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Login.cs" />
+    <Compile Include="Models\myObjectWrapper.cs" />
     <Compile Include="Models\Order.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -365,6 +373,8 @@
     <Compile Include="Models\Recipe.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\RecipeDetails.cs" />
+    <Compile Include="Models\RecipeStepDetails.cs" />
     <Compile Include="Models\Recipe_Step.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -373,6 +383,7 @@
     </Compile>
     <Compile Include="Models\Users.cs" />
     <Compile Include="Models\UserTypeEnum.cs" />
+    <Compile Include="Payment\PaypalConfiguration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -403,6 +414,7 @@
     <Content Include="Images\grocerystorelogo.png" />
     <Content Include="Images\AdminLoginIcon.jpg" />
     <Content Include="applicationhost.config" />
+    <Content Include="Images\Recipe\recipehome.png" />
     <Content Include="Models\DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>DataModel.edmx</DependentUpon>
@@ -473,6 +485,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Style\RecipeStyle.css" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -524,6 +537,19 @@
     <Content Include="Views\Customer\ProductDetails.cshtml" />
     <Content Include="Views\Customer\LoginCustomer.cshtml" />
     <Content Include="Views\Customer\ViewCart.cshtml" />
+    <Content Include="Views\Customer\ProceedToCheckout.cshtml" />
+    <Content Include="Views\Customer\ProceedToCheckoutFromCart.cshtml" />
+    <Content Include="Views\Payment\Success.cshtml" />
+    <Content Include="Views\Recipe\AddNewRecipe.cshtml" />
+    <Content Include="Views\Recipe\Index.cshtml" />
+    <Content Include="Views\Recipe\Index1.cshtml" />
+    <Content Include="Views\Distributor\Recipe.cshtml" />
+    <Content Include="Views\Recipe\AddNewRecipeDetail.cshtml" />
+    <Content Include="Views\Recipe\_PartialPage1.cshtml" />
+    <Content Include="Views\Shared\_RecipeLayoutPage1.cshtml" />
+    <Content Include="Views\Recipe\RecipeHome.cshtml" />
+    <Content Include="Views\Recipe\ViewRecipeDetails.cshtml" />
+    <Content Include="Views\Shared\CustomerLoginPartial.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

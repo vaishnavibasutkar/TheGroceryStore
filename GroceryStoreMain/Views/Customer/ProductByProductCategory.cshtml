@@ -31,7 +31,15 @@
                         <div class=" dropdown ">
                             <button class="btn btn-sm text-dark p-0 dropdown-toggle " data-toggle="dropdown" id="AddToCart"><i class="fa fa-shopping-cart  mr-1"></i> Add To Cart</button>
                             <div class="dropdown-menu  rounded-0 m-0">
-                                @if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]) == null)
+                                @if (Session["Username"] == null)
+                                {
+                                    <p class="nav-item nav-link" href="#" id="blankcart">
+
+                                        No Cart Added. Please login to add :)
+                                    </p>
+                                }
+                                else if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]) == null)
+
                                 {
                                     <p class="nav-item nav-link" href="#" id="blankcart">
 
@@ -45,8 +53,8 @@
                                         foreach (var cart in ((List<GroceryStoreMain.Models.Cart>)Session["Cart"]))
                                         {
                                             @*<a class="nav-item nav-link" href="@Html.Raw(@Url.Action("AddToCart", "Customer", new { id = cart.cart_id ,pid=@Model.p_id}))" id=@cart.cart_id>
-                                                @cart.name
-                                            </a>*@
+                        @cart.name
+                    </a>*@
 
                                             <a class="nav-item nav-link" id=@cart.cart_id pid="@item.p_id" onclick="AddToCartPBPC(this)">
                                                 @cart.name
@@ -57,10 +65,10 @@
 
                                     if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count == 0)
                                     {
-                                        <p class="nav-item nav-link" href="#" id="blankcart">
+                            <p class="nav-item nav-link" href="#" id="blankcart">
 
-                                            No Cart Added. Please login to add :)
-                                        </p>
+                                No Cart Added. Please add new cart:)
+                            </p>
                                     }
                                 }
 
