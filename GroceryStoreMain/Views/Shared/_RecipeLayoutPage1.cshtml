@@ -70,47 +70,46 @@
 
                             <li class="nav-item active">
 
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/index.html">Home</a>
+                                <a class="nav-link" href="@Url.Action("RecipeHome","Recipe")">Home</a>
 
                             </li>
 
-                            <li class="nav-item dropdown">
+                            @*<li class="nav-item dropdown">
 
-                                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    Pages
+                Pages
 
-                                </a>
+            </a>
 
-                                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+            <div class="dropdown-menu" aria-labelledby="pagesDropdown">
 
-                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/left-sidebar.html">Left Sidebar</a>
+                <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/left-sidebar.html">Left Sidebar</a>
 
-                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/right-sidebar.html">Right Sidebar</a>
+                <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/right-sidebar.html">Right Sidebar</a>
 
-                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html">Full Width</a>
+                <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html">Full Width</a>
 
-                                </div>
+            </div>
+
+        </li>*@
+
+                            <li class="nav-item">
+
+                                <a class="nav-link" href="@Url.Action("About","Recipe")">About</a>
 
                             </li>
 
                             <li class="nav-item">
 
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/about.html">About</a>
+                                <a class="nav-link" href="@Url.Action("Contact","Recipe")">Contact</a>
 
                             </li>
+                            @*<li class="nav-item">
 
-                            <li class="nav-item">
+            <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/components.html">Components</a>
 
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/contact.html">Contact</a>
-
-                            </li>
-
-                            <li class="nav-item">
-
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/components.html">Components</a>
-
-                            </li>
+        </li>*@
 
                         </ul>
 

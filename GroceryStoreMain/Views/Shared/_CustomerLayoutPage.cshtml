@@ -164,8 +164,10 @@
                                 </div>
                             </div>
                             <a href="contact.html" class="nav-item nav-link ">Contact</a>
+
+
                         </div>
-                        <div class="navbar-nav ml-auto py-0" id="menulogin">
+                        <div class="navbar-nav ml-auto py-0 dropdown" id="menulogin">
                             @if (Session["Name"] == null)
                             {
                                 <a href="#mgsmodal1" data-toggle="modal" data-target="#mgsmodal1" class="nav-item nav-link" id="loginLink">Login</a>
@@ -173,9 +175,26 @@
                             }
                             else
                             {
-                                <a href="" class="nav-item nav-link">@Session["Name"]</a>
-                                <a href="@Url.Action("Logout", "Customer")" class="nav-item nav-link">Logout</a>
+
+                                <a href="#" class=" dropdown-toggle btn nav-item nav-link" data-toggle="dropdown">
+                                    @Session["Name"]
+
+                                </a>
+                                <div class="dropdown-menu  rounded-0 m-0" >
+                                    <a class="nav-item nav-link" href="@Url.Action("MyProfile","Customer")" id="myprofile">
+                                        My Profile
+                                    </a>
+
+                                    <a class="nav-item nav-link" href="#" id="orders">
+                                        Orders
+                                    </a>
+                                </div>
+
+                                <div class="nav-item nav-link">
+                                    <a href="@Url.Action("Logout", "Customer")">Logout</a>
+                                </div>
                             }
+
                         </div>
                     </div>
                 </nav>

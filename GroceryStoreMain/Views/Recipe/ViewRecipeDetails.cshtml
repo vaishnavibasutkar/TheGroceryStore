@@ -77,8 +77,8 @@
                         <div>
                             @foreach (var rs in Model.Recipe_Step)
                             {
-                                <input type="checkbox" name="rs" value=" @rs.Product.name - @rs.product_unit  -   @rs.amount_req" />
-                                <label class="form-check-label" for="flexCheckDefault">
+                                <input type="checkbox" name="rs" value=" @rs.Product.name - @rs.product_unit  -   @rs.amount_req" id="@rs.p_id"/>
+                                <label class="form-check-label" for="flexCheckDefault" >
                                     @rs.Product.name -@rs.product_unit - @rs.amount_req
                                 </label>
                                 <br />
@@ -140,7 +140,7 @@
                                 </span>
                             </button>
 
-                            <button class="btn btn-outline-primary" RecipeID="@Model.r_id" id="SeletedIngrdient" onclick="SelectedIngredientCart(@Model.r_id)">
+                            <button class="btn btn-outline-primary" RecipeID="@Model.r_id" id="SeletedIngrdient" onclick="SelectedIngredientCart()">
                                 Add Selected ingredients to Cart
                                 <span class="recipe-shopping-list__add-all-button-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
