@@ -16,143 +16,134 @@
 </div>
 <!-- Page Header End -->
 <!-- Checkout Start -->
-@using (Html.BeginForm())
-{
-    <div class="container-fluid pt-5">
-        <div class="row px-xl-5">
-            <div class="col-lg-8">
-                <div class="mb-4">
-                    <h4 class="font-weight-semi-bold mb-4">Billing Details</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Delivery Date</label>
-                            <input class="form-control" type="date" placeholder="Select Delivery Date" onchange="DeliveryDateChange(this)">
-                        </div>
-                        <div class="col-md-6 form-group"></div>
-                        <div class="col-md-12 form-group">
-                            <label>Delivery Time</label>
-                            <br />
-                            <label class="col-md-6 form-control">Hello </label>
-                            <input class=" " type="checkbox">  <label >Hello </label>
-                            <input class="form-control" type="checkbox">hello
 
-                            <input class="form-control" type="checkbox" placeholder="Select Delivery Time">hello
-                        </div>
-                        </div>
-                </div>
-                <div class="mb-4">
-                    <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>Full Name</label>
-                            <input class="form-control" type="text" placeholder="John" value="@Model.customer.full_name">
-                        </div>
+<div class="container-fluid pt-5">
+    <div class="row px-xl-5">
+        <div class="col-lg-8">
+            <div class="mb-4">
+                <h4 class="font-weight-semi-bold mb-4">Billing Details</h4>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>Delivery Date</label>
+                        <input class="form-control" type="date" placeholder="Select Delivery Date" onchange="DeliveryDateChange(this)">
+                        <script>
+                            function DeliveryDateChange(item) {
+                                var DeliveryDate = $(item).val()
+                                $.ajax({
+                                    type: 'post',
+                                    dataType: 'json',
+                                    url: '/Customer/GetDeliveryDate',
+                                    data: { SelectedDeliveryDate: DeliveryDate },
+                                    success: function (dts) {
+                                        var deliveryTimeSlots = dts.DeliveryTimeSlots
+                                        //var a = response.DeliveryTimeSlots;
 
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com" value="@Model.customer.email_id">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789" value="@Model.customer.mobile_no">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Alternate Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789" value="@Model.customer.alternate_mobile_no">
-                        </div>
+                                        var ddlCustomers = $("<select  id='dd'/>");
+                                        ddlCustomers.addClass("form-control");
 
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.address1">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 2</label>
-                            <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.address2">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 3</label>
-                            <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.address3">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>City</label>
-                            <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.city">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>State</label>
-                            <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.state">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Country</label>
-                            <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.country">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>ZIP Code</label>
-                            <input class="form-control" type="text" placeholder="123" value="@Model.customer.Customer_Address.postal_code">
-                        </div>
+                                        //Add the Options to the DropDownList.
+                                        $(deliveryTimeSlots).each(function () {
+                                            var option = $("<option />");
 
-                        @*<div class="col-md-6 form-group">
-                                <label>Address Line 2</label>
-                                <input class="form-control" type="text" placeholder="123 Street">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>Country</label>
-                                <select class="custom-select">
-                                    <option selected>United States</option>
-                                    <option>Afghanistan</option>
-                                    <option>Albania</option>
-                                    <option>Algeria</option>
-                                </select>
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>City</label>
-                                <input class="form-control" type="text" placeholder="New York">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>State</label>
-                                <input class="form-control" type="text" placeholder="New York">
-                            </div>
-                            <div class="col-md-6 form-group">
-                                <label>ZIP Code</label>
-                                <input class="form-control" type="text" placeholder="123">
-                            </div>*@
-                        @*<div class="col-md-12 form-group">
-                                <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="newaccount">
-                                    <label class="custom-control-label" for="newaccount">Create an account</label>
-                                </div>
-                            </div>*@
-                        <div class="col-md-12 form-group">
-                            <div class="custom-control custom-checkbox">
-                                <input type="checkbox" class="custom-control-input" id="shipto">
-                                <label class="custom-control-label" for="shipto" data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
-                            </div>
-                        </div>
+                                            //Set Customer Name in Text part.
+                                            option.html(this.dts_dtm);
+
+                                            //Set CustomerId in Value part.
+                                            option.val(this.dts_id);
+
+                                            //Add the Option element to DropDownList.
+                                            ddlCustomers.append(option);
+                                        });
+
+                                        //Reference the container DIV.
+                                        var dvContainer = $("#dvContainer")
+
+                                        $("#dvLabel").removeClass("text-hide")
+
+                                        //Add the DropDownList to DIV.
+                                        var div = $("<div />");
+                                        div.append(ddlCustomers);
+
+                                        //Add the DIV to the container DIV.
+                                        dvContainer.append(div);
+                                    },
+                                    failure: function (dts) {
+
+                                        var temp = JSON.parse(dts)
+                                        for (var i = 0; i < a.length; i++) {
+                                            alert("jh");
+                                        }
+                                        var test = "hi"
+                                        alert(test);
+                                    }
+
+
+                                });
+
+                            }
+                        </script>
+                    </div>
+                    <div class="col-md-6 form-group border-3"></div>
+                    <div class="col-md-6 form-group border-2">
+                        <label id="dvLabel" class="text-hide">Delivery Time</label>
+
+                        <br />
+                        <div id="dvContainer"></div>
+
                     </div>
                 </div>
-                <div class="collapse mb-4" id="shipping-address">
-                    <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
-                    <div class="row">
-                        <div class="col-md-6 form-group">
-                            <label>First Name</label>
-                            <input class="form-control" type="text" placeholder="John">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Last Name</label>
-                            <input class="form-control" type="text" placeholder="Doe">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>E-mail</label>
-                            <input class="form-control" type="text" placeholder="example@email.com">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Mobile No</label>
-                            <input class="form-control" type="text" placeholder="+123 456 789">
-                        </div>
-                        <div class="col-md-6 form-group">
-                            <label>Address Line 1</label>
-                            <input class="form-control" type="text" placeholder="123 Street">
-                        </div>
-                        <div class="col-md-6 form-group">
+            </div>
+            <div class="mb-4">
+                <h4 class="font-weight-semi-bold mb-4">Billing Address</h4>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>Full Name</label>
+                        <input class="form-control" type="text" placeholder="John" value="@Model.customer.full_name">
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label>E-mail</label>
+                        <input class="form-control" type="text" placeholder="example@email.com" value="@Model.customer.email_id">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Mobile No</label>
+                        <input class="form-control" type="text" placeholder="+123 456 789" value="@Model.customer.mobile_no">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Alternate Mobile No</label>
+                        <input class="form-control" type="text" placeholder="+123 456 789" value="@Model.customer.alternate_mobile_no">
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 1</label>
+                        <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.address1">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 2</label>
+                        <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.address2">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 3</label>
+                        <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.address3">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>City</label>
+                        <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.city">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>State</label>
+                        <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.state">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Country</label>
+                        <input class="form-control" type="text" placeholder="123 Street" value="@Model.customer.Customer_Address.country">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>ZIP Code</label>
+                        <input class="form-control" type="text" placeholder="123" value="@Model.customer.Customer_Address.postal_code">
+                    </div>
+
+                    @*<div class="col-md-6 form-group">
                             <label>Address Line 2</label>
                             <input class="form-control" type="text" placeholder="123 Street">
                         </div>
@@ -176,67 +167,164 @@
                         <div class="col-md-6 form-group">
                             <label>ZIP Code</label>
                             <input class="form-control" type="text" placeholder="123">
+                        </div>*@
+                    @*<div class="col-md-12 form-group">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="newaccount">
+                                <label class="custom-control-label" for="newaccount">Create an account</label>
+                            </div>
+                        </div>*@
+                    <div class="col-md-12 form-group">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="shipto">
+                            <label class="custom-control-label" for="shipto" data-toggle="collapse" data-target="#shipping-address">Ship to different address</label>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-4">
-                <div class="card border-secondary mb-5">
-                    <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+            <div class="collapse mb-4" id="shipping-address">
+                <h4 class="font-weight-semi-bold mb-4">Shipping Address</h4>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>First Name</label>
+                        <input class="form-control" type="text" placeholder="John">
                     </div>
-                    <div class="card-body">
-                        <h5 class="font-weight-medium mb-3">Products</h5>
-                        @foreach (var product in Model.cart.Cart_Product_Assoc.Select(c => c.Product))
-                        {
-                            <div class="d-flex justify-content-between">
-                                <p>@product.name</p>
-                                <p>@product.price</p>
-                            </div>
-                        }
-
-                        <hr class="mt-0">
-                        <div class="d-flex justify-content-between mb-3 pt-1">
-                            <h6 class="font-weight-medium">Subtotal</h6>
-                            <h6 class="font-weight-medium">@Model.subtotal</h6>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <h6 class="font-weight-medium">Shipping</h6>
-                            <h6 class="font-weight-medium">@Model.shipping</h6>
-                        </div>
+                    <div class="col-md-6 form-group">
+                        <label>Last Name</label>
+                        <input class="form-control" type="text" placeholder="Doe">
                     </div>
-                    <div class="card-footer border-secondary bg-transparent">
-                        <div class="d-flex justify-content-between mt-2">
-                            <h5 class="font-weight-bold">Total</h5>
-                            <h5 class="font-weight-bold">@Model.total</h5>
-                        </div>
+                    <div class="col-md-6 form-group">
+                        <label>E-mail</label>
+                        <input class="form-control" type="text" placeholder="example@email.com">
                     </div>
-                </div>
-                <div class="card border-secondary mb-5">
-                    <div class="card-header bg-secondary border-0">
-                        <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                    <div class="col-md-6 form-group">
+                        <label>Mobile No</label>
+                        <input class="form-control" type="text" placeholder="+123 456 789">
                     </div>
-                    <div class="card-body">
-                        <div class="form-group">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="paypal">
-                                <label class="custom-control-label" for="paypal">Pay Pal</label>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="custom-control custom-radio">
-                                <input type="radio" class="custom-control-input" name="payment" id="cod">
-                                <label class="custom-control-label" for="cod">Cash On Delivery</label>
-                            </div>
-                        </div>
-
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 1</label>
+                        <input class="form-control" type="text" placeholder="123 Street">
                     </div>
-                    <div class="card-footer border-secondary bg-transparent">
-                        <a href="@Url.Action("PaymentWithPaypal","Payment",new { checkoutmodel=Model})" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" type="submit">Place Order</a>
+                    <div class="col-md-6 form-group">
+                        <label>Address Line 2</label>
+                        <input class="form-control" type="text" placeholder="123 Street">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>Country</label>
+                        <select class="custom-select">
+                            <option selected>United States</option>
+                            <option>Afghanistan</option>
+                            <option>Albania</option>
+                            <option>Algeria</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>City</label>
+                        <input class="form-control" type="text" placeholder="New York">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>State</label>
+                        <input class="form-control" type="text" placeholder="New York">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <label>ZIP Code</label>
+                        <input class="form-control" type="text" placeholder="123">
                     </div>
                 </div>
             </div>
         </div>
+        <div class="col-lg-4">
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">Order Total</h4>
+                </div>
+                <div class="card-body">
+                    <h5 class="font-weight-medium mb-3">Products</h5>
+                    @foreach (var product in Model.cart.Cart_Product_Assoc.Select(c => c.Product))
+                    {
+                        <div class="d-flex justify-content-between">
+                            <p>@product.name</p>
+                            <p>@product.price</p>
+                        </div>
+                    }
+
+                    <hr class="mt-0">
+                    <div class="d-flex justify-content-between mb-3 pt-1">
+                        <h6 class="font-weight-medium">Subtotal</h6>
+                        <h6 class="font-weight-medium">@Model.subtotal</h6>
+                    </div>
+                    <div class="d-flex justify-content-between">
+                        <h6 class="font-weight-medium">Shipping</h6>
+                        <h6 class="font-weight-medium">@Model.shipping</h6>
+                    </div>
+                </div>
+                <div class="card-footer border-secondary bg-transparent">
+                    <div class="d-flex justify-content-between mt-2">
+                        <h5 class="font-weight-bold">Total</h5>
+                        <h5 class="font-weight-bold">@Model.total</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-secondary mb-5">
+                <div class="card-header bg-secondary border-0">
+                    <h4 class="font-weight-semi-bold m-0">Payment</h4>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="payment" id="paypal">
+                            <label class="custom-control-label" for="paypal">Pay Pal</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" class="custom-control-input" name="payment" id="cod">
+                            <label class="custom-control-label" for="cod">Cash On Delivery</label>
+                        </div>
+                    </div>
+
+                </div>
+                @{
+                    var test = Model;
+                    //var serializer = new System.Web.Script.Serialization.JavaScriptSerializer();
+                    //string objJson = serializer.Serialize(Model);
+                }
+                <div class="card-footer border-secondary bg-transparent">
+                    <input type="hidden" value="@Model" id="testmodel" />
+
+                    @*<button class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" id="ProceedToCheckout">Place Order</button>*@
+                    <a id="ProceedToCheckout" " class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" type="submit">Place Order</a>
+                    <a href="@Url.Action("PaymentWithPaypal","Payment",new {a=Model.customer.full_name, checkoutmodel=test})" class="btn btn-lg btn-block btn-primary font-weight-bold my-3 py-3" type="submit">Place Order</a>
+                </div>
+            </div>
+        </div>
     </div>
-}
-<!-- Checkout End -->
+
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#ProceedToCheckout').click(function () {
+            var selectedDTS = $('#dd :selected').attr('value');
+            var m = $('#testmodel').val()
+            var h = JSON.stringify(m)
+            var dataArray = $.makeArray($("#testmodel").serializeArray());
+
+          var t = $('testmodel').val()
+                 $.ajax({
+                    url: '@Url.Action("PaymentWithPaypal", "Payment")',
+                    type: 'POST',
+                    contentType:"application/json",
+                    data: JSON.stringify(t),
+                    success: function (data) {
+
+                        alert(data);
+                    }
+
+                }
+            )
+
+            });
+});
+    </script>
+   
+    <!-- Checkout End -->

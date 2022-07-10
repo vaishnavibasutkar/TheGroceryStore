@@ -49,7 +49,6 @@ $(document).ready(function () {
         }
     });
 
-
     $('#customerLogin').change(function () {
         var a = document.getElementById('customerLogin').value
         if (a.length == 10) {
@@ -65,11 +64,11 @@ $(document).ready(function () {
         CustomerLoginFunction();
     });
 
-
     $('#CustomerLoginEmail').click(function (e) {
         CustomerLoginEmailFunction();
 
     });
+
     $('#modelcontent').on('click', '#validateOTP', function () {
         if ($('#otptext').val().length == 6) {
             $.ajax({
@@ -101,7 +100,6 @@ $(document).ready(function () {
         }
     });
 
-
     $('#modelcontent').on('click', '#LoginUsingEmail', function () {
 
         $("#modelbody").html('<div class="md-form mb-6 text-lg-center">Enter your Email ID to Login / Sign up <br />' +
@@ -114,6 +112,7 @@ $(document).ready(function () {
 
 
     });
+
     $('#modelcontent').on('click', '#LoginUsingPhone', function () {
 
         $("#modelbody").html('<div class="md-form mb-6 text-lg-center">Enter your phone number to Login / Sign up <br />' +
@@ -125,6 +124,7 @@ $(document).ready(function () {
 
 
     });
+
     $('#name').change(function () {
         alert('Changed!');
         var n = $('#name').val()
@@ -134,6 +134,27 @@ $(document).ready(function () {
     $("#upload").on('click', function () {
         $("input[type='file']").click();
     });
+
+    $('#ProceedToCheckout').click(function () {
+        //var obj = JSON.parse('@Html.Raw(objJson)');
+        //var jsonData = JSON.parse(JSON.stringify({ f: {} }));
+        ////add object to json
+        //jsonData.f = obj;
+        var t = $('#testmodel').val();
+        $.ajax({
+            url: '@Url.Action("ProceedToCheckout")',
+            type: 'POST',
+            contentType: "application/json",
+            data: JSON.stringify(t),
+            success: function (data) {
+                        ...
+            alert(data);
+        },
+            error: function (response, xhr, data) {
+            }
+                }
+    )
+});
 })
 
 
@@ -356,8 +377,35 @@ function DeliveryDateChange(item) {
         url: '/Customer/GetDeliveryDate',
         data: { SelectedDeliveryDate: DeliveryDate },
         success: function (dts) {
-            var temp = dts.DeliveryTimeSlots
+            var deliveryTimeSlots = dts.DeliveryTimeSlots
             //var a = response.DeliveryTimeSlots;
+
+            var ddlCustomers = $("<select />");
+
+            //Add the Options to the DropDownList.
+            $(deliveryTimeSlots).each(function () {
+                var option = $("<option />");
+
+                //Set Customer Name in Text part.
+                option.html(this.dts_dtm);
+
+                //Set CustomerId in Value part.
+                option.val(this.dts_id);
+
+                //Add the Option element to DropDownList.
+                ddlCustomers.append(option);
+            });
+
+            //Reference the container DIV.
+            var dvContainer = $("#dvContainer")
+
+            //Add the DropDownList to DIV.
+            var div = $("<div />");
+            div.append(ddlCustomers);
+
+            //Add the DIV to the container DIV.
+            dvContainer.append(div);
+
             $('#deliverydtm').val(temp)
             var test = "hi"
             alert(test);
@@ -376,13 +424,14 @@ function DeliveryDateChange(item) {
     });
 
 }
+
 function AddRecipeStep() {
     $.ajax({
         type: 'post',
         dataType: 'json',
         url: '/Recipe/AddNewRecipeDPartial',
         success: function (partialView) {
-            $('.RecipeSteps').append(partialView);
+            $('#RecipeSteps').append(partialView);
         }
     });
     //var url = '@Url.Action("addnewrecipedetail", "recipe")';
@@ -425,18 +474,52 @@ function AllIngredientCart(item) {
 }
 
 function SelectedIngredientCart() {
-    var test = $('#SeletedIngrdient').attr('RecipeID')
-    alert($('#SeletedIngrdient').attr('RecipeStep'));
-    var arr = []
-    arr.push(test)
-
+    
     var NoOfServing = $('#NOServing').text();
-    arr.push(NoOfServing);
+    
     var selectedIngredient = []
+    
     $('input[name="rs"]:checked').each(function () {
-        selectedIngredient.push(this.value);
+        selectedIngredient.push(this.id);
     });
-    alert(item)
-    alert(NoOfServing)
-    alert(selectedIngredient)
+
+    if ($('#sessionUser').val() == null || $('#sessionUser').val() == "") {
+
+        $('#loginLink').click()
+    }
+    else {
+
+        var RecipeID = $('#SeletedIngrdient').attr('RecipeID')
+        var NoOfServing = $('#NOServing').text();
+
+        $.ajax({
+            type: 'post',
+            dataType: 'json',
+            url: '/Recipe/SelectedIngrdientCart',
+            data: { SelectedIngredient: selectedIngredient, NoOfServing: NoOfServing },
+            success: function (response) {
+                if (response.Success) {
+
+                    $('#tempMessage').append(response.tempMessage)
+                }
+            }
+        });
+    }
 }
+
+function readURL(input) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#recipeimage').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#url").change(function () {
+    readURL(this);
+});

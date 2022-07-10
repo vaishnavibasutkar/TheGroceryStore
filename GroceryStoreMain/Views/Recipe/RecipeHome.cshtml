@@ -53,49 +53,50 @@
                     <div class="col-lg-4">
                         <ul class="navbar-nav justify-content-center">
 
+
                             <li class="nav-item active">
 
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/index.html">Home</a>
+                                <a class="nav-link" href="@Url.Action("RecipeHome","Recipe")">Home</a>
 
                             </li>
 
-                            <li class="nav-item dropdown">
+                            @*<li class="nav-item dropdown">
 
-                                <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="pagesDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 
-                                    Pages
+                                        Pages
 
-                                </a>
+                                    </a>
 
-                                <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                                    <div class="dropdown-menu" aria-labelledby="pagesDropdown">
 
-                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/left-sidebar.html">Left Sidebar</a>
+                                        <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/left-sidebar.html">Left Sidebar</a>
 
-                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/right-sidebar.html">Right Sidebar</a>
+                                        <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/right-sidebar.html">Right Sidebar</a>
 
-                                    <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html">Full Width</a>
+                                        <a class="dropdown-item" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html">Full Width</a>
 
-                                </div>
+                                    </div>
+
+                                </li>*@
+
+                            <li class="nav-item">
+
+                                <a class="nav-link" href="@Url.Action("About","Recipe")">About</a>
 
                             </li>
 
                             <li class="nav-item">
 
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/about.html">About</a>
+                                <a class="nav-link" href="@Url.Action("Contact","Recipe")">Contact</a>
 
                             </li>
 
-                            <li class="nav-item">
+                            @*<li class="nav-item">
 
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/contact.html">Contact</a>
+                                    <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/components.html">Components</a>
 
-                            </li>
-
-                            <li class="nav-item">
-
-                                <a class="nav-link" href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/components.html">Components</a>
-
-                            </li>
+                                </li>*@
 
                         </ul>
 
@@ -112,12 +113,20 @@
                 <div class="mask">
                     <div class="d-flex justify-content-center align-items-center h-100">
                         <div class="text-white">
+                            @using (Html.BeginForm("RecipeHome", "Recipe", FormMethod.Post))
+                            {
 
-                            <form class="form-wrapper">
                                 <h1 class="mb-3 font-weight-medium">Find a Recipe</h1>
-                                <input type="text" id="search" placeholder="Search for..." required>
+                                @Html.TextBox("search", null, new {  @placeholder = "Search for..."})
+                                @*<input type="text" id="searchString" placeholder="Search for..." required>*@
                                 <input type="submit" class="btn-success" value="go" id="submit">
-                            </form>
+
+                            }
+                            @*<form class="form-wrapper">
+            <h1 class="mb-3 font-weight-medium">Find a Recipe</h1>
+            <input type="text" id="search" placeholder="Search for..." required>
+            <input type="submit" class="btn-success" value="go" id="submit">
+        </form>*@
                         </div>
                     </div>
                 </div>

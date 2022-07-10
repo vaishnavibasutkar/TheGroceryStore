@@ -19,7 +19,7 @@
         @Html.HiddenFor(model => model.modified_dtm)
 
         <div>
-            <h3><i class="fas fa-edit"></i> <span id="recipeName">@Model.name</span></h3><!---->
+            <h3><i class="fas fa-edit"></i> <span id="recipeName">@Model.name</span></h3>
             <div>
                 <div class="row">
                     <div class="col-md-12">
@@ -43,113 +43,46 @@
 
                 <div class="row pt-2">
                     <div class="col-md-6" style="max-height: 50vh; min-height: 30vh;">
-                        <div id="upload" class="h-100 w-100 border border-primary rounded" style="border-width: 2px !important; border-style: dashed !important;">
+                        @*<div id="upload" class="h-100 w-100 border border-primary rounded" style="border-width: 2px !important; border-style: dashed !important;">
                             <i class="far fa-image fa-10x text-primary" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
-                            <!---->
-                        </div><!---->
-                        <input id="id_file_upload" type="file" style="display:none" />
 
-                    </div>
-                    <!--<div class="col-md-6 mt-1">
-                        <label for="id_name"> Preparation Time (min)</label>
-                        <input id="id_prep_time" type="number" class="form-control">
-                        <br><label for="id_name"> Waiting Time (min)</label><input id="id_wait_time" type="number" class="form-control">
-                        <br><label for="id_name"> Servings</label><input id="id_servings" type="number" class="form-control">
-                        <br><label for="id_name"> Servings Text</label><input id="id_servings_text" maxlength="32" class="form-control">
-                        <br><label for="id_name"> Keywords</label><div tabindex="-1" class="multiselect">
-                            <div class="multiselect__select"></div>  <div class="multiselect__tags">
-                                <div class="multiselect__tags-wrap" style="display: none;"></div>-->
-                    <!----> <!--<div class="multiselect__spinner" style="display: none;"></div> <input name="" id="id_keywords" type="text" autocomplete="nope" placeholder="Select Keyword" tabindex="0" class="multiselect__input" style="width: 0px; position: absolute; padding: 0px;">--> <!---->
-                    <!--<span class="multiselect__placeholder">
-                            Select Keyword
-                        </span>
-                    </div>-->
-                    @*<div tabindex="-1" class="multiselect__content-wrapper" style="max-height: 300px; display: none;">
-                                    <ul class="multiselect__content" style="display: inline-block;">
-                                        -->
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option multiselect__option--highlight"><span>🌟</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>2020 holiday</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>-20% kalorien</span></span> </li>
-                                        <li class="multiselect__element">
-                                            <span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>30-60 минути</span></span>
-                                        </li>
-                                        <li class="multiselect__element">
-                                            <span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>3 étoiles</span></span>
-                                        </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>4 Punkte</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>60+ минути</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>Aal</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>abendessen</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>aftensmad</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>afternoon tea</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>airfry</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>albern</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>american</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>amerikaans</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>Apfel</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>appetizer</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>arbeit</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>Artischocke</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>asd</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>asian</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>asian american</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>asien</span></span> </li>
-                                        <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>Auflauf</span></span> </li>
-                                        <li class="multiselect__element">
-                                            <span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>aufstrich</span></span>
-                                        </li>
-                                        <li style="display: none;"><span class="multiselect__option">No elements found. Consider changing the search query.</span></li>
-                                        <li style="display: none;"><span class="multiselect__option">List is empty.</span></li>
-                                    </ul>
-                                </div>
-                            </div>
                         </div>*@
-                </div>
-                <div class="row pt-2">
-                    <div class="col-md-12">
-                        <!--<div class="card border-grey">
-                                    <div class="card-header" style="display: table;">
-                                        <div class="row">
-                                            <div class="col-md-9 d-table">
-                                                <h5 class="d-table-cell align-middle">Nutrition</h5>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <button type="button" title="Add nutrition to recipe" class="btn btn-sm btn-success shadow-none float-right">
-                                                    <i class="fas fa-plus-circle"></i>
-                                                </button>
-
-                        </div>
-                                </div>
-                            </div><div id="id_nutrition_collapse" class="mt-2 collapse" style="display: none;"></div>
-                        </div>
-                        <header role="tab" class="card-header p-1">
-                            <button type="button" class="btn text-left btn-outline-primary btn-block rounded-0 collapsed" style="overflow-anchor: none;">Receipe Steps </button>
-                        </header>
-                        <!--<div id="additional_collapse" class="mt-2 collapse" style="display: none;"><fieldset class="form-group" id="__BVID__14">-->
-                        <!----><!--<div><div class="input-group-append"><div squared="" class="input-group-text"> Create Food</div><div squared="" class="input-group-text"><div class="custom-control custom-checkbox"><input type="checkbox" class="custom-control-input" value="true" id="__BVID__15"><label class="custom-control-label" for="__BVID__15"></label></div></div>--><!----><!----><!--</div><em class="small text-muted"> Create a food and link it to this recipe. </em>--><!----><!----><!----><!--</div></fieldset></div>-->
+                       
+                        <input type="file" id="url" name="url" />
+                        @*@Html.TextBoxFor(model => model.description, new { type = "file", @id = "fUpload" })*@
+                        <img id="recipeimage" src="#" class="h-100 w-100 border border-primary rounded" alt="ajsh" style="border-width: 2px !important; border-style: dashed !important;" />
+                        <br />
                     </div>
+
+
+
                 </div>
-                <div>
-                    <div>
-                        <div class="card mt-2 mb-2">
-                            <div id="id_card_step_0" class="card-body pr-2 pl-2 pr-md-5 pl-md-5">
+              
+                <div >
+                    <!--<div class="row pt-2">
+                        <div class=" mb-2">
+                            <div id="id_card_step_0" class=" pr-2 pl-2 pr-md-5 pl-md-5">
                                 <div class="row">
                                     <div class="col-11">
-                                        <h4 id="id_step_0" class="handle">@*<i class="fas fa-paragraph"></i>*@Step 1</h4>
+                                        <h4 id="id_step_0" class="handle">
+                                            
+                                            <i class="fas fa-paragraph"></i>
+                                            Step 1
+                                        </h4>
                                     </div>
-                                    <div class="col-1" style="text-align: right;">
+                                    <!--<div class="col-1" style="text-align: right;">
                                         <div class="dropout">
                                             <button class="more">
                                                 <span></span>
                                                 <span></span>
                                                 <span></span>
                                             </button>
-                                            <div>
-                                                @*@Html.ActionLink("Edit", "EditProduct", new { id = p.p_id })
+                                            <div>-->-->
+                                                <!--@*@Html.ActionLink("Edit", "EditProduct", new { id = p.p_id })
 
-                                                    @Html.ActionLink("Remove", "RemoveProduct", new { id = p.p_id })*@
+                                                @Html.ActionLink("Remove", "RemoveProduct", new { id = p.p_id })*@-->
 
-                                            </div>
+                                            <!--<!--</div>
                                         </div>
                                         <style>
                                             .more {
@@ -205,29 +138,29 @@
                                                 target.parentElement.classList.toggle('active')
                                             }
                                         </script>
-                                        <!--<a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn shadow-none btn-lg">
+                                        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn shadow-none btn-lg">
                                             <i class="fas fa-ellipsis-v text-muted"></i>
                                         </a>
                                         <div aria-labelledby="dropdownMenuLink" class="dropdown-menu dropdown-menu-right">
                                             <button class="dropdown-item"><i class="fa fa-trash fa-fw"></i> Delete </button>
-                                            <button type="button" class="dropdown-item"><i class="fas fa-eye fa-fw"></i> Show as header </button>-->
-                                        <!----><!----><!---->
-                                        <!--</div>-->
-                                    </div>
-                                </div>
+                                            <button type="button" class="dropdown-item"><i class="fas fa-eye fa-fw"></i> Show as header </button>
+
+                                        </div>
+                                    </div>-->
+                                <!--</div>
                                 <div class="row">
                                     <div class="col-md-12">
                                         <label for="id_step_18514name">Instruction</label>
                                         <input id="id_step_18514name" class="form-control">
                                     </div>
-                                </div>
-                                <!--<div class="row pt-2">
+                                </div>-->
+                                @*<div class="row pt-2">
                                     <div class="col col-md-12">
                                         <button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
                                             <i class="fas fa-plus-circle"></i> Time
-                                        </button>-->
-                                <!----><!---->
-                                <!--<button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
+                                        </button>
+
+                                        <button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
                                             <i class="fas fa-plus-circle"></i> Recipe
                                         </button>
                                         <button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
@@ -237,9 +170,9 @@
                                             <i class="fas fa-plus-circle"></i> Paste Ingredients
                                         </button>
                                     </div>
-                                </div>-->
-                                <!----><!----><!---->
-                                <div class="row pt-2">
+                                </div>*@
+
+                                <!--<div class="row pt-2">
                                     <div class="col-md-12">
                                         <div class="jumbotron" style="padding: 16px;">
                                             <div class="row">
@@ -251,7 +184,8 @@
                                                 <div class="col-md-12 pr-0 pl-0 pr-md-2 pl-md-2 mt-2">
                                                     <div>
                                                         <div draggable="false" class="" style="">
-                                                            <hr class="d-md-none"><!---->
+                                                            <hr class="d-md-none">
+
                                                             <div class="d-flex">
                                                                 <div class="flex-grow-0 handle align-self-start">
                                                                     <button type="button" class="btn btn-lg shadow-none pr-0 pl-1 pr-md-2 pl-md-2"><i class="fas fa-arrows-alt-v"></i></button>
@@ -260,195 +194,36 @@
                                                                     <div class="col-lg-3 col-md-6 small-padding"><input type="number" step="any" id="amount_0_0" class="form-control"></div>
                                                                     <div class="col-lg-3 col-md-6 small-padding">   @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class = "form-control" })</div>
                                                                     <div class="col-lg-3 col-md-6 small-padding">  <input type="text" class="form-control" placeholder="product_unit" /> </div>
-                                                                    <div class="col-lg-3 col-md-6 small-padding">  <input type="text" class="form-control" placeholder="amount_req" /> </div>
-                                                                    <!--<div class="col-lg-2 col-md-6 small-padding">
+                                                                    <div class="col-lg-3 col-md-6 small-padding">  <input type="text" class="form-control" placeholder="amount_req" /> </div>-->
+                                                                    @*<div class="col-lg-2 col-md-6 small-padding">
                                                                         <div tabindex="-1" class="multiselect">
                                                                             <div class="multiselect__select"></div>
                                                                             <div class="multiselect__tags">
-                                                                                <div class="multiselect__tags-wrap" style="display: none;"></div>-->
-                                                                    <!---->
-                                                                    <!--<div class="multiselect__spinner" style="display: none;"></div>
-                                                                    <input name="" id="unit_0_0" type="text" autocomplete="nope" placeholder="Select Unit" tabindex="0" class="multiselect__input" style="width: 0px; position: absolute; padding: 0px;"> <span class="multiselect__single">g</span>-->
-                                                                    <!---->
-                                                                    <!--</div>
-                                                                    <div tabindex="-1" class="multiselect__content-wrapper" style="max-height: 300px; display: none;">
-                                                                        <ul class="multiselect__content" style="display: inline-block;">-->
-                                                                    <!---->
-                                                                    <!--<li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option multiselect__option--highlight"><span>­</span></span>--> <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>&amp;</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>+</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>-</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>–</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(1</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>1</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>1"</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(10</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(10.75</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>10g</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>10oz.</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>1½"</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>1½"-thick</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>11-ounce</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(12</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(12-</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(12oz.)</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>–1/3</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(13.5-ounce/400</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>1⁄4</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>14.5-ounce</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(¼-ounce)</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(1/4-ounce)</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(14-ounce</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                                    <li style="display: none;"><span class="multiselect__option">No elements found. Consider changing the search query.</span></li>
-                                                                                    <li style="display: none;"><span class="multiselect__option">List is empty. </span></li>
-                                                                                </ul>
+                                                                                <div class="multiselect__tags-wrap" style="display: none;"></div>
+
+                                                                                <div class="multiselect__spinner" style="display: none;"></div>
+                                                                                <input name="" id="unit_0_0" type="text" autocomplete="nope" placeholder="Select Unit" tabindex="0" class="multiselect__input" style="width: 0px; position: absolute; padding: 0px;"> <span class="multiselect__single">g</span>
+
                                                                             </div>
+
                                                                         </div>
-                                                                    </div><div class="col-lg-4 col-md-6 small-padding">
+                                                                    </div>
+                                                                    <div class="col-lg-4 col-md-6 small-padding">
                                                                         <div tabindex="-1" class="multiselect">
                                                                             <div class="multiselect__select"></div>  <div class="multiselect__tags">
-                                                                                <div class="multiselect__tags-wrap" style="display: none;"></div>-->
-                                                                    <!----> <!--<div class="multiselect__spinner" style="display: none;"></div> <input name="" id="ingredient_0_0" type="text" autocomplete="nope" placeholder="Select Food" tabindex="0" class="multiselect__input" style="width: 0px; position: absolute; padding: 0px;">--> <!---->
-                                                                    <!--<span class="multiselect__placeholder">
-                                                                            Select Food
-                                                                        </span>
+                                                                                <div class="multiselect__tags-wrap" style="display: none;"></div>
+                                                                                <div class="multiselect__spinner" style="display: none;"></div> <input name="" id="ingredient_0_0" type="text" autocomplete="nope" placeholder="Select Food" tabindex="0" class="multiselect__input" style="width: 0px; position: absolute; padding: 0px;">
+                                                                                <span class="multiselect__placeholder">
+                                                                                    Select Food
+                                                                                </span>
+                                                                            </div>
+
+
+                                                                        </div>
                                                                     </div>
 
-                                                                    <div tabindex="-1" class="multiselect__content-wrapper" style="max-height: 300px; display: none;">
-
-                                                                        <ul class="multiselect__content" style="display: inline-block;">-->
-                                                                    <!---->
-                                                                    <!--<li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option multiselect__option--highlight"><span>-</span></span>--> <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>...</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>0</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>00 white flour</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(0,1 g) Safranfäden</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>/ 0.25 oz / 2¼ tsp instant dried yeast</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(100 g) neutral-flavored oil</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(100 g out of shell) eggs</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(100 grams) all-purpose flour</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(100 grams) coarsely chopped pecans</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(100 grams) granulated sugar</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(100 grams) granulated white sugar</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(100 g) sugar</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(105 grams) light brown sugar</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(106 g) granulated sugar</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(106 g) packed light brown sugar</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(106g) packed light brown sugar</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(10 grams) vanilla extract or 1 teaspoon extract and 1 teaspoon vanilla bean paste</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(10mL) vanilla extract</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>10 ounces noodles</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(110 grams) honey or golden syrup</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>1 1/2 ounces powdered gelatin (4 to 6 packets; 30 to 45g), such as Knox</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>1 ½ pounds store-bought or Homemade Tortilla Chips</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(1 1/2 tablespoons) honey syrup</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                    <li class="multiselect__element"><span data-select="Select" data-selected="Selected" data-deselect="Deselect" class="multiselect__option"><span>(1 1/2 tablespoons) pure maple syrup</span></span>-->
-                                                                    <!---->
-                                                                    <!--</li>
-                                                                                    <li style="display: none;"><span class="multiselect__option">No elements found. Consider changing the search query.</span></li>
-                                                                                    <li style="display: none;"><span class="multiselect__option">List is empty. </span></li>
-                                                                                </ul>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>-->
-                                                                    @*<div class="small-padding col-lg-4 col-md-6"><input maxlength="256" placeholder="Note" class="form-control"></div>*@
-                                                                </div>
+                                                                    <div class="small-padding col-lg-4 col-md-6"><input maxlength="256" placeholder="Note" class="form-control"></div>*@
+                                                                @*</div>
                                                                 <div class="flex-grow-0 small-padding">
                                                                     <button type="button" class="dropdown-item"><i class="fa fa-trash fa-fw"></i>  </button>
                                                                 </div>
@@ -457,251 +232,89 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            @*<div class="row">
-                                                    <div class="col-md-2 offset-md-5" style="text-align: center; margin-top: 8px;">
-                                                        <button class="btn btn-success btn-block">
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
-                                                </div>*@
+                                            <div class="row">
+                                                <div class="col-md-2 offset-md-5" style="text-align: center; margin-top: 8px;">
+                                                    <button class="btn btn-success btn-block">
+                                                        <i class="fa fa-plus"></i>
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                @*<div class="row pt-2">
-                                                                        <div class="col-md-12">
-                                                                            <label for="id_instruction_18514">Instructions</label>
-                                                                            <textarea spellcheck="true"></textarea>
-                                                                            <div class="v-md-editor v-md-editor--edit" style="height: 30vh;">
-                                                                                <div class="v-md-editor__left-area" style="width: 0px; border-width: 0px;">
-                                                                                    <div class="v-md-editor__left-area-title" style="height: 41px; line-height: 41px;">
-                                                                                        Directory navigation
-                                                                                    </div>
-                                                                                    <div class="v-md-editor__left-area-body"><div class="scrollbar"><div class="scrollbar__wrap" style="margin-bottom: 0px; margin-right: 0px;"><div class="scrollbar__view"><ul class="v-md-editor__toc-nav"></ul></div></div><div class="scrollbar__bar is-horizontal"><div class="scrollbar__thumb" style="transform: translateX(0%);"></div></div><div class="scrollbar__bar is-vertical"><div class="scrollbar__thumb" style="transform: translateY(0%);"></div></div></div></div>
-                                                                                </div><div class="v-md-editor__right-area">
-                                                                                    <div class="v-md-editor__toolbar">
-                                                                                        <ul class="v-md-editor__toolbar-left">
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-undo v-md-editor__toolbar-item-undo">
 
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Undo（Ctrl+Z）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-redo v-md-editor__toolbar-item-redo">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Redo（Ctrl+Y）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-divider"></li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-editor__toolbar-item-h v-md-editor__toolbar-item--menu">
-                                                                                                H
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Headings（Ctrl+1~6）
-                                                                                                </div><ul class="v-md-editor__menu v-md-editor__menu--list" style="left: 0px; display: none;"><li class="v-md-editor__menu-item v-md-editor__menu-item-h1">Heading 1</li><li class="v-md-editor__menu-item v-md-editor__menu-item-h2">Heading 2</li><li class="v-md-editor__menu-item v-md-editor__menu-item-h3">Heading 3</li><li class="v-md-editor__menu-item v-md-editor__menu-item-h4">Heading 4</li><li class="v-md-editor__menu-item v-md-editor__menu-item-h5">Heading 5</li><li class="v-md-editor__menu-item v-md-editor__menu-item-h6">Heading 6</li></ul><i class="v-md-icon-arrow-down v-md-editor__menu-ctrl"></i>
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-bold v-md-editor__toolbar-item-bold">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Bold（Ctrl+B）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-italic v-md-editor__toolbar-item-italic">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Italic（Ctrl+I）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-strikethrough v-md-editor__toolbar-item-strikethrough">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Strike
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-quote v-md-editor__toolbar-item-quote">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Blockquote（Ctrl+Q）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-divider"></li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-ul v-md-editor__toolbar-item-ul">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Unordered list（Ctrl+U）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-ol v-md-editor__toolbar-item-ol">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Ordered list（Ctrl+O）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-table v-md-editor__toolbar-item-table">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Insert table
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-horizontal v-md-editor__toolbar-item-hr">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Line
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-divider"></li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-link v-md-editor__toolbar-item-link">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Insert link（Ctrl+L）
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-img v-md-editor__toolbar-item-image v-md-editor__toolbar-item--menu">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Insert image
-                                                                                                </div><ul class="v-md-editor__menu v-md-editor__menu--list" style="left: 0px; display: none;"><li class="v-md-editor__menu-item v-md-editor__menu-item-image-link">Insert link</li></ul><i class="v-md-icon-arrow-down v-md-editor__menu-ctrl"></i>
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-code v-md-editor__toolbar-item-code">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Insert Codeblock
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                        </ul><ul disabled-mens="image/upload-image" class="v-md-editor__toolbar-right">
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-preview v-md-editor__toolbar-item-preview">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Enable preview
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-sync v-md-editor__toolbar-item-sync-scroll v-md-editor__toolbar-item--active">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Disable sync scroll
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                            <li class="v-md-editor__toolbar-item v-md-icon-fullscreen v-md-editor__toolbar-item-fullscreen">
-
-                                                                                                <div class="v-md-editor__tooltip" style="left: 0px; top: 0px; display: none;">
-                                                                                                    Full screen(Press ESC to exit)
-                                                                                                </div>
-
-                                                                                            </li>
-                                                                                        </ul>
-                                                                                    </div>
-                                                                                    <div class="v-md-editor__main">
-                                                                                        <div class="v-md-editor__editor-wrapper">
-                                                                                            <div class="scrollbar">
-                                                                                                <div class="scrollbar__wrap" style="margin-bottom: 0px; margin-right: 0px;">
-                                                                                                    <div class="scrollbar__view">
-                                                                                                        <div class="v-md-textarea-editor">
-                                                                                                            <pre>
-                                    <section data-line="1">
-                                                                                                            <br></section>
-                                    </pre>
-                                                                                                            <textarea spellcheck="true"></textarea>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="scrollbar__bar is-horizontal"><div class="scrollbar__thumb" style="transform: translateX(0%);"></div></div>
-                                                                                                <div class="scrollbar__bar is-vertical"><div class="scrollbar__thumb" style="transform: translateY(0%);"></div></div>
-                                                                                            </div>
-                                                                                        </div><div class="v-md-editor__preview-wrapper" style="display: none;">
-                                                                                            <div class="scrollbar">
-                                                                                                <div class="scrollbar__wrap" style="margin-bottom: 0px; margin-right: 0px;">
-                                                                                                    <div class="scrollbar__view">
-                                                                                                        <div class="v-md-editor-preview" style="tab-size: 2;">
-                                                                                                            <div class="vuepress-markdown-body"></div>
-                                                                                                        </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                                <div class="scrollbar__bar is-horizontal">
-                                                                                                    <div class="scrollbar__thumb" style="transform: translateX(0%);"></div>
-                                                                                                </div>
-                                                                                                <div class="scrollbar__bar is-vertical">
-                                                                                                    <div class="scrollbar__thumb" style="transform: translateY(0%);"></div>
-                                                                                                </div>
-                                                                                            </div>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>*@
                             </div>
                         </div>
-                        <div id="RecipeSteps">
-                            <h1>HII</h1>
-                        </div>
-                        <div class="row">
-                            <div class="col col-md-12 text-center">
-                                <div role="group" class="btn-group">
-                                    <button type="button" class="btn btn-success shadow-none" onclick="AddRecipeStep()"> Add Step </button>
-                                    <button type="button" class="btn btn-warning shadow-none"><i class="fas fa-sort-amount-down-alt fa-lg"></i></button>
-                                </div>
+                    </div>*@
+                    <div id="RecipeSteps">
+                        <h1>HII</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col col-md-12 text-center">
+                            <div role="group" class="btn-group">
+                                <button type="button" class="btn btn-success shadow-none" onclick="AddRecipeStep()"> Add Step </button>
+                                <button type="button" class="btn btn-warning shadow-none"><i class="fas fa-sort-amount-down-alt fa-lg"></i></button>
                             </div>
                         </div>
                     </div>
-                </div><!----><br><br><br><br><br><br>
-                <div class="row fixed-bottom p-2 b-2 border-top text-center" style="background: white;">
-                    <div class="col-md-3 col-6">
-                        <a href="/delete/recipe/10203/" class="btn btn-block btn-danger shadow-none">Delete</a>
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <a href="/view/recipe/10203"><button class="btn btn-block btn-primary shadow-none">View</button></a>
-                    </div>
-                    <div class="col-md-3 col-6">
+                </div>
+            </div><br><br><br><br><br><br>
+            <div class="row p-2 b-2 border-top text-center" style="background: white;">
+                <div class="col-md-3 col-6">
+                    <a href="/delete/recipe/10203/" class="btn btn-block btn-danger shadow-none">Delete</a>
+                </div>
+                <div class="col-md-3 col-6">
+                    <a href="/view/recipe/10203"><button class="btn btn-block btn-primary shadow-none">View</button></a>
+                </div>
+                <div class="col-md-3 col-6">
 
-                        <input type="submit" value="Save" id="Submit" class="btn btn-sm btn-block btn-info shadow-nones" onclick="location.href='@Url.Action("AddNewRecipeDetail", "Recipe", new { recipeDetails = Model })'" />
-                    </div>
-                    <div class="col-md-3 col-6">
-                        <button type="button" title="Ctrl + Shift + S" class="btn btn-sm btn-block btn-success shadow-none"> Save &amp; View </button>
-                    </div>
-                </div><!----><!----><div><!----></div>
-            </div>
+                    <input type="submit" value="Save" id="Submit" class="btn btn-sm btn-block btn-info shadow-nones" onclick="location.href='@Url.Action("AddNewRecipeDetail", "Recipe", new { recipeDetails = Model })'" />
+                </div>
+                <div class="col-md-3 col-6">
+                    <button type="button" title="Ctrl + Shift + S" class="btn btn-sm btn-block btn-success shadow-none"> Save &amp; View </button>
+                </div>
+            </div><div></div>
         </div>
+    @*</div>*@
 
 
-    }
-</div>
-
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@Styles.Render("~/Content/css")
-@Scripts.Render("~/bundles/modernizr")
-@*@RenderSection("scripts", required: false)*@
-@Scripts.Render("~/bundles/jqueryval")
-<script src="~/Scripts/CustomScript/CustomJS.js"></script>
-
-
-<!--<script>
-    function AddRecipeStep()
-    {
-    var url = '@Url.Action("addnewrecipedetail", "recipe")';
-        var ele = $('#RecipeSteps').load(url)
-        var a = "Hrllo";
-        //String a = "  @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class =" form-control" })".toString()
-        document.getElementById("RecipeSteps").innerHTML += "<div class=card mt-2 mb-2>"+
-        "<div id=id_card_step_0 class=card-body pr-2 pl-2 pr-md-5 pl-md-5> "+
-         "   <div class=row> <div class=col-11>                <h4 id=id_step_0 class=handle>-->@*<i class=fas fa-paragraph></i>*@<!--Step 1</h4>            </div>        </div > "+
-         "       <div class=row > <div class=col-md-12>                <label for=id_step_18514name>Instruction</label>                <input id=id_step_18514name class=form-control>       +     </div>        </div> "+
-          "          <div class=row pt-2><div class=col-md-12> <div class=jumbotron style=padding: 16px;>                    <div class=row><div class=col-md-12><h4>Ingredients</h4></div>                    </div>                    <div class=row>                        <div class=col-md-12 pr-0 pl-0 pr-md-2 pl-md-2 mt-2>                            <div>                                <div draggable=false class= style=> <hr class=d-md-none><!---->                                    <div class=d-flex>"+
-           "             <div class=flex-grow-0 handle align-self-start><button type=button class=btn btn-lg shadow-none pr-0 pl-1 pr-md-2 pl-md-2><i class=fas fa-arrows-alt-v></i></button>  </div>"+
-            "            <div class=flex-fill row style=margin-left: 4px; margin-right: 4px;>                                            <div class=col-lg-3 col-md-6 small-padding><input type=number step=any id=amount_0_0 class=form-control></div>                                            <div class=col-lg-3 col-md-6 small-padding>   "+a"</div>                                            <div class=col-lg-3 col-md-6 small-padding>  <input type=text class=form-control placeholder=product_unit /> </div>                                            <div class=col-lg-3 col-md-6 small-padding>                                                <input type=text class=form-control placeholder=amount_req /> </div>                                            </div>                                            <div class=flex-grow-0 small-padding>                                                <button type=button class=dropdown-item><i class=fa fa-trash fa-fw></i>  </button>                                            </div>"+
-             "       </div>                                </div>                            </div>                        </div>                    </div>                </div>            </div>        </div >    </div ></div >"
 }
-</script>-->
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*@RenderSection("scripts", required: false)*@
+    @Scripts.Render("~/bundles/jqueryval")
+    <script src="~/Scripts/CustomScript/CustomJS.js"></script>
+
+
+    @*<script>
+                                                                    function AddRecipeStep()
+                                                                    {
+                                                                    var url = '@Url.Action("addnewrecipedetail", "recipe")';
+                                                                        var ele = $('#RecipeSteps').load(url)
+                                                                        var a = "Hrllo";
+                                                                        //String a = "  @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class =" form-control" })".toString()
+                                                                        document.getElementById("RecipeSteps").innerHTML += "<div class=card mt-2 mb-2>"+
+                                                                        "<div id=id_card_step_0 class=card-body pr-2 pl-2 pr-md-5 pl-md-5> "+
+                                                                         "   <div class=row> <div class=col-11>                <h4 id=id_step_0 class=handle>
+                                                                <i class=fas fa-paragraph></i>
+                                                                Step 1</h4>            </div>        </div > "+
+                                                                "       <div class=row > <div class=col-md-12>                <label for=id_step_18514name>Instruction</label>                <input id=id_step_18514name class=form-control>       +     </div>        </div> "+
+                                                                 "          <div class=row pt-2><div class=col-md-12> <div class=jumbotron style=padding: 16px;>                    <div class=row><div class=col-md-12><h4>Ingredients</h4></div>                    </div>                    <div class=row>                        <div class=col-md-12 pr-0 pl-0 pr-md-2 pl-md-2 mt-2>                            <div>                                <div draggable=false class= style=> <hr class=d-md-none><!--
+                                                                <div class=d-flex>
+                                                                    "+
+                                                                    "             <div class=flex-grow-0 handle align-self-start><button type=button class=btn btn-lg shadow-none pr-0 pl-1 pr-md-2 pl-md-2><i class=fas fa-arrows-alt-v></i></button>  </div>"+
+                                                                    "            <div class=flex-fill row style=margin-left: 4px; margin-right: 4px;>                                            <div class=col-lg-3 col-md-6 small-padding><input type=number step=any id=amount_0_0 class=form-control></div>                                            <div class=col-lg-3 col-md-6 small-padding>   "+a"</div>                                            <div class=col-lg-3 col-md-6 small-padding>  <input type=text class=form-control placeholder=product_unit /> </div>                                            <div class=col-lg-3 col-md-6 small-padding>                                                <input type=text class=form-control placeholder=amount_req /> </div>                                            </div>                                            <div class=flex-grow-0 small-padding>                                                <button type=button class=dropdown-item><i class=fa fa-trash fa-fw></i>  </button>                                            </div>"+
+                                                                    "
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            }
+        </script>*@
+

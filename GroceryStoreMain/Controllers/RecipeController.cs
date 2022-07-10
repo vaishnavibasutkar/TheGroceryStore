@@ -195,6 +195,25 @@ namespace GroceryStoreMain.Controllers
 
         }
 
+        [HttpPost]
+        public ActionResult RecipeHome(string search)
+        {
+            if (search == null || search == "")
+            {
+                var recipes = context.Recipes.ToList();
+                return View(recipes);
+            }
+            else
+            {
+                var terms = search.Split(' ');
+                var results = context.Recipes
+                    .Where(q => terms.Any(term => q.name.Contains(term)))
+                    .ToList();
+                var recipes = context.Recipes.ToList();
+                return View(results);
+            }
+        }
+
         public ActionResult AllIngredientCart(int RecipeID, int NoOfServing)
         {
             //Retrived All Product Required for Recipe
@@ -205,7 +224,7 @@ namespace GroceryStoreMain.Controllers
             //Created new Cart
             var c_id = Convert.ToInt32(Session["id"]);
             Cart cart = new Cart();
-            string name= Session["Username"] + " - " + DateTime.Now.ToString();
+            string name = Session["Username"] + " - " + DateTime.Now.ToString();
             cart.name = name;
             cart.comment = name;
             cart.c_id = c_id;
@@ -227,8 +246,63 @@ namespace GroceryStoreMain.Controllers
             }
 
             context.SaveChanges();
-            string tempMessage= "All Ingredient Added to Cart. Please <a href=https://localhost:44350/Customer/home>Click Here</a>";
-            return Json(new { Success = true, tempMessage= tempMessage }, JsonRequestBehavior.AllowGet);
+            string tempMessage = "All Ingredient Added to Cart. Please <a href=https://localhost:44350/Customer/home>Click Here</a>";
+            return Json(new { Success = true, tempMessage = tempMessage }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult SelectedIngrdientCart(List<string> SelectedIngredient, int NoOfServing)
+        {
+            int RecipeID = 2;
+            //Retrived All Product Required for Recipes
+            List<Product> products = context.Recipe_Step.Where(rs => SelectedIngredient.Contains(rs.p_id.ToString()))
+                                                        .Select(rs => rs.Product)
+                                                        .ToList();
+
+            //Created new Cart
+            var c_id = Convert.ToInt32(Session["id"]);
+            Cart cart = new Cart();
+            string name = Session["Username"] + " - " + DateTime.Now.ToString();
+            cart.name = name;
+            cart.comment = name;
+            cart.c_id = c_id;
+            Cart cart_new = context.Carts.Add(cart); //check if id present
+            context.SaveChanges();
+
+
+            //Add All Required Product to cart
+            Cart cart1 = context.Carts.FirstOrDefault(c => c.name == name && c.c_id == c_id);
+            foreach (var product in products)
+            {
+                for (int i = 0; i < NoOfServing; i++)
+                {
+                    Cart_Product_Assoc cart_Product_Assoc = new Cart_Product_Assoc();
+                    cart_Product_Assoc.cart_id = cart_new.cart_id;
+                    cart_Product_Assoc.p_id = product.p_id;
+                    context.Cart_Product_Assoc.Add(cart_Product_Assoc);
+                }
+            }
+
+            context.SaveChanges();
+            string tempMessage = "All Ingredient Added to Cart. Please <a href=https://localhost:44350/Customer/home>Click Here</a>";
+            return Json(new { Success = true, tempMessage = tempMessage }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        #region Contact developer
+        public ActionResult Contact()
+        {
+            ViewBag.Message = "Your contact page.";
+            ViewBag.Layout = "~/Views/Shared/_RecipeLayoutPage1.cshtml";
+            ViewBag.Title = "Contact";
+            return View();
+        }
+        #endregion
+        #region About 
+        public ActionResult About()
+        {
+            ViewBag.Message = "Your About page.";
+            ViewBag.Layout = "~/Views/Shared/_RecipeLayoutPage1.cshtml";
+            ViewBag.Title = "About";
+            return View();
         }
         #endregion
     }

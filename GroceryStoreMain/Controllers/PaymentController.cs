@@ -12,12 +12,22 @@ namespace GroceryStoreMain.Controllers
 {
     public class PaymentController : Controller
     {
-        public ActionResult PaymentWithPaypal(CheckoutModel checkoutmodel, string Cancel = null)
+        GroceryStoreDBEntities context = new GroceryStoreDBEntities();
+        public CheckoutModel CheckoutModel { get; set; }
+        public ActionResult PaymentWithPaypal(string a ,CheckoutModel checkoutmodel=null, string Cancel = null)
         {
+            //check for payment mode.
+            //if (checkoutmodel.)
+            //{
+
+            //}
+
+
             //getting the apiContext  
             APIContext apiContext = PaypalConfiguration.GetAPIContext();
             try
             {
+                this.CheckoutModel = checkoutmodel;
                 //A resource representing a Payer that funds a payment Payment Method as paypal  
                 //Payer Id will be returned when payment proceeds or click to pay  
                 string payerId = Request.Params["PayerID"];
@@ -84,20 +94,31 @@ namespace GroceryStoreMain.Controllers
         }
         private PayPal.Api.Payment CreatePayment(APIContext apiContext, string redirectUrl)
         {
+            var c = this.CheckoutModel;
+            //Models.Order order = new Models.Order();
+
+            //context.Orders.Add(order);
+            //context.SaveChanges();
+
             //create itemlist and add item objects to it  
             var itemList = new ItemList()
             {
                 items = new List<Item>()
             };
-            //Adding Item Details like name, currency, price etc  
-            itemList.items.Add(new Item()
-            {
-                name = "Item Name comes here",
-                currency = "USD",
-                price = "1",
-                quantity = "1",
-                sku = "sku"
-            });
+            //foreach (var item in this.CheckoutModel.cart.Cart_Product_Assoc)
+            //{
+            //    //Adding Item Details like name, currency, price etc  
+            //    itemList.items.Add(new Item()
+            //    {
+            //        name = item.Product.name,
+            //        currency = "IN",
+            //        price = item.Product.price.ToString(),
+            //        quantity = "1",
+            //        sku = item.Product.Product_Category.name
+            //    });
+            //}
+            
+            
             var payer = new Payer()
             {
                 payment_method = "paypal"
@@ -118,8 +139,8 @@ namespace GroceryStoreMain.Controllers
             //Final amount with details  
             var amount = new Amount()
             {
-                currency = "USD",
-                total = "3", // Total must be equal to sum of tax, shipping and subtotal.  
+                currency = "IN",
+                //total = this.CheckoutModel.total.ToString(), // Total must be equal to sum of tax, shipping and subtotal.  
                 details = details
             };
             var transactionList = new List<Transaction>();
@@ -143,9 +164,9 @@ namespace GroceryStoreMain.Controllers
         }
         public ActionResult Success()
         {
-
+            ViewBag.Category = context.Product_Category.ToList();
             return View();
         }
     }
-    
+
 }
