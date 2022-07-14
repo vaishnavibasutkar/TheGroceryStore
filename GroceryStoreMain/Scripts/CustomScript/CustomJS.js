@@ -1,5 +1,22 @@
 ﻿var testobject;
 $(document).ready(function () {
+    $("body").on("change", "#categoryrecipe", function () {
+        $('#productrecipe').empty()
+        var selectedCategory = parseInt($(this).find("option:selected").val())
+
+        var options ="<option>---Products---</option>"
+        $('#tag li').each(function () {
+            var t = this.id.split(' - ')
+       
+            if (selectedCategory==t[1]) {
+              
+                options += '<option value="' + t[0] + '">' + t[2] + '</option>';
+            }
+        })
+
+        
+        $('#productrecipe').html(options);
+    });
 
     $('#AddToCart').click(function (e) {
         // $this = $(e.target);
@@ -135,26 +152,29 @@ $(document).ready(function () {
         $("input[type='file']").click();
     });
 
-    $('#ProceedToCheckout').click(function () {
-        //var obj = JSON.parse('@Html.Raw(objJson)');
-        //var jsonData = JSON.parse(JSON.stringify({ f: {} }));
-        ////add object to json
-        //jsonData.f = obj;
-        var t = $('#testmodel').val();
-        $.ajax({
-            url: '@Url.Action("ProceedToCheckout")',
-            type: 'POST',
-            contentType: "application/json",
-            data: JSON.stringify(t),
-            success: function (data) {
-                        ...
-            alert(data);
-        },
-            error: function (response, xhr, data) {
-            }
-                }
-    )
-});
+    //$('#ProceedToCheckout').click(function () {
+    //    //var obj = JSON.parse('@Html.Raw(objJson)');
+    //    //var jsonData = JSON.parse(JSON.stringify({ f: {} }));
+    //    ////add object to json
+    //    //jsonData.f = obj;
+    //    var t = $('#testmodel').val();
+    //    $.ajax({
+    //        url: '@Url.Action("ProceedToCheckout")',
+    //        type: 'POST',
+    //        contentType: "application/json",
+    //        data: JSON.stringify(t),
+    //        success: function (data) {
+                      
+    //        alert(data);
+    //    },
+    //        error: function (response, xhr, data) {
+    //        }
+    //            }
+    //)
+//});
+
+
+    
 })
 
 
@@ -183,6 +203,27 @@ function CustomerLoginFunction() {
             }
         });
     }
+}
+function SearchProduct() {
+
+    window.location.href = "https://localhost:44350/Customer/CustomerHome?search=" + $('#searchtext').val();
+    //$.ajax({
+    //    type: 'GET',
+    //    dataType: 'json',
+    //    url: '/Customer/CustomerHome',
+    //    data: { search:$('#t1').val()},
+    //    success: function (data) {
+    //        if (data.success) {
+    //            alert('hi')
+    //            window.location.href = data.url;
+    //        }
+
+    //    },
+    //    failure: function (data) {
+    //        alert('fail')
+    //    }
+
+    //})
 }
 
 function CustomerLoginEmailFunction() {
@@ -369,61 +410,61 @@ function ProceedToCheckoutFromCart(ids) {
 
 }
 
-function DeliveryDateChange(item) {
-    var DeliveryDate = $(item).val()
-    $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: '/Customer/GetDeliveryDate',
-        data: { SelectedDeliveryDate: DeliveryDate },
-        success: function (dts) {
-            var deliveryTimeSlots = dts.DeliveryTimeSlots
-            //var a = response.DeliveryTimeSlots;
+//function DeliveryDateChange(item) {
+//    var DeliveryDate = $(item).val()
+//    $.ajax({
+//        type: 'post',
+//        dataType: 'json',
+//        url: '/Customer/GetDeliveryDate',
+//        data: { SelectedDeliveryDate: DeliveryDate },
+//        success: function (dts) {
+//            var deliveryTimeSlots = dts.DeliveryTimeSlots
+//            //var a = response.DeliveryTimeSlots;
 
-            var ddlCustomers = $("<select />");
+//            var ddlCustomers = $("<select />");
 
-            //Add the Options to the DropDownList.
-            $(deliveryTimeSlots).each(function () {
-                var option = $("<option />");
+//            //Add the Options to the DropDownList.
+//            $(deliveryTimeSlots).each(function () {
+//                var option = $("<option />");
 
-                //Set Customer Name in Text part.
-                option.html(this.dts_dtm);
+//                //Set Customer Name in Text part.
+//                option.html(this.dts_dtm);
 
-                //Set CustomerId in Value part.
-                option.val(this.dts_id);
+//                //Set CustomerId in Value part.
+//                option.val(this.dts_id);
 
-                //Add the Option element to DropDownList.
-                ddlCustomers.append(option);
-            });
+//                //Add the Option element to DropDownList.
+//                ddlCustomers.append(option);
+//            });
 
-            //Reference the container DIV.
-            var dvContainer = $("#dvContainer")
+//            //Reference the container DIV.
+//            var dvContainer = $("#dvContainer")
 
-            //Add the DropDownList to DIV.
-            var div = $("<div />");
-            div.append(ddlCustomers);
+//            //Add the DropDownList to DIV.
+//            var div = $("<div />");
+//            div.append(ddlCustomers);
 
-            //Add the DIV to the container DIV.
-            dvContainer.append(div);
+//            //Add the DIV to the container DIV.
+//            dvContainer.append(div);
 
-            $('#deliverydtm').val(temp)
-            var test = "hi"
-            alert(test);
-        },
-        failure: function (dts) {
+//            $('#deliverydtm').val(temp)
+//            var test = "hi"
+//            alert(test);
+//        },
+//        failure: function (dts) {
 
-            var temp = JSON.parse(dts)
-            for (var i = 0; i < a.length; i++) {
-                alert("jh");
-            }
-            var test = "hi"
-            alert(test);
-        }
+//            var temp = JSON.parse(dts)
+//            for (var i = 0; i < a.length; i++) {
+//                alert("jh");
+//            }
+//            var test = "hi"
+//            alert(test);
+//        }
 
 
-    });
+//    });
 
-}
+//}
 
 function AddRecipeStep() {
     $.ajax({
@@ -511,9 +552,10 @@ function readURL(input) {
 
     if (input.files && input.files[0]) {
         var reader = new FileReader();
-
         reader.onload = function (e) {
+         
             $('#recipeimage').attr('src', e.target.result);
+            
         }
 
         reader.readAsDataURL(input.files[0]);

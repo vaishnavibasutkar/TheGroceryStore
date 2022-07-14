@@ -44,208 +44,54 @@
                 <div class="row pt-2">
                     <div class="col-md-6" style="max-height: 50vh; min-height: 30vh;">
                         @*<div id="upload" class="h-100 w-100 border border-primary rounded" style="border-width: 2px !important; border-style: dashed !important;">
-                            <i class="far fa-image fa-10x text-primary" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
+                                <i class="far fa-image fa-10x text-primary" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
 
-                        </div>*@
-                       
+                            </div>*@
+
                         <input type="file" id="url" name="url" />
+
                         @*@Html.TextBoxFor(model => model.description, new { type = "file", @id = "fUpload" })*@
-                        <img id="recipeimage" src="#" class="h-100 w-100 border border-primary rounded" alt="ajsh" style="border-width: 2px !important; border-style: dashed !important;" />
+                        <img id="recipeimage" src="#" class="h-100 w-100 border border-primary rounded" alt=" " style="border-width: 2px !important; border-style: dashed !important;" />
+
                         <br />
                     </div>
 
 
 
                 </div>
-              
-                <div >
-                    <!--<div class="row pt-2">
-                        <div class=" mb-2">
-                            <div id="id_card_step_0" class=" pr-2 pl-2 pr-md-5 pl-md-5">
-                                <div class="row">
-                                    <div class="col-11">
-                                        <h4 id="id_step_0" class="handle">
-                                            
-                                            <i class="fas fa-paragraph"></i>
-                                            Step 1
-                                        </h4>
-                                    </div>
-                                    <!--<div class="col-1" style="text-align: right;">
-                                        <div class="dropout">
-                                            <button class="more">
-                                                <span></span>
-                                                <span></span>
-                                                <span></span>
-                                            </button>
-                                            <div>-->-->
-                                                <!--@*@Html.ActionLink("Edit", "EditProduct", new { id = p.p_id })
+                <ul id="tag" class="hide">
 
-                                                @Html.ActionLink("Remove", "RemoveProduct", new { id = p.p_id })*@-->
+                    @foreach (var item in ViewBag.Product)
+                    {
+                        <li id="@item.p_id - @item.pc_id - @item.name">@item.name</li>
+                    }
+                </ul>
+                <div style=" border:1px solid medium">
+                    <div class="p-3 m-3 container-fluid" style=" border:1px solid">
+                        <div class=" p-3 m-3 bg-secondary text-black">
 
-                                            <!--<!--</div>
-                                        </div>
-                                        <style>
-                                            .more {
-                                                cursor: pointer;
-                                                border: none;
-                                                background: transparent;
-                                            }
+                            <h3>Step #1</h3>
 
-                                                .more span {
-                                                    display: block;
-                                                    width: .25rem;
-                                                    height: .25rem;
-                                                    background: #363636;
-                                                    border-radius: 50%;
-                                                    pointer-events: none;
-                                                }
+                        </div>
+                        <div class="columns">
 
-                                                    .more span:not(:last-child) {
-                                                        margin-bottom: .125rem;
-                                                    }
-
-                                            .dropout {
-                                                z-index: 9001;
-                                                width: fit-content;
-                                                position: relative;
-                                                margin-left: auto;
-                                                margin-right: auto;
-                                            }
-
-                                                .dropout div {
-                                                    position: absolute;
-                                                    top: -1.1rem;
-                                                    right: 1.5rem;
-                                                    transform: scaleX(0);
-                                                    transform-origin: right;
-                                                    transition: transform 0.12s ease;
-                                                    background-color: cornsilk;
-                                                    border-color: antiquewhite
-                                                }
-
-                                                .dropout.active div {
-                                                    transform: scaleX(1);
-                                                }
-                                        </style>
-                                        <script>
-                                            document.querySelector('table').onclick = ({
-                                                target
-                                            }) => {
-                                                if (!target.classList.contains('more')) return
-                                                document.querySelectorAll('.dropout.active').forEach(
-                                                    (d) => d !== target.parentElement && d.classList.remove('active')
-                                                )
-                                                target.parentElement.classList.toggle('active')
-                                            }
-                                        </script>
-                                        <a href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn shadow-none btn-lg">
-                                            <i class="fas fa-ellipsis-v text-muted"></i>
-                                        </a>
-                                        <div aria-labelledby="dropdownMenuLink" class="dropdown-menu dropdown-menu-right">
-                                            <button class="dropdown-item"><i class="fa fa-trash fa-fw"></i> Delete </button>
-                                            <button type="button" class="dropdown-item"><i class="fas fa-eye fa-fw"></i> Show as header </button>
-
-                                        </div>
-                                    </div>-->
-                                <!--</div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="id_step_18514name">Instruction</label>
-                                        <input id="id_step_18514name" class="form-control">
-                                    </div>
-                                </div>-->
-                                @*<div class="row pt-2">
-                                    <div class="col col-md-12">
-                                        <button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
-                                            <i class="fas fa-plus-circle"></i> Time
-                                        </button>
-
-                                        <button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
-                                            <i class="fas fa-plus-circle"></i> Recipe
-                                        </button>
-                                        <button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
-                                            <i class="fas fa-plus-circle"></i> File
-                                        </button>
-                                        <button type="button" class="btn ml-1 btn-primary btn-sm rounded-pill">
-                                            <i class="fas fa-plus-circle"></i> Paste Ingredients
-                                        </button>
-                                    </div>
-                                </div>*@
-
-                                <!--<div class="row pt-2">
-                                    <div class="col-md-12">
-                                        <div class="jumbotron" style="padding: 16px;">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <h4>Ingredients</h4>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-12 pr-0 pl-0 pr-md-2 pl-md-2 mt-2">
-                                                    <div>
-                                                        <div draggable="false" class="" style="">
-                                                            <hr class="d-md-none">
-
-                                                            <div class="d-flex">
-                                                                <div class="flex-grow-0 handle align-self-start">
-                                                                    <button type="button" class="btn btn-lg shadow-none pr-0 pl-1 pr-md-2 pl-md-2"><i class="fas fa-arrows-alt-v"></i></button>
-                                                                </div>
-                                                                <div class="flex-fill row" style="margin-left: 4px; margin-right: 4px;">
-                                                                    <div class="col-lg-3 col-md-6 small-padding"><input type="number" step="any" id="amount_0_0" class="form-control"></div>
-                                                                    <div class="col-lg-3 col-md-6 small-padding">   @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class = "form-control" })</div>
-                                                                    <div class="col-lg-3 col-md-6 small-padding">  <input type="text" class="form-control" placeholder="product_unit" /> </div>
-                                                                    <div class="col-lg-3 col-md-6 small-padding">  <input type="text" class="form-control" placeholder="amount_req" /> </div>-->
-                                                                    @*<div class="col-lg-2 col-md-6 small-padding">
-                                                                        <div tabindex="-1" class="multiselect">
-                                                                            <div class="multiselect__select"></div>
-                                                                            <div class="multiselect__tags">
-                                                                                <div class="multiselect__tags-wrap" style="display: none;"></div>
-
-                                                                                <div class="multiselect__spinner" style="display: none;"></div>
-                                                                                <input name="" id="unit_0_0" type="text" autocomplete="nope" placeholder="Select Unit" tabindex="0" class="multiselect__input" style="width: 0px; position: absolute; padding: 0px;"> <span class="multiselect__single">g</span>
-
-                                                                            </div>
-
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="col-lg-4 col-md-6 small-padding">
-                                                                        <div tabindex="-1" class="multiselect">
-                                                                            <div class="multiselect__select"></div>  <div class="multiselect__tags">
-                                                                                <div class="multiselect__tags-wrap" style="display: none;"></div>
-                                                                                <div class="multiselect__spinner" style="display: none;"></div> <input name="" id="ingredient_0_0" type="text" autocomplete="nope" placeholder="Select Food" tabindex="0" class="multiselect__input" style="width: 0px; position: absolute; padding: 0px;">
-                                                                                <span class="multiselect__placeholder">
-                                                                                    Select Food
-                                                                                </span>
-                                                                            </div>
-
-
-                                                                        </div>
-                                                                    </div>
-
-                                                                    <div class="small-padding col-lg-4 col-md-6"><input maxlength="256" placeholder="Note" class="form-control"></div>*@
-                                                                @*</div>
-                                                                <div class="flex-grow-0 small-padding">
-                                                                    <button type="button" class="dropdown-item"><i class="fa fa-trash fa-fw"></i>  </button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-md-2 offset-md-5" style="text-align: center; margin-top: 8px;">
-                                                    <button class="btn btn-success btn-block">
-                                                        <i class="fa fa-plus"></i>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div> Instruction: <input type=text class="form-control col-6" /></div>
+                            <div >
+                                @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class = "form-control col-6", @id = "categoryrecipe" })
+                            </div>
+                            <div >
+                                <select id="productrecipe" class="form-control col-6">
+                                    <option>---Products---</option>
+                                </select>
 
                             </div>
                         </div>
-                    </div>*@
+                        @*@Html.DropDownList("pc_id", new SelectList(((List<pro>)ViewBag.ProductCategory), "pc_Id", "Name"), htmlAttributes: new { @class = "form-control" })*@
+                    </div>
+
+                </div>
+
+                <div>
                     <div id="RecipeSteps">
                         <h1>HII</h1>
                     </div>
@@ -275,46 +121,20 @@
                 </div>
             </div><div></div>
         </div>
-    @*</div>*@
+        @*</div>*@
 
 
-}
-    </div>
+    }
+</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
-    @*@RenderSection("scripts", required: false)*@
-    @Scripts.Render("~/bundles/jqueryval")
-    <script src="~/Scripts/CustomScript/CustomJS.js"></script>
+@Scripts.Render("~/bundles/jquery")
+@Scripts.Render("~/bundles/bootstrap")
+@Styles.Render("~/Content/css")
+@Scripts.Render("~/bundles/modernizr")
+@*@RenderSection("scripts", required: false)*@
+@Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/CustomScript/CustomJS.js"></script>
 
 
-    @*<script>
-                                                                    function AddRecipeStep()
-                                                                    {
-                                                                    var url = '@Url.Action("addnewrecipedetail", "recipe")';
-                                                                        var ele = $('#RecipeSteps').load(url)
-                                                                        var a = "Hrllo";
-                                                                        //String a = "  @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class =" form-control" })".toString()
-                                                                        document.getElementById("RecipeSteps").innerHTML += "<div class=card mt-2 mb-2>"+
-                                                                        "<div id=id_card_step_0 class=card-body pr-2 pl-2 pr-md-5 pl-md-5> "+
-                                                                         "   <div class=row> <div class=col-11>                <h4 id=id_step_0 class=handle>
-                                                                <i class=fas fa-paragraph></i>
-                                                                Step 1</h4>            </div>        </div > "+
-                                                                "       <div class=row > <div class=col-md-12>                <label for=id_step_18514name>Instruction</label>                <input id=id_step_18514name class=form-control>       +     </div>        </div> "+
-                                                                 "          <div class=row pt-2><div class=col-md-12> <div class=jumbotron style=padding: 16px;>                    <div class=row><div class=col-md-12><h4>Ingredients</h4></div>                    </div>                    <div class=row>                        <div class=col-md-12 pr-0 pl-0 pr-md-2 pl-md-2 mt-2>                            <div>                                <div draggable=false class= style=> <hr class=d-md-none><!--
-                                                                <div class=d-flex>
-                                                                    "+
-                                                                    "             <div class=flex-grow-0 handle align-self-start><button type=button class=btn btn-lg shadow-none pr-0 pl-1 pr-md-2 pl-md-2><i class=fas fa-arrows-alt-v></i></button>  </div>"+
-                                                                    "            <div class=flex-fill row style=margin-left: 4px; margin-right: 4px;>                                            <div class=col-lg-3 col-md-6 small-padding><input type=number step=any id=amount_0_0 class=form-control></div>                                            <div class=col-lg-3 col-md-6 small-padding>   "+a"</div>                                            <div class=col-lg-3 col-md-6 small-padding>  <input type=text class=form-control placeholder=product_unit /> </div>                                            <div class=col-lg-3 col-md-6 small-padding>                                                <input type=text class=form-control placeholder=amount_req /> </div>                                            </div>                                            <div class=flex-grow-0 small-padding>                                                <button type=button class=dropdown-item><i class=fa fa-trash fa-fw></i>  </button>                                            </div>"+
-                                                                    "
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            }
-                                            }
-        </script>*@
+
 

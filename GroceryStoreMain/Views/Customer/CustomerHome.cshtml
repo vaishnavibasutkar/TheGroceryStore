@@ -1,0 +1,84 @@
+﻿@model IEnumerable<GroceryStoreMain.Models.ProductModel>
+
+@{
+    ViewBag.Title = "CustomerHome";
+    Layout = "~/Views/Shared/_CustomerLayoutPage.cshtml";
+}
+<div class="container-fluid pt-5">
+    @*<div class="text-center mb-4">
+        <h2 class="section-title px-5"><span class="px-2">@Model.name</span></h2>
+    </div>*@
+
+    <div class="row px-xl-5 pb-3">
+        @foreach (var item in Model)
+        {
+            <input type="hidden" value=@item.p_id id="productID" />
+            <div class="col-lg-3 col-md-6 col-sm-12 pb-1">
+                <div class="card product-item border-0 mb-4">
+                    <div class="card-header product-img position-relative overflow-hidden bg-transparent border p-0">
+                        <img class="img-fluid w-100" src=@String.Format("/Images/Products/"+@item.imagepath.ToString()) alt="">
+                    </div>
+                    <div class="card-body border-left border-right text-center p-0 pt-4 pb-3">
+                        <h6 class="text-truncate mb-3">@item.name</h6>
+                        <div class="d-flex justify-content-center">
+                            <h6>@item.price</h6><h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                        </div>
+                    </div>
+                    <div class="card-footer d-flex justify-content-between bg-light border">
+                        <a href="@Url.Action("ProductDetails", "Customer", new { id = item.p_id })" class="btn btn-sm text-dark p-0"><i class="fas fa-eye text-primary mr-1"></i>View Detail</a>
+
+                        <div class=" dropdown ">
+                            <button class="btn btn-sm text-dark p-0 dropdown-toggle " data-toggle="dropdown" id="AddToCart"><i class="fa fa-shopping-cart  mr-1"></i> Add To Cart</button>
+                            <div class="dropdown-menu  rounded-0 m-0">
+                                @if (Session["Username"] == null)
+                                {
+                                    <p class="nav-item nav-link" href="#" id="blankcart">
+
+                                        No Cart Added. Please login to add :)
+                                    </p>
+                                }
+                                else if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]) == null)
+
+                                {
+                                    <p class="nav-item nav-link" href="#" id="blankcart">
+
+                                        No Cart Added. Please login to add :)
+                                    </p>
+                                }
+                                else
+                                {
+                                    if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count > 0)
+                                    {
+                                        foreach (var cart in ((List<GroceryStoreMain.Models.Cart>)Session["Cart"]))
+                                        {
+                                            @*<a class="nav-item nav-link" href="@Html.Raw(@Url.Action("AddToCart", "Customer", new { id = cart.cart_id ,pid=@Model.p_id}))" id=@cart.cart_id>
+                                                    @cart.name
+                                                </a>*@
+
+                                            <a class="nav-item nav-link" id=@cart.cart_id pid="@item.p_id" onclick="AddToCartPBPC(this)">
+                                                @cart.name
+                                            </a>
+                                        }
+
+                                    }
+
+                                    if (((List<GroceryStoreMain.Models.Cart>)Session["Cart"]).Count == 0)
+                                    {
+                                        <p class="nav-item nav-link" href="#" id="blankcart">
+
+                                            No Cart Added. Please add new cart:)
+                                        </p>
+                                    }
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        }
+
+
+    </div>
+</div>

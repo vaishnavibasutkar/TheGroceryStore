@@ -96,7 +96,9 @@ namespace GroceryStoreMain.Controllers
             if (Session["Username"] != null)
             {
                 ViewBag.Product = context.Products.ToList();
-                ViewBag.ProductCategory = context.Product_Category.ToList();
+                var ProductCategory = context.Product_Category.ToList();
+                ProductCategory.Add(new Product_Category() { name = "---Product Category---", pc_id = 0 });
+                ViewBag.ProductCategory = ProductCategory.OrderBy(pc => pc.pc_id);
                 RecipeDetails recipeDetails = new RecipeDetails(recipeID);
                 return View(recipeDetails);
             }

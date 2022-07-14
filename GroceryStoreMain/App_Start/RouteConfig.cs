@@ -34,6 +34,11 @@ namespace GroceryStoreMain
                url: "{controller}/{action}/{id}",
                defaults: new { controller = "Recipe", action = "RecipeHome", id = UrlParameter.Optional }
            );
+            routes.MapRoute(
+              name: "Payment",
+              url: "{controller}/{action}/{id}",
+              defaults: new { controller = "Payment", action = "Failure", id = UrlParameter.Optional }
+          );
 
         }
     }

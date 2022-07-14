@@ -1,0 +1,142 @@
+﻿@model GroceryStoreMain.Models.Order
+
+@{
+    ViewBag.Title = "MyOrderDetails";
+    Layout = "~/Views/Shared/_CustomerLayoutPage.cshtml";
+}
+<br />
+@*<h2>Order Details</h2>*@
+
+<div class="col-5 offset-md-2 ">
+    <h4>Order Details</h4>
+    <div>
+        <div class="bg-secondary p-2 mt-lg-4  font-weight-bolder"> Order #@Model.o_id</div>
+        <table class="mt-lg-3">
+            <tr>
+                <td class="col-4 text-right">
+                    Delivery Time Slot
+                </td>
+                <td>
+                    @Model.Delivery_Time_Slot.start_datetime
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4 text-right">
+                    Order Date
+                </td>
+                <td>
+                    @Model.order_date
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4 text-right">
+                    Order Status
+                </td>
+                <td>
+                    @Model.Order_Status.code
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4 text-right">
+                    Delivery Charge
+                </td>
+                <td>
+                    @Model.delivery_charge
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4 text-right">
+                    Tax
+                </td>
+                <td>
+                    @Model.tax
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4 text-right">
+                    Total Amount
+                </td>
+                <td>
+                    @Model.total_amount
+                </td>
+            </tr>
+        </table>
+        <div class="bg-secondary p-2 mt-lg-4 rounded-3 font-weight-bolder"> Buyer Information</div>
+        <table class="mt-lg-3">
+            <tr>
+                <td class="col-4 text-right">
+                    Name
+                </td>
+                <td>
+                    @Model.Customer.full_name
+                </td>
+
+            </tr>
+            <tr>
+                <td class="col-4 text-right">
+                    Contact
+                </td>
+                <td>
+                    @Model.Customer.mobile_no
+                </td>
+            </tr>
+            <tr>
+                <td class="col-4 text-right">
+                    Shipping Address
+                </td>
+                <td class="p-1">
+                    @Model.Customer_Address.address1, @Model.Customer_Address.address2, @Model.Customer_Address.address3,@Model.Customer_Address.city, @Model.Customer_Address.state, @Model.Customer_Address.country - @Model.Customer_Address.postal_code
+                </td>
+            </tr>
+        </table>
+        <div class="bg-secondary  p-2 mt-lg-4 rounded-3 font-weight-bolder">Products</div>
+        <div class="mt-lg-3 ">
+           
+            <table class="table" >@*style="border:1px solid tomato;"  >*@
+                <tr>
+                    <td class="col-4 font-weight-bolder ">
+                        #
+                    </td>
+                    <td class="col-4 font-weight-bolder">
+                        Product
+                    </td>
+                    <td class="col-4 font-weight-bolder">
+                        Product Name
+                    </td> 
+                    <td class="col-4 font-weight-bolder">
+                        Unit Price
+                    </td>
+                    <td class="col-4 font-weight-bolder">
+                        Quantity
+                    </td>
+                </tr>
+
+                @{var i = 1;}
+                @foreach (var order_Detail in Model.Order_Details)
+                {
+                    <tr>
+                        <td class="col-4">
+                            @i
+                            @{i = i + 1;}
+                        </td>
+                        <td class="col-4">
+                            <img class="img-fluid w-100" src=@String.Format("/Images/Products/"+order_Detail.Product.imagepath.ToString()) alt="">
+                        </td>
+                        <td class="col-4">
+                            @order_Detail.Product.name
+                        </td>
+                        <td class="col-4">
+                            @order_Detail.Product.price
+                        </td>
+                        <td class="col-4">
+                            @order_Detail.quantity
+                        </td>
+
+                    </tr>
+                }
+            </table>
+        </div>
+        <button class="btn-primary bg-secondary border-0 p-2 shadow mt-lg-4 font-weight-bold offset-2" type="button" onclick="location.href='@Url.Action("MyOrders", "Customer")'">BACK TO ORDER HISTORY</button>
+     
+    </div>
+</div>

@@ -1,0 +1,57 @@
+﻿@model IEnumerable<GroceryStoreMain.Models.Order>
+
+@{
+    ViewBag.Title = "MyOrders";
+    Layout = "~/Views/Shared/_CustomerLayoutPage.cshtml";
+}
+<br />
+
+<h2 class="text-center">Order History</h2>
+<br />
+
+            <div class="col-md-6 offset-md-2 text-center">
+                <table class="table">
+                    <tr>
+                        <th>
+                            #
+                        </th>
+                        <th>
+                           ORDER ID
+                        </th>
+                        <th>
+                          DATE
+                        </th>
+                        <th>
+                            AMOUNT
+                        </th>
+                        <th>
+                         STATUS
+                        </th>
+
+                    </tr>
+                    @{ var i = 1;}
+                    @foreach (var item in Model)
+                    {
+                <tr>
+                    <td>
+                        @i
+                        @{ i = i + 1;}
+                    </td>
+                    <td>
+                        @Html.ActionLink(item.o_id.ToString(), "MyOrderDetails", new { id = item.o_id })
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.order_date)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.total_amount)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Order_Status.code)
+                    </td>
+
+                </tr>
+                    }
+
+                </table>
+            </div>
