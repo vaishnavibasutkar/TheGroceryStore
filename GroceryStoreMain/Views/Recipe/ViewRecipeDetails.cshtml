@@ -23,15 +23,15 @@
 
                         @*<ul class="list-inline meta">
 
-            <li class="list-inline-item"><a href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html#" title="" class="post-category" tabindex="-1">Foody</a></li>
+                                <li class="list-inline-item"><a href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html#" title="" class="post-category" tabindex="-1">Foody</a></li>
 
-            <li class="list-inline-item">May 24, 2020 </li>
+                                <li class="list-inline-item">May 24, 2020 </li>
 
-            <li class="list-inline-item"><i class="fa fa-eye"></i>3258</li>
+                                <li class="list-inline-item"><i class="fa fa-eye"></i>3258</li>
 
-            <li class="list-inline-item"><i class="fa fa-comments"></i>64</li>
+                                <li class="list-inline-item"><i class="fa fa-comments"></i>64</li>
 
-        </ul>*@
+                            </ul>*@
 
                         <h5 class="text-primary" id="tempMessage"> </h5>
                         <h3 class="card-title">Creamy Garlic Parmesan Chicken Salad - @Model.name</h3>
@@ -39,16 +39,20 @@
                     </div>
 
                     <div class="blog-img">
-
-                        <img src="~/Images/Recipe/recipehome.png" width="80%" alt="" class="img-fluid">
+                        @if (Model.imagepath != null)
+                        {
+                            <img src="@Url.Content(Model.imagepath)" width="80%" class="img-fluid" />
+                            @*<img id="recipeimage" src=@Url.Content(Model.imagepath) class="h-80 w-100 border border-primary rounded" height="150" width="100" alt=" " style="border-width: 2px !important; border-style: dashed !important;" />*@
+                        }
+                        <img src="~/Images/Recipe/recipehome.png" alt="" class="img-fluid">
 
                     </div>
 
                     <div class="blog-content">
 
-                        <p>@Model.description</p>
+                        <h5>Description: </h5><p>@Model.description</p>
 
-                        <p>@Model.comment Etiam id volutpat enim, eget volutpat nunc. Quisque tristique neque nec nibh varius auctor. Cur abitur imperdiet quam eget nunc pellentesque, non interdum ante aliquam. Nunc pellentesque nec arcu sit amet posuere. Etiam convallis euismod erat, id consequat mi interdum et. Ut ornare luctus ex quis ornare. Curabitur quis eros a dolor eleifend pharetra a id lacus. Maecenas lobortis erat et euismod vehicula. </p>
+                        <h5>Comments by Author: </h5> <p>@Model.comment </p>
 
                         <div class="hr-theme-slash-2">
                             <div class="hr-icon"><i class="fa fa-circle" style="font-size:15px"></i></div>
@@ -77,9 +81,10 @@
                         <div>
                             @foreach (var rs in Model.Recipe_Step)
                             {
-                                <input type="checkbox" name="rs" value=" @rs.Product.name - @rs.product_unit  -   @rs.amount_req" id="@rs.p_id"/>
-                                <label class="form-check-label" for="flexCheckDefault" >
-                                    @rs.Product.name -@rs.product_unit - @rs.amount_req
+                                <input type="checkbox" name="rs" value=" @rs.Product.name - @rs.product_unit  -   @rs.amount_req" id="@rs.p_id" />
+                                <label class="form-check-label" for="flexCheckDefault">
+                                    @*@rs.Product.name -@rs.product_unit - @rs.amount_req*@
+                                    @rs.Product.name - @rs.amount_req
                                 </label>
                                 <br />
                             }
@@ -120,13 +125,11 @@
                                         $('#demolist a').on('click', function () {
                                             var txt = ($(this).text());
                                             $('#NOServing').text(txt);
-                                            alert("Your Favourite Sports is " + txt);
                                         });
                                         $('#demolist p').on('focusout', function () {
                                             var txt = ($('#Serving').val());
 
                                             $('#NOServing').text(txt);
-                                            alert("Your Favourite Sports is " + txt);
                                         });
                                     });
                                 </script>
@@ -178,7 +181,8 @@
 
                         @foreach (var item in Model.Recipe_Step.OrderBy(c => c.step_number))
                         {
-                            <p>Step - @item.step_number: <br />@item.instruction </p>
+                            <span class="font-weight-bolder">Step - @item.step_number: <br /></span>
+                            <p class="m-2">@item.instruction</p>
                             <br />
                         }
                         @*<p>In a large bowl, combine shredded chicken, red onion, apple, grapes, Greek yogurt, lemon juice, garlic powder, salt and pepper. Mix until well combined.</p>
@@ -213,49 +217,27 @@
                     <div class="social-share d-flex align-items-center mt-5 mb-5">
 
                         <p class="mb-0 mr-3"><strong>Share on:</strong></p>
-
                         <ul class="social-links list-inline mb-0">
-
                             <li class="list-inline-item">
-
-                                <a href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html#" title="" class="d-inline-flex justify-content-center align-items-center">
-
+                                <a href="https://www.facebook.com/" title="" class="d-inline-flex justify-content-center align-items-center">
                                     <i class="fa fa-facebook-f"></i>
-
                                 </a>
-
                             </li>
-
                             <li class="list-inline-item">
-
-                                <a href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html#" title="" class="d-inline-flex justify-content-center align-items-center">
-
+                                <a href="https://twitter.com/?lang=en-in" title="" class="d-inline-flex justify-content-center align-items-center">
                                     <i class="fa fa-twitter"></i>
-
                                 </a>
-
                             </li>
-
                             <li class="list-inline-item">
-
-                                <a href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html#" title="" class="d-inline-flex justify-content-center align-items-center">
-
+                                <a href="https://in.linkedin.com/" title="" class="d-inline-flex justify-content-center align-items-center">
                                     <i class="fa fa-linkedin"></i>
-
                                 </a>
-
                             </li>
-
                             <li class="list-inline-item">
-
-                                <a href="https://webdevproof.com/theme-forest-demo/nelluce/food/en/full-width.html#" title="" class="d-inline-flex justify-content-center align-items-center">
-
+                                <a href="https://in.pinterest.com/" title="" class="d-inline-flex justify-content-center align-items-center">
                                     <i class="fa fa-pinterest"></i>
-
                                 </a>
-
                             </li>
-
                         </ul>
 
                     </div>

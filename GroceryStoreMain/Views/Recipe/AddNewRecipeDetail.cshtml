@@ -7,124 +7,287 @@
 
 <h2>AddNewRecipeDetail</h2>
 <div class="col-xl-8 col-12">
-    @using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
 
+    @Html.HiddenFor(model => model.created_by)
+    @Html.HiddenFor(model => model.created_dtm)
+    @Html.HiddenFor(model => model.modified_by)
+    @Html.HiddenFor(model => model.modified_dtm)
 
-        @Html.HiddenFor(model => model.r_id)
-        @Html.HiddenFor(model => model.created_by)
-        @Html.HiddenFor(model => model.created_dtm)
-        @Html.HiddenFor(model => model.modified_by)
-        @Html.HiddenFor(model => model.modified_dtm)
-
+    <div>
+        <h3><i class="fas fa-edit"></i> <span id="recipeName">@Model.name</span></h3>
         <div>
-            <h3><i class="fas fa-edit"></i> <span id="recipeName">@Model.name</span></h3>
-            <div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="id_name"> Name</label>
-                        @Html.EditorFor(model => model.name, new { @class = "form-control", @id = "name" })
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="id_name"> Name</label>
+                    @Html.EditorFor(model => model.name, new { @class = "form-control", @id = "name" })
 
-                    </div>
                 </div>
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <label> Description </label>
-                        @Html.TextAreaFor(r => r.description, new { @class = "form-control", @maxlength = "512" })
-                    </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-12">
+                    <label> Description </label>
+                    @Html.TextAreaFor(r => r.description, new { @class = "form-control", @maxlength = "512", @id = "description" })
                 </div>
-                <div class="row pt-2">
-                    <div class="col-12">
-                        <label> Comment </label>
-                        @Html.TextAreaFor(r => r.comment, new { @class = "form-control", @maxlength = "512" })
-                    </div>
+            </div>
+            <div class="row pt-2">
+                <div class="col-12">
+                    <label> Comment </label>
+                    @Html.TextAreaFor(r => r.comment, new { @class = "form-control", @maxlength = "512", @id = "comment" })
                 </div>
+            </div>
 
-                <div class="row pt-2">
+            <div class="row pt-2" id="divEmp">
+                @using (Ajax.BeginForm("UploadFiles", "Recipe", new AjaxOptions { OnSuccess = "OnSuccess" }, new { @enctype = "multipart/form-data" }))//, HttpMethod = "POST", UpdateTargetId = "divEmp" }))
+                {
                     <div class="col-md-6" style="max-height: 50vh; min-height: 30vh;">
                         @*<div id="upload" class="h-100 w-100 border border-primary rounded" style="border-width: 2px !important; border-style: dashed !important;">
                                 <i class="far fa-image fa-10x text-primary" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);"></i>
 
                             </div>*@
 
-                        <input type="file" id="url" name="url" />
-
+                        <input type="hidden" value="@Model.r_id" name="r_id" id="r_id" />
+                        <input type="hidden" name="saveImage" id="saveImage" value="true" />
+                        <input type="file" class="form-control" id="url" name="ImageFile" />
+                        <br />
+                        @*@Html.TextBoxFor(x => x.ImageFile, new { type = "file" })*@
+                        @*@Html.TextBoxFor(x => x.ImageFile, new { type = "file", @class = "form-control", @name = "url", @id = "url" })*@
                         @*@Html.TextBoxFor(model => model.description, new { type = "file", @id = "fUpload" })*@
-                        <img id="recipeimage" src="#" class="h-100 w-100 border border-primary rounded" alt=" " style="border-width: 2px !important; border-style: dashed !important;" />
+                        @if (Model.imagepath != null)
+                        {
+
+                            <img id="recipeimage" src=@Url.Content(Model.imagepath) class="h-80 w-100 border border-primary rounded" height="150" width="100" alt=" " style="border-width: 2px !important; border-style: dashed !important;" />
+                        }
+                        else
+                        {
+                            <img id="recipeimage" src="" class="h-80 w-100 border border-primary rounded" height="150" width="100" alt=" " style="border-width: 2px !important; border-style: dashed !important;" />
+                        }
+                        <br />
+                        <div id="uploadMessage">
+
+                        </div>
+                        <br />
+                        <input type="submit" value="Upload" id="uploadimage" class="btn btn-primary" />
+
 
                         <br />
+                        <br />
                     </div>
+                }
+                <script type="text/javascript">
+                    function OnSuccess(response) {
+                        if (response.success) {
+                            $('#saveImage').val(false)
+                            $('#uploadimage').attr('disabled', 'disabled')
+                            $('#uploadMessage').html('<h4><i class="fa fa-check" style="font-size:36px;color:lightgreen"></i>' + response.uploadMessage + '</h4>')
 
+                        }
 
-
-                </div>
-                <ul id="tag" class="hide">
-
-                    @foreach (var item in ViewBag.Product)
-                    {
-                        <li id="@item.p_id - @item.pc_id - @item.name">@item.name</li>
                     }
-                </ul>
-                <div style=" border:1px solid medium">
+                    function OnFailure(response) {
+                        alert("Error occured.");
+                    }
+                </script>
+            </div>
+            <ul id="tag" class="hide">
+
+                @foreach (var item in ViewBag.Product)
+                {
+                    <li id="@item.p_id - @item.pc_id - @item.name">@item.name</li>
+                }
+            </ul>
+           
+            @*<div style=" border:1px solid medium">
                     <div class="p-3 m-3 container-fluid" style=" border:1px solid">
-                        <div class=" p-3 m-3 bg-secondary text-black">
+                        <div class=" p-3 m-3 bg-gradient-secondary text-black">
 
                             <h3>Step #1</h3>
 
                         </div>
-                        <div class="columns">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    Instruction:
+                                </td>
+                                <td>
+                                    <input type=text class="form-control col-6" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="productcategory" class="form-control col-6">
+                                        @foreach (var item in ViewBag.ProductCategory)
+                                        {
+                                            <option id="@item.pc_id">@item.name</option>
+                                        }
+                                    </select>
+                                    @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class = "form-control col-6", @id = "categoryrecipe" })
+                                </td>
+                                <td>
+                                    <select id="productrecipe" class="form-control col-6">
+                                        <option>---Products---</option>
+                                    </select>
+                                </td>
 
-                            <div> Instruction: <input type=text class="form-control col-6" /></div>
-                            <div >
-                                @Html.DropDownList("pc_id", new SelectList(ViewBag.ProductCategory, "pc_Id", "Name"), htmlAttributes: new { @class = "form-control col-6", @id = "categoryrecipe" })
-                            </div>
-                            <div >
-                                <select id="productrecipe" class="form-control col-6">
-                                    <option>---Products---</option>
-                                </select>
+                                <div>
+                                    todo: product unit and amount req
+                                    <b> Add image to recipe</b>
+                                </div>
+                            </tr>
+                            <tr>
+                                <td>Portion:</td>
+                                <td><input type="number" class="form-control col-6" id="amountreq" /></td>
+                            </tr>
 
-                            </div>
+                        </table>
+                    </div>
+
+                </div>*@
+
+            <script>
+                function AddRecipeStep() {
+                    var stepnum;
+                    if (parseInt($('#recipestepnum').val()) !=0) {
+                        stepnum = parseInt($('#TotalStep').val()) + parseInt($('#recipestepnum').val())
+                        $('#recipestepnum').attr("value","0")
+                    }
+                    else {
+
+                        stepnum = parseInt($('#TotalStep').val())
+                    }
+                            stepnum = stepnum + 1
+
+                            var div = document.createElement("DIV")
+                            div.innerHTML = '<div class="p-2 mt-3 bg-gradient-secondary text-black"><h3>Step #' + stepnum + '</h3></div>' +
+                                '<table class="table table-borderless"><tr><td>Instruction:</td><td>' +
+                            '<input type=text id="instruction'+stepnum+'" class="form-control col - 6"/>' +
+                                '</td></tr>' +
+                                '<tr><td>  <select id="productcategory" class="form-control col-6">  @foreach (var item in ViewBag.ProductCategory)  { <option id="@item.pc_id">@item.name</option>       }          </select></td>' +
+                                '<td id="products"><select id="productrecipe' + stepnum + '" class="form-control col-6"><option>---Products---</option></select></td></tr><tr><td>Portion:</td><td><input type="number" class="form-control col-6" id="amountreq' + stepnum + '" /></td></tr></table><hr>'
+                            $('#RecipeSteps').append(div)
+                            $('#TotalStep').val(stepnum)
+                }
+
+
+            </script>
+            <div class="container-fluid">
+                <input type="hidden" id="TotalStep" value="0" />
+                <div id="RecipeSteps" >
+
+                    <h1><u>Steps:</u></h1>
+                    <input type="hidden" id="recipestepnum" value="@Model.recipeStepDetails.Count" />
+                    @{int num = 1;}
+                    @for (int i = 0; i < Model.recipeStepDetails.Count; i++)
+                    {
+                        @*@num = i + 1;*@
+                        <div class="p-2 mt-3 bg-gradient-secondary text-black"><h3>Step # @num </h3></div>
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>Instruction:</td>
+                                <td>
+                                    <input type=text id=@(("instruction"+ @num).Replace(" ","")) class="form-control col - 6" value="@Model.recipeStepDetails[i].instruction" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select id="productcategory" class="form-control col-6">
+                                        @foreach (var item in ViewBag.ProductCategory)
+                                        {
+                                            if (Model.recipeStepDetails[i].Product.pc_id == item.pc_id)
+                                            {
+                                                <option id="@item.pc_id" selected>@item.name</option>
+                                            }
+                                            else
+                                            {
+                                                <option id="@item.pc_id">@item.name</option>
+                                            }
+
+                                        }
+                                    </select>
+                                </td>
+
+                                <td id="products">
+                                    <select id=@(("productrecipe"+@num).Replace(" ","")) class="form-control col-6">
+                                        <option id="@Model.recipeStepDetails[i].p_id">@Model.recipeStepDetails[i].Product.name </option>
+                                    </select>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Portion:</td>
+                                <td>
+                                    <input type="number" class="form-control col-6" id=@(("amountreq"+ num).Replace(" ","")) value="@Model.recipeStepDetails[i].amount_req" />
+                                </td>
+                            </tr>
+                        </table>
+                        num = num + 1;
+
+                        //$('#TotalStep').val(num)
+
+                    }
+                    @*@foreach (var rs in Model.recipeStepDetails)
+                        {
+
+                            <div class="p-2 mt-3 bg-gradient-secondary text-black"><h3>Step #' + stepnum + '</div>
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td>Instruction:</td>
+                                    <td>
+                                        <input type=text id="instruction' + stepnum + '" class="form-control col - 6" />
+
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td>
+                                        <select id="productcategory" class="form-control col-6">
+                                            @foreach (var item in ViewBag.ProductCategory)
+                                            {
+                                                <option id="@item.pc_id">@item.name</option>
+                                            }
+                                        </select>
+                                    </td>
+
+                                    <td id="products"><select id="productrecipe' + stepnum + class="form-control col-6"><option>---Products---</option></select></td>
+                                </tr>
+                                <tr><td>Portion:</td><td><input type="number" class="form-control col-6" id="amountreq' + stepnum + '" /></td></tr>
+                            </table>
+                            <hr
+                            < input type = "text" value = "@rs.instruction" id = "instruction" class="form-control col-6" />
+                        }*@
+
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col col-md-12 text-center">
+                        <div role="group" class="btn-group">
+                            <button type="button" class="btn btn-success shadow-none" onclick="AddRecipeStep()"> Add Step </button>
+                            <button type="button" class="btn btn-warning shadow-none"><i class="fas fa-sort-amount-down-alt fa-lg"></i></button>
                         </div>
-                        @*@Html.DropDownList("pc_id", new SelectList(((List<pro>)ViewBag.ProductCategory), "pc_Id", "Name"), htmlAttributes: new { @class = "form-control" })*@
                     </div>
+                </div>
+            </div>
+        </div><br><br><br><br><br><br>
+        <div class="row p-2 b-3 border-top text-center" style="background: white;">
+            <div class="col-md-3 col-6">
+                <a href="@Url.Action("RemoveRecipe","Recipe",new { rid=Model.r_id})" class="btn btn-block btn-danger shadow-none p-3 ml-2">Delete</a>
 
-                </div>
-
-                <div>
-                    <div id="RecipeSteps">
-                        <h1>HII</h1>
-                    </div>
-                    <div class="row">
-                        <div class="col col-md-12 text-center">
-                            <div role="group" class="btn-group">
-                                <button type="button" class="btn btn-success shadow-none" onclick="AddRecipeStep()"> Add Step </button>
-                                <button type="button" class="btn btn-warning shadow-none"><i class="fas fa-sort-amount-down-alt fa-lg"></i></button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><br><br><br><br><br><br>
-            <div class="row p-2 b-2 border-top text-center" style="background: white;">
-                <div class="col-md-3 col-6">
-                    <a href="/delete/recipe/10203/" class="btn btn-block btn-danger shadow-none">Delete</a>
-                </div>
-                <div class="col-md-3 col-6">
+            </div>
+            @*<div class="col-md-3 col-6">
                     <a href="/view/recipe/10203"><button class="btn btn-block btn-primary shadow-none">View</button></a>
-                </div>
-                <div class="col-md-3 col-6">
+                </div>*@
+            <div class="col-md-3 col-6">
 
-                    <input type="submit" value="Save" id="Submit" class="btn btn-sm btn-block btn-info shadow-nones" onclick="location.href='@Url.Action("AddNewRecipeDetail", "Recipe", new { recipeDetails = Model })'" />
-                </div>
-                <div class="col-md-3 col-6">
+                @*<input type="submit" value="Save" id="Submit" class="btn btn-sm btn-block btn-info shadow-nones" onclick="location.href='@Url.Action("AddNewRecipeDetail", "Recipe", new { recipeDetails = Model })'" />*@
+                <input value="Save" id="Submit" class="btn btn-sm btn-block btn-info shadow-nones p-3 ml-2" onclick="SubmitRecipeDetails()" />
+            </div>
+            @*<div class="col-md-3 col-6">
                     <button type="button" title="Ctrl + Shift + S" class="btn btn-sm btn-block btn-success shadow-none"> Save &amp; View </button>
-                </div>
-            </div><div></div>
-        </div>
-        @*</div>*@
+                </div>*@
+        </div><div></div>
+    </div>
+    @*</div>*@
 
 
-    }
+
 </div>
 
 @Scripts.Render("~/bundles/jquery")
@@ -134,6 +297,8 @@
 @*@RenderSection("scripts", required: false)*@
 @Scripts.Render("~/bundles/jqueryval")
 <script src="~/Scripts/CustomScript/CustomJS.js"></script>
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
 
 
 

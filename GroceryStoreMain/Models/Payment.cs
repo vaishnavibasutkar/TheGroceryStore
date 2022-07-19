@@ -15,12 +15,10 @@ namespace GroceryStoreMain.Models
     public partial class Payment
     {
         public int pay_id { get; set; }
-        public Nullable<int> c_id { get; set; }
         public decimal amount { get; set; }
         public System.DateTime payment_date { get; set; }
         public Nullable<int> o_id { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual Order Order { get; set; }
     }
 }

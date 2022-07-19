@@ -7,7 +7,7 @@
 <br />
 @*<h2>Order Details</h2>*@
 
-<div class="col-5 offset-md-2 ">
+<div class="col-8 offset-md-2 ">
     <h4>Order Details</h4>
     <div>
         <div class="bg-secondary p-2 mt-lg-4  font-weight-bolder"> Order #@Model.o_id</div>
@@ -91,52 +91,170 @@
         </table>
         <div class="bg-secondary  p-2 mt-lg-4 rounded-3 font-weight-bolder">Products</div>
         <div class="mt-lg-3 ">
-           
-            <table class="table" >@*style="border:1px solid tomato;"  >*@
+
+            <table class="table">
+                @*style="border:1px solid tomato;"  >*@
+
                 <tr>
-                    <td class="col-4 font-weight-bolder ">
+                    <td class="col-sm-1 font-weight-bolder ">
                         #
                     </td>
-                    <td class="col-4 font-weight-bolder">
+                    <td class="col-2 font-weight-bolder">
                         Product
                     </td>
-                    <td class="col-4 font-weight-bolder">
+                    <td class="col-2 font-weight-bolder">
                         Product Name
-                    </td> 
-                    <td class="col-4 font-weight-bolder">
+                    </td>
+                    <td class="col-2 font-weight-bolder">
                         Unit Price
                     </td>
-                    <td class="col-4 font-weight-bolder">
+                    <td class="col-2 font-weight-bolder">
                         Quantity
                     </td>
+                    @if ((@Model.Order_Status.code == "DELIVERED" || @Model.Order_Status.code == "COMPLETED") && (Model.order_date - DateTime.Now).Days < 15)
+                    {
+                        <td class="col-5 font-weight-bolder">
+                            Rating  &amp; Comment
+                        </td>
+                    }
                 </tr>
 
                 @{var i = 1;}
                 @foreach (var order_Detail in Model.Order_Details)
                 {
                     <tr>
-                        <td class="col-4">
+                        <td class="col-sm-1">
                             @i
                             @{i = i + 1;}
                         </td>
-                        <td class="col-4">
+                        <td class="col-2">
                             <img class="img-fluid w-100" src=@String.Format("/Images/Products/"+order_Detail.Product.imagepath.ToString()) alt="">
                         </td>
-                        <td class="col-4">
+                        <td class="col-2">
                             @order_Detail.Product.name
                         </td>
-                        <td class="col-4">
+                        <td class="col-2">
                             @order_Detail.Product.price
                         </td>
-                        <td class="col-4">
+                        <td class="col-2">
                             @order_Detail.quantity
                         </td>
+                        @if ((@Model.Order_Status.code == "DELIVERED" || @Model.Order_Status.code == "COMPLETED") && (Model.order_date - DateTime.Now).Days < 15)
+                        {
+                            <td>
+                                @using (Html.BeginForm("AddFeedback", "Customer", FormMethod.Post, new { }))
+                                {
+                                    <input type="button" value="Add Product Review" class="btnSubmitReview btn-circle btn-primary bg-secondary border-0  mt-lg-4 offset-2 " id="@order_Detail.p_id" />
+                                    @*<textarea cols="20" rows="6" name="productcomment" id="productcomment"></textarea>
+                                        <div onmouseout="CRateSelected()">
+                                            <span id="span1" class="fa fa-star checked" onmouseout="CRateOut(1)" onmousedown="CRateOver(1)" onclick="CRateClick(1)"></span>
+                                            <span id="span2" class="fa fa-star checked" onmouseout="CRateOut(2)" onmousedown="CRateOver(2)" onclick="CRateClick(2)"></span>
+                                            <span id="span3" class="fa fa-star checked" onmouseout="CRateOut(3)" onmousedown="CRateOver(3)" onclick="CRateClick(3)"></span>
+                                            <span id="span4" class="fa fa-star checked" onmouseout="CRateOut(4)" onmousedown="CRateOver(4)" onclick="CRateClick(4)"></span>
+                                            <span id="span5" class="fa fa-star checked" onmouseout="CRateOut(5)" onmousedown="CRateOver(5)" onclick="CRateClick(5)"></span>
+                                        </div>
+                                        <div>
+                                            <input type="hidden" id="lblRating" />
+                                         </div>*@
+                                }
+                            </td>
+                        }
 
                     </tr>
                 }
             </table>
         </div>
         <button class="btn-primary bg-secondary border-0 p-2 shadow mt-lg-4 font-weight-bold offset-2" type="button" onclick="location.href='@Url.Action("MyOrders", "Customer")'">BACK TO ORDER HISTORY</button>
-     
+        <div class="modal fade" id="modelWindow" role="dialog">
+            <div class="modal-dialog modal-sm vertical-align-center">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title"> <b>Enter Feedback:</b></h4>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+
+                    </div>
+                    <div class="modal-body">
+                        Comment:
+                        <br />
+                        <textarea cols="20" rows="6" name="productcomment" id="productcomment"></textarea>
+                        <div onmouseout="CRateSelected()">
+                            <span id="span1" class="fa fa-star" onmouseout="CRateOut(1)" onmouseover="CRateOver(1)" onclick="CRateClick(1)"></span>
+                            <span id="span2" class="fa fa-star" onmouseout="CRateOut(2)" onmouseover="CRateOver(2)" onclick="CRateClick(2)"></span>
+                            <span id="span3" class="fa fa-star" onmouseout="CRateOut(3)" onmouseover="CRateOver(3)" onclick="CRateClick(3)"></span>
+                            <span id="span4" class="fa fa-star" onmouseout="CRateOut(4)" onmouseover="CRateOver(4)" onclick="CRateClick(4)"></span>
+                            <span id="span5" class="fa fa-star" onmouseout="CRateOut(5)" onmouseover="CRateOver(5)" onclick="CRateClick(5)"></span>
+                        </div>
+                        <div>
+                            <input type="hidden" id="lblRating" />
+                        </div>
+                        <input type="hidden" id="p_id_model" value="" />
+                    </div>
+                    <div class="modal-footer">
+                        <input type="button" value="Submit Feedback" class="btn btn-default" onclick="submitFeedback()" />
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <script type="text/javascript">
+            $('.btnSubmitReview').click(function () {
+
+                $('#p_id_model').val($(this).attr('id'))
+                $('#modelWindow').modal('show');
+            });
+
+            function CRateOut(rating) {
+                for (var i = 1; i <= rating; i++) {
+
+                    $('#span' + i).attr('class', 'fa fa-star');
+                }
+            }
+            function CRateOver(rating) {
+                for (var i = 1; i <= rating; i++) {
+                    $('#span' + i).attr('class', 'fa fa-star checked');
+                }
+            }
+            function CRateClick(rating) {
+                $('#lblRating').val(rating);
+                for (var i = 1; i < rating; i++) {
+                    $('#span' + i).attr('class', 'fa fa-star checked');
+                }
+                for (var i = rating + 1; i <= 5; i++) {
+                    $('#span' + i).attr('class', 'fa fa-star ');
+                }
+            }
+            function CRateSelected() {
+                var rating = $('#lblRating').val()
+                for (var i = 1; i <= rating; i++) {
+                    $('#span' + i).attr('class', 'fa fa-star checked');
+                }
+            }
+            function submitFeedback() {
+                var feedback = {}
+
+                feedback.p_id = parseInt($('#p_id_model').val())
+                feedback.feedback1 = $('#productcomment').val()
+                feedback.rating = parseInt($('#lblRating').val())
+                $.ajax({
+                    type: 'post',
+                    dataType: 'json',
+                    url: '/Customer/SubmitFeedback',
+                    data: { feedback: JSON.stringify(feedback) },
+                    success: function (response) {
+                        if (response.success) {
+                            window.location.href = response.url;
+                        }
+                    }
+                });
+            }
+
+        </script>
+        <style>
+            .checked {
+                color: orange;
+            }
+        </style>
     </div>
 </div>

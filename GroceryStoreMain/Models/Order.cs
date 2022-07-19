@@ -30,8 +30,8 @@ namespace GroceryStoreMain.Models
         public decimal delivery_charge { get; set; }
         public decimal tax { get; set; }
         public decimal total_amount { get; set; }
+        public string paymentmode { get; set; }
     
-        public virtual Customer Customer { get; set; }
         public virtual Customer_Address Customer_Address { get; set; }
         public virtual Delivery_Time_Slot Delivery_Time_Slot { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

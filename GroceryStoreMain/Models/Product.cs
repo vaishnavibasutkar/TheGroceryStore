@@ -20,9 +20,9 @@ namespace GroceryStoreMain.Models
             this.Batches = new HashSet<Batch>();
             this.Cart_Product_Assoc = new HashSet<Cart_Product_Assoc>();
             this.Discounts = new HashSet<Discount>();
-            this.Feedbacks = new HashSet<Feedback>();
             this.Order_Details = new HashSet<Order_Details>();
             this.Recipe_Step = new HashSet<Recipe_Step>();
+            this.Feedbacks = new HashSet<Feedback>();
         }
     
         public int p_id { get; set; }
@@ -42,12 +42,12 @@ namespace GroceryStoreMain.Models
         public virtual ICollection<Discount> Discounts { get; set; }
         public virtual Distributor Distributor { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Feedback> Feedbacks { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Order_Details> Order_Details { get; set; }
         public virtual Product_Category Product_Category { get; set; }
         public virtual Unit_Of_Measurement Unit_Of_Measurement { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recipe_Step> Recipe_Step { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Feedback> Feedbacks { get; set; }
     }
 }

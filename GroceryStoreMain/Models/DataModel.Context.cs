@@ -35,17 +35,17 @@ namespace GroceryStoreMain.Models
         public virtual DbSet<Discount> Discounts { get; set; }
         public virtual DbSet<Distributor> Distributors { get; set; }
         public virtual DbSet<FAQ> FAQs { get; set; }
-        public virtual DbSet<Feedback> Feedbacks { get; set; }
-        public virtual DbSet<Order> Orders { get; set; }
         public virtual DbSet<Order_Details> Order_Details { get; set; }
         public virtual DbSet<Order_Status> Order_Status { get; set; }
         public virtual DbSet<OTP_History> OTP_History { get; set; }
-        public virtual DbSet<Payment> Payments { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<Product_Category> Product_Category { get; set; }
-        public virtual DbSet<Recipe> Recipes { get; set; }
-        public virtual DbSet<Recipe_Step> Recipe_Step { get; set; }
         public virtual DbSet<Unit_Of_Measurement> Unit_Of_Measurement { get; set; }
         public virtual DbSet<Feedback_test> Feedback_test { get; set; }
+        public virtual DbSet<Payment> Payments { get; set; }
+        public virtual DbSet<Recipe_Step> Recipe_Step { get; set; }
+        public virtual DbSet<Recipe> Recipes { get; set; }
+        public virtual DbSet<Feedback> Feedbacks { get; set; }
+        public virtual DbSet<Order> Orders { get; set; }
     }
 }

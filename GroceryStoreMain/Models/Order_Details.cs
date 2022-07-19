@@ -22,7 +22,7 @@ namespace GroceryStoreMain.Models
         public decimal total_amt { get; set; }
     
         public virtual Distributor Distributor { get; set; }
-        public virtual Order Order { get; set; }
         public virtual Product Product { get; set; }
+        public virtual Order Order { get; set; }
     }
 }

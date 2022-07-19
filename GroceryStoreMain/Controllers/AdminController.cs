@@ -120,7 +120,7 @@ namespace GroceryStoreMain.Controllers
                 pc.name = product_Category.name;
                 pc.description = product_Category.description;
                 pc.eff_end_dtm = product_Category.eff_end_dtm;
-                pc.eff_start_dtm = DateTime.Now;
+                pc.eff_start_dtm = DateTime.Now.AddYears(1);
                 pc.imagepath = path;
                 context.Product_Category.Add(pc);
                 context.SaveChanges();

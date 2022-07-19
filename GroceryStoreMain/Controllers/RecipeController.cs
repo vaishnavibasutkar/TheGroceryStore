@@ -1,7 +1,10 @@
 ﻿using GroceryStoreMain.Models;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Text.Json;
 using System.Web;
 using System.Web.Mvc;
 
@@ -93,14 +96,32 @@ namespace GroceryStoreMain.Controllers
 
         public ActionResult AddNewRecipeDetail(int recipeID)
         {
+            Session["Username"] = "distributor";
+            Session["Name"] = "test";
+            Session["id"] = "1";
+
             if (Session["Username"] != null)
             {
+                //ViewBag.Product = context.Products.ToList();
+                //var ProductCategory = context.Product_Category.ToList();
+                //ProductCategory.Add(new Product_Category() { name = "---Product Category---", pc_id = 0 });
+                //ViewBag.ProductCategory = ProductCategory.OrderBy(pc => pc.pc_id);
+                //RecipeDetails recipeDetails = new RecipeDetails(recipeID);
+                //return View(recipeDetails);
+
+
                 ViewBag.Product = context.Products.ToList();
                 var ProductCategory = context.Product_Category.ToList();
                 ProductCategory.Add(new Product_Category() { name = "---Product Category---", pc_id = 0 });
                 ViewBag.ProductCategory = ProductCategory.OrderBy(pc => pc.pc_id);
                 RecipeDetails recipeDetails = new RecipeDetails(recipeID);
+                if (recipeDetails.imagepath != null)
+                {
+                    string UploadPath = ConfigurationManager.AppSettings["RecipeImagePath"].ToString();
+                    recipeDetails.imagepath = Path.Combine("~\\Images\\Recipe", recipeDetails.imagepath);
+                }
                 return View(recipeDetails);
+
             }
             else
             {
@@ -108,13 +129,82 @@ namespace GroceryStoreMain.Controllers
             }
         }
         [HttpPost]
-        public ActionResult AddNewRecipeDetail(RecipeDetails recipeDetails)
+        public JsonResult UploadFiles(HttpPostedFileBase ImageFile, bool saveImage, int r_id)
+        {
+
+            if (ImageFile != null)
+            {
+                var recipe = context.Recipes.FirstOrDefault(r => r.r_id == r_id);
+
+                string UploadPath = ConfigurationManager.AppSettings["RecipeImagePath"].ToString();
+                if (recipe.imagepath != null)
+                {
+                    var fullPath = Path.Combine(UploadPath, recipe.imagepath);
+                    if (System.IO.File.Exists(fullPath))
+                    {
+                        System.IO.File.Delete(fullPath);
+                    }
+
+                    var fileName = Guid.NewGuid().ToString() + Path.GetFileName(ImageFile.FileName);
+                    var path = Path.Combine(UploadPath, fileName);
+                    // store the uploaded file on the file system
+
+                    ImageFile.SaveAs(path);
+
+                    recipe.imagepath = fileName;
+
+                    context.SaveChangesAsync();
+                }
+                else
+                {
+                    var fileName = Guid.NewGuid().ToString() + Path.GetFileName(ImageFile.FileName);
+                    var path = Path.Combine(UploadPath, fileName);
+                    // store the uploaded file on the file system
+
+                    ImageFile.SaveAs(path);
+
+                    recipe.imagepath = fileName;
+
+                    context.SaveChangesAsync();
+                }
+                saveImage = saveImage && false;
+                return Json(new { success = true, uploadMessage = "Recipe Image uploaded successfully." });
+
+            }
+            return Json(new { success = false });
+        }
+
+        [HttpPost]
+        public ActionResult UploadRecipe(string recipe)
         {
             if (Session["Username"] != null)
             {
+                var _recipe = JsonSerializer.Deserialize<RecipeDetails>(recipe);
+                var _recipeNew = context.Recipes.FirstOrDefault(a => a.r_id == _recipe.r_id);
+                if (_recipeNew != null)
+                {
+                    _recipeNew.name = _recipe.name;
+                    _recipeNew.description = _recipe.description;
+                    _recipeNew.comment = _recipe.comment;
+                    _recipeNew.Recipe_Step = _recipe.recipeStepDetails;
+                    _recipeNew.modified_by = Session["Username"].ToString();
+                    _recipeNew.modified_dtm = DateTime.Now;
+                    List<Recipe_Step> recipe_Steps = _recipe.recipeStepDetails.ToList();
+                    foreach (var recipe_Step in context.Recipe_Step.Where(rs=>rs.r_id==_recipe.r_id))
+                    {
+                        context.Recipe_Step.Remove(recipe_Step);
+                    }
+                    context.Recipe_Step.AddRange(recipe_Steps);
+                    context.Recipes.Attach(_recipeNew);
+                    context.Entry(_recipeNew).State = System.Data.Entity.EntityState.Modified;
+                }
+                if (context.SaveChanges() > 0)
+                {
+                    TempData["Message"] = "Recipe - " + _recipe.name + " is Added/Updated.";
+                }
 
                 //RecipeDetails recipeDetails = new RecipeDetails(recipeID);
-                return View(recipeDetails);
+                return Json(new { success = true, url = "https://localhost:44350/Distributor/Recipe" });
             }
             else
             {
@@ -176,6 +266,9 @@ namespace GroceryStoreMain.Controllers
             Session["Cart"] = context.Carts.Where(c => c.c_id == customer.c_id).ToList();
 
             var recipes = context.Recipes.ToList();
+            string UploadPath = ConfigurationManager.AppSettings["RecipeImagePath"].ToString();
+            recipes.Where(r => r.imagepath != null).ToList().ForEach(r => { r.imagepath = Path.Combine("~\\Images\\Recipe", r.imagepath); });
+
             return View(recipes);
         }
         public ActionResult ViewRecipeDetails(int id)
@@ -185,6 +278,11 @@ namespace GroceryStoreMain.Controllers
                 ViewBag.Product = context.Products.ToList();
                 ViewBag.ProductCategory = context.Product_Category.ToList();
                 Recipe recipe = context.Recipes.FirstOrDefault(r => r.r_id == id);
+                if (recipe.imagepath != null)
+                {
+                    string UploadPath = ConfigurationManager.AppSettings["RecipeImagePath"].ToString();
+                    recipe.imagepath = Path.Combine("~\\Images\\Recipe", recipe.imagepath);
+                }
                 List<Recipe_Step> recipe_Steps = context.Recipe_Step.Where(rs => rs.r_id == id).ToList();
                 return View(recipe);
             }
@@ -203,16 +301,21 @@ namespace GroceryStoreMain.Controllers
             if (search == null || search == "")
             {
                 var recipes = context.Recipes.ToList();
+                string UploadPath = ConfigurationManager.AppSettings["RecipeImagePath"].ToString();
+                recipes.Where(r => r.imagepath != null).ToList().ForEach(r => { r.imagepath = Path.Combine("~\\Images\\Recipe", r.imagepath); });
+
                 return View(recipes);
             }
             else
             {
                 var terms = search.Split(' ');
-                var results = context.Recipes
+                var recipes = context.Recipes
                     .Where(q => terms.Any(term => q.name.Contains(term)))
                     .ToList();
-                var recipes = context.Recipes.ToList();
-                return View(results);
+                string UploadPath = ConfigurationManager.AppSettings["RecipeImagePath"].ToString();
+                recipes.Where(r => r.imagepath != null).ToList().ForEach(r => { r.imagepath = Path.Combine("~\\Images\\Recipe", r.imagepath); });
+
+                return View(recipes);
             }
         }
 

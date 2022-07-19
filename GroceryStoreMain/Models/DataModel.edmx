@@ -115,7 +115,7 @@
           <Key>
             <PropertyRef Name="f_id" />
           </Key>
-          <Property Name="f_id" Type="int" Nullable="false" />
+          <Property Name="f_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="c_id" Type="int" />
           <Property Name="p_id" Type="int" />
           <Property Name="feedback" Type="varchar" MaxLength="50" />
@@ -144,6 +144,7 @@
           <Property Name="delivery_charge" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="tax" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="total_amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="paymentmode" Type="varchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Order_Details">
           <Key>
@@ -179,7 +180,6 @@
             <PropertyRef Name="pay_id" />
           </Key>
           <Property Name="pay_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="c_id" Type="int" />
           <Property Name="amount" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="payment_date" Type="datetime" Nullable="false" />
           <Property Name="o_id" Type="int" />
@@ -220,17 +220,18 @@
           <Property Name="modified_by" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="modified_dtm" Type="datetime" Nullable="false" />
           <Property Name="comment" Type="varchar(max)" />
+          <Property Name="imagepath" Type="varchar(max)" />
         </EntityType>
         <EntityType Name="Recipe_Step">
           <Key>
             <PropertyRef Name="rs_id" />
           </Key>
-          <Property Name="rs_id" Type="int" Nullable="false" />
+          <Property Name="rs_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="step_number" Type="int" Nullable="false" />
           <Property Name="instruction" Type="varchar(max)" Nullable="false" />
           <Property Name="r_id" Type="int" />
           <Property Name="p_id" Type="int" />
-          <Property Name="product_unit" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="product_unit" Type="varchar" MaxLength="30" />
           <Property Name="amount_req" Type="int" />
         </EntityType>
         <EntityType Name="Unit_Of_Measurement">
@@ -348,18 +349,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Order_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="o_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Order_Customer_Address">
           <End Role="Customer_Address" Type="Self.Customer_Address" Multiplicity="0..1" />
           <End Role="Order" Type="Self.Order" Multiplicity="*" />
@@ -453,18 +442,6 @@
             </Principal>
             <Dependent Role="Payment">
               <PropertyRef Name="o_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Payment_Payment">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_id" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="c_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -587,10 +564,6 @@
             <End Role="Product" EntitySet="Product" />
             <End Role="Feedback" EntitySet="Feedback" />
           </AssociationSet>
-          <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
-            <End Role="Customer" EntitySet="Customer" />
-            <End Role="Order" EntitySet="Order" />
-          </AssociationSet>
           <AssociationSet Name="FK_Order_Customer_Address" Association="Self.FK_Order_Customer_Address">
             <End Role="Customer_Address" EntitySet="Customer_Address" />
             <End Role="Order" EntitySet="Order" />
@@ -621,10 +594,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_Payment_Order" Association="Self.FK_Payment_Order">
             <End Role="Order" EntitySet="Order" />
-            <End Role="Payment" EntitySet="Payment" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Payment_Payment" Association="Self.FK_Payment_Payment">
-            <End Role="Customer" EntitySet="Customer" />
             <End Role="Payment" EntitySet="Payment" />
           </AssociationSet>
           <AssociationSet Name="FK_Product_Distributor" Association="Self.FK_Product_Distributor">
@@ -707,11 +676,9 @@
           <Property Name="email_id" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="ca_id" Type="Int32" />
           <NavigationProperty Name="Customer_Address" Relationship="Self.FK_Customer_Customer" FromRole="Customer" ToRole="Customer_Address" />
-          <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedback_Feedback" FromRole="Customer" ToRole="Feedback" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Customer" FromRole="Customer" ToRole="Order" />
           <NavigationProperty Name="OTP_History" Relationship="Self.FK_OTP_History_OTP_History" FromRole="Customer" ToRole="OTP_History" />
-          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Payment" FromRole="Customer" ToRole="Payment" />
           <NavigationProperty Name="Carts" Relationship="GroceryStoreDBModel.FK_Cart_Customer" FromRole="Customer" ToRole="Cart" />
+          <NavigationProperty Name="Feedbacks" Relationship="GroceryStoreDBModel.FK_Feedback_Feedback" FromRole="Customer" ToRole="Feedback" />
         </EntityType>
         <EntityType Name="Customer_Address">
           <Key>
@@ -726,7 +693,7 @@
           <Property Name="country" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="postal_code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Customer" FromRole="Customer_Address" ToRole="Customer" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Customer_Address" FromRole="Customer_Address" ToRole="Order" />
+          <NavigationProperty Name="Orders" Relationship="GroceryStoreDBModel.FK_Order_Customer_Address" FromRole="Customer_Address" ToRole="Order" />
         </EntityType>
         <EntityType Name="Delivery_Time_Slot">
           <Key>
@@ -737,7 +704,7 @@
           <Property Name="capacity" Type="Int32" Nullable="false" />
           <Property Name="start_datetime" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="duration" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Delivery_Time_Slot" FromRole="Delivery_Time_Slot" ToRole="Order" />
+          <NavigationProperty Name="Orders" Relationship="GroceryStoreDBModel.FK_Order_Delivery_Time_Slot" FromRole="Delivery_Time_Slot" ToRole="Order" />
         </EntityType>
         <EntityType Name="Discount">
           <Key>
@@ -777,38 +744,6 @@
           <Property Name="answer" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="created_dtm" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="Feedback">
-          <Key>
-            <PropertyRef Name="f_id" />
-          </Key>
-          <Property Name="f_id" Type="Int32" Nullable="false" />
-          <Property Name="c_id" Type="Int32" />
-          <Property Name="p_id" Type="Int32" />
-          <Property Name="feedback1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <Property Name="rating" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Feedback_Feedback" FromRole="Feedback" ToRole="Customer" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Feedback_Product" FromRole="Feedback" ToRole="Product" />
-        </EntityType>
-        <EntityType Name="Order">
-          <Key>
-            <PropertyRef Name="o_id" />
-          </Key>
-          <Property Name="o_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="c_id" Type="Int32" />
-          <Property Name="ca_id" Type="Int32" />
-          <Property Name="dts_id" Type="Int32" />
-          <Property Name="os_id" Type="Int32" />
-          <Property Name="order_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="delivery_charge" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="tax" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="total_amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Order_Customer" FromRole="Order" ToRole="Customer" />
-          <NavigationProperty Name="Customer_Address" Relationship="Self.FK_Order_Customer_Address" FromRole="Order" ToRole="Customer_Address" />
-          <NavigationProperty Name="Delivery_Time_Slot" Relationship="Self.FK_Order_Delivery_Time_Slot" FromRole="Order" ToRole="Delivery_Time_Slot" />
-          <NavigationProperty Name="Order_Details" Relationship="Self.FK_Order_Details_Order" FromRole="Order" ToRole="Order_Details" />
-          <NavigationProperty Name="Order_Status" Relationship="Self.FK_Order_Order_Status" FromRole="Order" ToRole="Order_Status" />
-          <NavigationProperty Name="Payments" Relationship="Self.FK_Payment_Order" FromRole="Order" ToRole="Payment" />
-        </EntityType>
         <EntityType Name="Order_Details">
           <Key>
             <PropertyRef Name="od_id" />
@@ -820,8 +755,8 @@
           <Property Name="quantity" Type="Int32" />
           <Property Name="total_amt" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
           <NavigationProperty Name="Distributor" Relationship="Self.FK_Order_Details_Distributor" FromRole="Order_Details" ToRole="Distributor" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Order_Details_Order" FromRole="Order_Details" ToRole="Order" />
           <NavigationProperty Name="Product" Relationship="Self.FK_Order_Details_Product" FromRole="Order_Details" ToRole="Product" />
+          <NavigationProperty Name="Order" Relationship="GroceryStoreDBModel.FK_Order_Details_Order" FromRole="Order_Details" ToRole="Order" />
         </EntityType>
         <EntityType Name="Order_Status">
           <Key>
@@ -830,7 +765,7 @@
           <Property Name="os_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="description" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Orders" Relationship="Self.FK_Order_Order_Status" FromRole="Order_Status" ToRole="Order" />
+          <NavigationProperty Name="Orders" Relationship="GroceryStoreDBModel.FK_Order_Order_Status" FromRole="Order_Status" ToRole="Order" />
         </EntityType>
         <EntityType Name="OTP_History">
           <Key>
@@ -842,18 +777,6 @@
           <Property Name="eff_startdtm" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="eff_enddtm" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Customer" Relationship="Self.FK_OTP_History_OTP_History" FromRole="OTP_History" ToRole="Customer" />
-        </EntityType>
-        <EntityType Name="Payment">
-          <Key>
-            <PropertyRef Name="pay_id" />
-          </Key>
-          <Property Name="pay_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="c_id" Type="Int32" />
-          <Property Name="amount" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
-          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="o_id" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Payment_Payment" FromRole="Payment" ToRole="Customer" />
-          <NavigationProperty Name="Order" Relationship="Self.FK_Payment_Order" FromRole="Payment" ToRole="Order" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -870,12 +793,12 @@
           <NavigationProperty Name="Cart_Product_Assoc" Relationship="Self.FK_Cart_Product_Assoc_Product" FromRole="Product" ToRole="Cart_Product_Assoc" />
           <NavigationProperty Name="Discounts" Relationship="Self.FK_Discount_Product" FromRole="Product" ToRole="Discount" />
           <NavigationProperty Name="Distributor" Relationship="Self.FK_Product_Distributor" FromRole="Product" ToRole="Distributor" />
-          <NavigationProperty Name="Feedbacks" Relationship="Self.FK_Feedback_Product" FromRole="Product" ToRole="Feedback" />
           <NavigationProperty Name="Order_Details" Relationship="Self.FK_Order_Details_Product" FromRole="Product" ToRole="Order_Details" />
           <NavigationProperty Name="Product_Category" Relationship="Self.FK_Product_Product_Category" FromRole="Product" ToRole="Product_Category" />
           <NavigationProperty Name="Unit_Of_Measurement" Relationship="Self.FK_Product_Unit_Of_Measurement" FromRole="Product" ToRole="Unit_Of_Measurement" />
-          <NavigationProperty Name="Recipe_Step" Relationship="Self.FK_Recipe_Step_Product" FromRole="Product" ToRole="Recipe_Step" />
           <Property Name="imagepath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recipe_Step" Relationship="GroceryStoreDBModel.FK_Recipe_Step_Product" FromRole="Product" ToRole="Recipe_Step" />
+          <NavigationProperty Name="Feedbacks" Relationship="GroceryStoreDBModel.FK_Feedback_Product" FromRole="Product" ToRole="Feedback" />
         </EntityType>
         <EntityType Name="Product_Category">
           <Key>
@@ -888,34 +811,6 @@
           <Property Name="eff_end_dtm" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Products" Relationship="Self.FK_Product_Product_Category" FromRole="Product_Category" ToRole="Product" />
           <Property Name="imagepath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-        </EntityType>
-        <EntityType Name="Recipe">
-          <Key>
-            <PropertyRef Name="r_id" />
-          </Key>
-          <Property Name="r_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="created_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="created_dtm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="modified_by" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="modified_dtm" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="Recipe_Step" Relationship="Self.FK_Recipe_Step_Recipe" FromRole="Recipe" ToRole="Recipe_Step" />
-        </EntityType>
-        <EntityType Name="Recipe_Step">
-          <Key>
-            <PropertyRef Name="rs_id" />
-          </Key>
-          <Property Name="rs_id" Type="Int32" Nullable="false" />
-          <Property Name="step_number" Type="Int32" Nullable="false" />
-          <Property Name="instruction" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="r_id" Type="Int32" />
-          <Property Name="p_id" Type="Int32" />
-          <Property Name="product_unit" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="amount_req" Type="Int32" />
-          <NavigationProperty Name="Product" Relationship="Self.FK_Recipe_Step_Product" FromRole="Recipe_Step" ToRole="Product" />
-          <NavigationProperty Name="Recipe" Relationship="Self.FK_Recipe_Step_Recipe" FromRole="Recipe_Step" ToRole="Recipe" />
         </EntityType>
         <EntityType Name="Unit_Of_Measurement">
           <Key>
@@ -985,30 +880,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Feedback_Feedback">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_id" />
-            </Principal>
-            <Dependent Role="Feedback">
-              <PropertyRef Name="c_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="o_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_OTP_History_OTP_History">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="OTP_History" Type="Self.OTP_History" Multiplicity="*" />
@@ -1018,42 +889,6 @@
             </Principal>
             <Dependent Role="OTP_History">
               <PropertyRef Name="c_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Payment_Payment">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer">
-              <PropertyRef Name="c_id" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="c_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Customer_Address">
-          <End Role="Customer_Address" Type="Self.Customer_Address" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Customer_Address">
-              <PropertyRef Name="ca_id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="ca_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Delivery_Time_Slot">
-          <End Role="Delivery_Time_Slot" Type="Self.Delivery_Time_Slot" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Delivery_Time_Slot">
-              <PropertyRef Name="dts_id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="dts_id" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1093,54 +928,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Feedback_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="Feedback" Type="Self.Feedback" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="p_id" />
-            </Principal>
-            <Dependent Role="Feedback">
-              <PropertyRef Name="p_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Details_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="o_id" />
-            </Principal>
-            <Dependent Role="Order_Details">
-              <PropertyRef Name="o_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Order_Order_Status">
-          <End Role="Order_Status" Type="Self.Order_Status" Multiplicity="0..1" />
-          <End Role="Order" Type="Self.Order" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order_Status">
-              <PropertyRef Name="os_id" />
-            </Principal>
-            <Dependent Role="Order">
-              <PropertyRef Name="os_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Payment_Order">
-          <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
-          <End Role="Payment" Type="Self.Payment" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Order">
-              <PropertyRef Name="o_id" />
-            </Principal>
-            <Dependent Role="Payment">
-              <PropertyRef Name="o_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Order_Details_Product">
           <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
           <End Role="Order_Details" Type="Self.Order_Details" Multiplicity="*" />
@@ -1177,30 +964,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Recipe_Step_Product">
-          <End Role="Product" Type="Self.Product" Multiplicity="0..1" />
-          <End Role="Recipe_Step" Type="Self.Recipe_Step" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Product">
-              <PropertyRef Name="p_id" />
-            </Principal>
-            <Dependent Role="Recipe_Step">
-              <PropertyRef Name="p_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Recipe_Step_Recipe">
-          <End Role="Recipe" Type="Self.Recipe" Multiplicity="0..1" />
-          <End Role="Recipe_Step" Type="Self.Recipe_Step" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Recipe">
-              <PropertyRef Name="r_id" />
-            </Principal>
-            <Dependent Role="Recipe_Step">
-              <PropertyRef Name="r_id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityContainer Name="GroceryStoreDBEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Admins" EntityType="Self.Admin" />
           <EntitySet Name="Batches" EntityType="Self.Batch" />
@@ -1212,16 +975,11 @@
           <EntitySet Name="Discounts" EntityType="Self.Discount" />
           <EntitySet Name="Distributors" EntityType="Self.Distributor" />
           <EntitySet Name="FAQs" EntityType="Self.FAQ" />
-          <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
-          <EntitySet Name="Orders" EntityType="Self.Order" />
           <EntitySet Name="Order_Details" EntityType="Self.Order_Details" />
           <EntitySet Name="Order_Status" EntityType="Self.Order_Status" />
           <EntitySet Name="OTP_History" EntityType="Self.OTP_History" />
-          <EntitySet Name="Payments" EntityType="Self.Payment" />
           <EntitySet Name="Products" EntityType="Self.Product" />
           <EntitySet Name="Product_Category" EntityType="Self.Product_Category" />
-          <EntitySet Name="Recipes" EntityType="Self.Recipe" />
-          <EntitySet Name="Recipe_Step" EntityType="Self.Recipe_Step" />
           <EntitySet Name="Unit_Of_Measurement" EntityType="Self.Unit_Of_Measurement" />
           <AssociationSet Name="FK_Batch_Distributor" Association="Self.FK_Batch_Distributor">
             <End Role="Distributor" EntitySet="Distributors" />
@@ -1243,29 +1001,9 @@
             <End Role="Customer_Address" EntitySet="Customer_Address" />
             <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
-          <AssociationSet Name="FK_Feedback_Feedback" Association="Self.FK_Feedback_Feedback">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Feedback" EntitySet="Feedbacks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Customer" Association="Self.FK_Order_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
           <AssociationSet Name="FK_OTP_History_OTP_History" Association="Self.FK_OTP_History_OTP_History">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="OTP_History" EntitySet="OTP_History" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Payment_Payment" Association="Self.FK_Payment_Payment">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Payment" EntitySet="Payments" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Customer_Address" Association="Self.FK_Order_Customer_Address">
-            <End Role="Customer_Address" EntitySet="Customer_Address" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Delivery_Time_Slot" Association="Self.FK_Order_Delivery_Time_Slot">
-            <End Role="Delivery_Time_Slot" EntitySet="Delivery_Time_Slot" />
-            <End Role="Order" EntitySet="Orders" />
           </AssociationSet>
           <AssociationSet Name="FK_Discount_Product" Association="Self.FK_Discount_Product">
             <End Role="Product" EntitySet="Products" />
@@ -1279,22 +1017,6 @@
             <End Role="Distributor" EntitySet="Distributors" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Feedback_Product" Association="Self.FK_Feedback_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Feedback" EntitySet="Feedbacks" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Details_Order" Association="Self.FK_Order_Details_Order">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Order_Details" EntitySet="Order_Details" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Order_Order_Status" Association="Self.FK_Order_Order_Status">
-            <End Role="Order_Status" EntitySet="Order_Status" />
-            <End Role="Order" EntitySet="Orders" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Payment_Order" Association="Self.FK_Payment_Order">
-            <End Role="Order" EntitySet="Orders" />
-            <End Role="Payment" EntitySet="Payments" />
-          </AssociationSet>
           <AssociationSet Name="FK_Order_Details_Product" Association="Self.FK_Order_Details_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="Order_Details" EntitySet="Order_Details" />
@@ -1307,20 +1029,53 @@
             <End Role="Unit_Of_Measurement" EntitySet="Unit_Of_Measurement" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
-          <AssociationSet Name="FK_Recipe_Step_Product" Association="Self.FK_Recipe_Step_Product">
-            <End Role="Product" EntitySet="Products" />
-            <End Role="Recipe_Step" EntitySet="Recipe_Step" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Recipe_Step_Recipe" Association="Self.FK_Recipe_Step_Recipe">
-            <End Role="Recipe" EntitySet="Recipes" />
-            <End Role="Recipe_Step" EntitySet="Recipe_Step" />
-          </AssociationSet>
           <EntitySet Name="Feedback_test" EntityType="GroceryStoreDBModel.Feedback_test" />
           <AssociationSet Name="FK_Cart_Customer" Association="GroceryStoreDBModel.FK_Cart_Customer">
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Cart" EntitySet="Carts" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="Payments" EntityType="GroceryStoreDBModel.Payment" />
+          <EntitySet Name="Recipe_Step" EntityType="GroceryStoreDBModel.Recipe_Step" />
+          <AssociationSet Name="FK_Recipe_Step_Product" Association="GroceryStoreDBModel.FK_Recipe_Step_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Recipe_Step" EntitySet="Recipe_Step" />
+          </AssociationSet>
+          <EntitySet Name="Recipes" EntityType="GroceryStoreDBModel.Recipe" />
+          <AssociationSet Name="FK_Recipe_Step_Recipe" Association="GroceryStoreDBModel.FK_Recipe_Step_Recipe">
+            <End Role="Recipe" EntitySet="Recipes" />
+            <End Role="Recipe_Step" EntitySet="Recipe_Step" />
+          </AssociationSet>
+          <EntitySet Name="Feedbacks" EntityType="GroceryStoreDBModel.Feedback" />
+          <AssociationSet Name="FK_Feedback_Feedback" Association="GroceryStoreDBModel.FK_Feedback_Feedback">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Feedback_Product" Association="GroceryStoreDBModel.FK_Feedback_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="Feedback" EntitySet="Feedbacks" />
+          </AssociationSet>
+          <EntitySet Name="Orders" EntityType="GroceryStoreDBModel.Order" />
+          <AssociationSet Name="FK_Order_Customer_Address" Association="GroceryStoreDBModel.FK_Order_Customer_Address">
+            <End Role="Customer_Address" EntitySet="Customer_Address" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Delivery_Time_Slot" Association="GroceryStoreDBModel.FK_Order_Delivery_Time_Slot">
+            <End Role="Delivery_Time_Slot" EntitySet="Delivery_Time_Slot" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Details_Order" Association="GroceryStoreDBModel.FK_Order_Details_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Order_Details" EntitySet="Order_Details" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Order_Order_Status" Association="GroceryStoreDBModel.FK_Order_Order_Status">
+            <End Role="Order_Status" EntitySet="Order_Status" />
+            <End Role="Order" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Payment_Order" Association="GroceryStoreDBModel.FK_Payment_Order">
+            <End Role="Order" EntitySet="Orders" />
+            <End Role="Payment" EntitySet="Payments" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Feedback_test">
           <Key>
             <PropertyRef Name="f_id" />
@@ -1343,7 +1098,186 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="Payment">
+          <Key>
+            <PropertyRef Name="pay_id" />
+          </Key>
+          <Property Name="pay_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="payment_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="o_id" Type="Int32" />
+          <NavigationProperty Name="Order" Relationship="GroceryStoreDBModel.FK_Payment_Order" FromRole="Payment" ToRole="Order" />
+        </EntityType>
+        <EntityType Name="Recipe_Step">
+          <Key>
+            <PropertyRef Name="rs_id" />
+          </Key>
+          <Property Name="rs_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="step_number" Type="Int32" Nullable="false" />
+          <Property Name="instruction" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="r_id" Type="Int32" />
+          <Property Name="p_id" Type="Int32" />
+          <Property Name="product_unit" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="amount_req" Type="Int32" />
+          <NavigationProperty Name="Product" Relationship="GroceryStoreDBModel.FK_Recipe_Step_Product" FromRole="Recipe_Step" ToRole="Product" />
+          <NavigationProperty Name="Recipe" Relationship="GroceryStoreDBModel.FK_Recipe_Step_Recipe" FromRole="Recipe_Step" ToRole="Recipe" />
+        </EntityType>
+        <Association Name="FK_Recipe_Step_Product">
+          <End Type="GroceryStoreDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Recipe_Step" Role="Recipe_Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="Recipe_Step">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Recipe">
+          <Key>
+            <PropertyRef Name="r_id" />
+          </Key>
+          <Property Name="r_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="created_by" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="created_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="modified_by" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="modified_dtm" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="comment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="imagepath" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Recipe_Step" Relationship="GroceryStoreDBModel.FK_Recipe_Step_Recipe" FromRole="Recipe" ToRole="Recipe_Step" />
+        </EntityType>
+        <Association Name="FK_Recipe_Step_Recipe">
+          <End Type="GroceryStoreDBModel.Recipe" Role="Recipe" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Recipe_Step" Role="Recipe_Step" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Recipe">
+              <PropertyRef Name="r_id" />
+            </Principal>
+            <Dependent Role="Recipe_Step">
+              <PropertyRef Name="r_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Feedback">
+          <Key>
+            <PropertyRef Name="f_id" />
+          </Key>
+          <Property Name="f_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_id" Type="Int32" />
+          <Property Name="p_id" Type="Int32" />
+          <Property Name="feedback1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="rating" Type="Int32" />
+          <NavigationProperty Name="Customer" Relationship="GroceryStoreDBModel.FK_Feedback_Feedback" FromRole="Feedback" ToRole="Customer" />
+          <NavigationProperty Name="Product" Relationship="GroceryStoreDBModel.FK_Feedback_Product" FromRole="Feedback" ToRole="Product" />
+        </EntityType>
+        <Association Name="FK_Feedback_Feedback">
+          <End Type="GroceryStoreDBModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="c_id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="c_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Feedback_Product">
+          <End Type="GroceryStoreDBModel.Product" Role="Product" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Feedback" Role="Feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="p_id" />
+            </Principal>
+            <Dependent Role="Feedback">
+              <PropertyRef Name="p_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Order">
+          <Key>
+            <PropertyRef Name="o_id" />
+          </Key>
+          <Property Name="o_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="c_id" Type="Int32" />
+          <Property Name="ca_id" Type="Int32" />
+          <Property Name="dts_id" Type="Int32" />
+          <Property Name="os_id" Type="Int32" />
+          <Property Name="order_date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="delivery_charge" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="tax" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="total_amount" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="paymentmode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Customer_Address" Relationship="GroceryStoreDBModel.FK_Order_Customer_Address" FromRole="Order" ToRole="Customer_Address" />
+          <NavigationProperty Name="Delivery_Time_Slot" Relationship="GroceryStoreDBModel.FK_Order_Delivery_Time_Slot" FromRole="Order" ToRole="Delivery_Time_Slot" />
+          <NavigationProperty Name="Order_Details" Relationship="GroceryStoreDBModel.FK_Order_Details_Order" FromRole="Order" ToRole="Order_Details" />
+          <NavigationProperty Name="Order_Status" Relationship="GroceryStoreDBModel.FK_Order_Order_Status" FromRole="Order" ToRole="Order_Status" />
+          <NavigationProperty Name="Payments" Relationship="GroceryStoreDBModel.FK_Payment_Order" FromRole="Order" ToRole="Payment" />
+        </EntityType>
+        <Association Name="FK_Order_Customer_Address">
+          <End Type="GroceryStoreDBModel.Customer_Address" Role="Customer_Address" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer_Address">
+              <PropertyRef Name="ca_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="ca_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Delivery_Time_Slot">
+          <End Type="GroceryStoreDBModel.Delivery_Time_Slot" Role="Delivery_Time_Slot" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Delivery_Time_Slot">
+              <PropertyRef Name="dts_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="dts_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Details_Order">
+          <End Type="GroceryStoreDBModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Order_Details" Role="Order_Details" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="o_id" />
+            </Principal>
+            <Dependent Role="Order_Details">
+              <PropertyRef Name="o_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Order_Order_Status">
+          <End Type="GroceryStoreDBModel.Order_Status" Role="Order_Status" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Order" Role="Order" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order_Status">
+              <PropertyRef Name="os_id" />
+            </Principal>
+            <Dependent Role="Order">
+              <PropertyRef Name="os_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Payment_Order">
+          <End Type="GroceryStoreDBModel.Order" Role="Order" Multiplicity="0..1" />
+          <End Type="GroceryStoreDBModel.Payment" Role="Payment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Order">
+              <PropertyRef Name="o_id" />
+            </Principal>
+            <Dependent Role="Payment">
+              <PropertyRef Name="o_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1465,32 +1399,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Feedbacks">
-            <EntityTypeMapping TypeName="GroceryStoreDBModel.Feedback">
-              <MappingFragment StoreEntitySet="Feedback">
-                <ScalarProperty Name="f_id" ColumnName="f_id" />
-                <ScalarProperty Name="c_id" ColumnName="c_id" />
-                <ScalarProperty Name="p_id" ColumnName="p_id" />
-                <ScalarProperty Name="feedback1" ColumnName="feedback" />
-                <ScalarProperty Name="rating" ColumnName="rating" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Orders">
-            <EntityTypeMapping TypeName="GroceryStoreDBModel.Order">
-              <MappingFragment StoreEntitySet="Order">
-                <ScalarProperty Name="o_id" ColumnName="o_id" />
-                <ScalarProperty Name="c_id" ColumnName="c_id" />
-                <ScalarProperty Name="ca_id" ColumnName="ca_id" />
-                <ScalarProperty Name="dts_id" ColumnName="dts_id" />
-                <ScalarProperty Name="os_id" ColumnName="os_id" />
-                <ScalarProperty Name="order_date" ColumnName="order_date" />
-                <ScalarProperty Name="delivery_charge" ColumnName="delivery_charge" />
-                <ScalarProperty Name="tax" ColumnName="tax" />
-                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Order_Details">
             <EntityTypeMapping TypeName="GroceryStoreDBModel.Order_Details">
               <MappingFragment StoreEntitySet="Order_Details">
@@ -1523,17 +1431,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Payments">
-            <EntityTypeMapping TypeName="GroceryStoreDBModel.Payment">
-              <MappingFragment StoreEntitySet="Payment">
-                <ScalarProperty Name="pay_id" ColumnName="pay_id" />
-                <ScalarProperty Name="c_id" ColumnName="c_id" />
-                <ScalarProperty Name="amount" ColumnName="amount" />
-                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
-                <ScalarProperty Name="o_id" ColumnName="o_id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="GroceryStoreDBModel.Product">
               <MappingFragment StoreEntitySet="Product">
@@ -1560,33 +1457,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Recipes">
-            <EntityTypeMapping TypeName="GroceryStoreDBModel.Recipe">
-              <MappingFragment StoreEntitySet="Recipe">
-                <ScalarProperty Name="r_id" ColumnName="r_id" />
-                <ScalarProperty Name="name" ColumnName="name" />
-                <ScalarProperty Name="description" ColumnName="description" />
-                <ScalarProperty Name="created_by" ColumnName="created_by" />
-                <ScalarProperty Name="created_dtm" ColumnName="created_dtm" />
-                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
-                <ScalarProperty Name="modified_dtm" ColumnName="modified_dtm" />
-                <ScalarProperty Name="comment" ColumnName="comment" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Recipe_Step">
-            <EntityTypeMapping TypeName="GroceryStoreDBModel.Recipe_Step">
-              <MappingFragment StoreEntitySet="Recipe_Step">
-                <ScalarProperty Name="rs_id" ColumnName="rs_id" />
-                <ScalarProperty Name="step_number" ColumnName="step_number" />
-                <ScalarProperty Name="instruction" ColumnName="instruction" />
-                <ScalarProperty Name="r_id" ColumnName="r_id" />
-                <ScalarProperty Name="p_id" ColumnName="p_id" />
-                <ScalarProperty Name="product_unit" ColumnName="product_unit" />
-                <ScalarProperty Name="amount_req" ColumnName="amount_req" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Unit_Of_Measurement">
             <EntityTypeMapping TypeName="GroceryStoreDBModel.Unit_Of_Measurement">
               <MappingFragment StoreEntitySet="Unit_Of_Measurement">
@@ -1603,6 +1473,71 @@
                 <ScalarProperty Name="p_id" ColumnName="p_id" />
                 <ScalarProperty Name="c_id" ColumnName="c_id" />
                 <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Payments">
+            <EntityTypeMapping TypeName="GroceryStoreDBModel.Payment">
+              <MappingFragment StoreEntitySet="Payment">
+                <ScalarProperty Name="o_id" ColumnName="o_id" />
+                <ScalarProperty Name="payment_date" ColumnName="payment_date" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="pay_id" ColumnName="pay_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipe_Step">
+            <EntityTypeMapping TypeName="GroceryStoreDBModel.Recipe_Step">
+              <MappingFragment StoreEntitySet="Recipe_Step">
+                <ScalarProperty Name="amount_req" ColumnName="amount_req" />
+                <ScalarProperty Name="product_unit" ColumnName="product_unit" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="r_id" ColumnName="r_id" />
+                <ScalarProperty Name="instruction" ColumnName="instruction" />
+                <ScalarProperty Name="step_number" ColumnName="step_number" />
+                <ScalarProperty Name="rs_id" ColumnName="rs_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Recipes">
+            <EntityTypeMapping TypeName="GroceryStoreDBModel.Recipe">
+              <MappingFragment StoreEntitySet="Recipe">
+                <ScalarProperty Name="imagepath" ColumnName="imagepath" />
+                <ScalarProperty Name="comment" ColumnName="comment" />
+                <ScalarProperty Name="modified_dtm" ColumnName="modified_dtm" />
+                <ScalarProperty Name="modified_by" ColumnName="modified_by" />
+                <ScalarProperty Name="created_dtm" ColumnName="created_dtm" />
+                <ScalarProperty Name="created_by" ColumnName="created_by" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="r_id" ColumnName="r_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Feedbacks">
+            <EntityTypeMapping TypeName="GroceryStoreDBModel.Feedback">
+              <MappingFragment StoreEntitySet="Feedback">
+                <ScalarProperty Name="rating" ColumnName="rating" />
+                <ScalarProperty Name="feedback1" ColumnName="feedback" />
+                <ScalarProperty Name="p_id" ColumnName="p_id" />
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="f_id" ColumnName="f_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="GroceryStoreDBModel.Order">
+              <MappingFragment StoreEntitySet="Order">
+                <ScalarProperty Name="paymentmode" ColumnName="paymentmode" />
+                <ScalarProperty Name="total_amount" ColumnName="total_amount" />
+                <ScalarProperty Name="tax" ColumnName="tax" />
+                <ScalarProperty Name="delivery_charge" ColumnName="delivery_charge" />
+                <ScalarProperty Name="order_date" ColumnName="order_date" />
+                <ScalarProperty Name="os_id" ColumnName="os_id" />
+                <ScalarProperty Name="dts_id" ColumnName="dts_id" />
+                <ScalarProperty Name="ca_id" ColumnName="ca_id" />
+                <ScalarProperty Name="c_id" ColumnName="c_id" />
+                <ScalarProperty Name="o_id" ColumnName="o_id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

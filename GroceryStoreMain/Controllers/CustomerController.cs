@@ -3,7 +3,9 @@ using GroceryStoreMain.Payment;
 using PayPal.Api;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Mail;
@@ -43,7 +45,17 @@ namespace GroceryStoreMain.Controllers
                 int id = Convert.ToInt32(Session["id"]);
                 Session["Cart"] = context.Carts.Where(c => c.c_id == id).ToList();
             }
-            ViewBag.Category = context.Product_Category.ToList();
+            List<Product_Category> pcs = context.Product_Category.ToList();
+            pcs.ForEach(p =>
+            {
+                if (p.imagepath != null)
+                {
+                    p.imagepath = Path.Combine("~\\Images\\ProductCategories", p.imagepath+".jpg");
+                }
+
+            });
+            ViewBag.Category = pcs;
+            ViewBag.NewArrivalProduct = context.Products.OrderBy(p => p.p_id).Take(8).ToList();
             //   ViewBag.NoofItemInCart=context.Carts.Where(c=>c.)
             return View();
         }
@@ -68,8 +80,8 @@ namespace GroceryStoreMain.Controllers
                     .Select(p => new ProductModel
                     {
                         p_id = p.p_id,
-                        name=p.name,
-                        price=p.price,
+                        name = p.name,
+                        price = p.price,
                         imagepath = p.imagepath.ToString()
 
                     }).ToList();
@@ -84,7 +96,7 @@ namespace GroceryStoreMain.Controllers
         {
             var c_id = Convert.ToInt32(Session["id"]);
             //todo: thinknig of adding order number. but for now i will use order id
-            var orders=context.Orders.Where(o => o.c_id == c_id).ToList();
+            var orders = context.Orders.Where(o => o.c_id == c_id).ToList();
             ViewBag.Category = context.Product_Category.ToList();
             return View(orders);
 
@@ -93,10 +105,21 @@ namespace GroceryStoreMain.Controllers
         public ActionResult MyOrderDetails(int id)
         {
             ViewBag.Category = context.Product_Category.ToList();
-            var order=context.Orders.FirstOrDefault(o => o.o_id==id);
+            var order = context.Orders.FirstOrDefault(o => o.o_id == id);
+            order = order.GetOrder(order);
             return View(order);
         }
 
+        public ActionResult SubmitFeedback(string feedback)
+        {
+            Feedback f = new Feedback();
+            f.c_id = Convert.ToInt32(Session["id"]);
+            Feedback feedback1 = JsonSerializer.Deserialize<Feedback>(feedback);
+            feedback1.c_id = Convert.ToInt32(Session["id"]);
+            context.Feedbacks.Add(feedback1);
+            context.SaveChanges();
+            return Json(new { success = true, url = "https://localhost:44350/Customer/CustomerHome" });
+        }
         public ActionResult ProductByProductCategory(int id = 0)
         {
             Product_Category product_Category = context.Product_Category.FirstOrDefault(pc => pc.pc_id == id);
@@ -289,8 +312,8 @@ namespace GroceryStoreMain.Controllers
         {
             if (Session["id"] == null)
             {
-                ViewBag.Category = context.Product_Category.ToList();
-                return View("Home");
+                
+                return RedirectToAction("Home");
             }
             if (Session["id"] != null)
             {
@@ -490,9 +513,9 @@ namespace GroceryStoreMain.Controllers
             };
             return this.payment.Execute(apiContext, paymentExecution);
         }
-        private PayPal.Api.Payment CreatePayment(APIContext apiContext, string redirectUrl)
+        private PayPal.Api.Payment CreatePayment(APIContext apiContext, string redirectUrl, Customer customer, Cart cart, Models.Order order)
         {
-            var c = this.CheckoutModel;
+
             //Models.Order order = new Models.Order();
 
             //context.Orders.Add(order);
@@ -503,23 +526,40 @@ namespace GroceryStoreMain.Controllers
             {
                 items = new List<Item>()
             };
-            //foreach (var item in this.CheckoutModel.cart.Cart_Product_Assoc)
-            //{
-            //    //Adding Item Details like name, currency, price etc  
-            //    itemList.items.Add(new Item()
-            //    {
-            //        name = item.Product.name,
-            //        currency = "IN",
-            //        price = item.Product.price.ToString(),
-            //        quantity = "1",
-            //        sku = item.Product.Product_Category.name
-            //    });
-            //}
+            foreach (var item in cart.Cart_Product_Assoc)//cpas
+            {
+                //Adding Item Details like name, currency, price etc  
+                itemList.items.Add(new Item()
+                {
+                    name = item.Product.name,
+                    currency = "USD",
+                    price = item.Product.price.ToString(),
+                    quantity = "1",
+                    sku = item.Product.Product_Category.name
+                });
+            }
 
+            Address address = new Address()
+            {
+                line1 = customer.Customer_Address.address1 + customer.Customer_Address.address2,
+                line2 = customer.Customer_Address.address3,
+                city = customer.Customer_Address.city,
+                country_code = "IN",
+                state = customer.Customer_Address.state,
+                postal_code = customer.Customer_Address.postal_code
+            };
+            PayerInfo payerInfo = new PayerInfo()
+            {
+                first_name = customer.full_name,
+                billing_address = address,
+                email = customer.email_id,
+                country_code = "IN"
+            };
 
             var payer = new Payer()
             {
-                payment_method = "paypal"
+                payment_method = "paypal",
+                payer_info = payerInfo
             };
             // Configure Redirect Urls here with RedirectUrls object  
             var redirUrls = new RedirectUrls()
@@ -530,14 +570,15 @@ namespace GroceryStoreMain.Controllers
             // Adding Tax, shipping and Subtotal details  
             var details = new Details()
             {
-                tax = "1",
-                shipping = "1",
-                subtotal = "1"
+                tax = order.tax.ToString(),//total
+                shipping = order.delivery_charge.ToString(),//shipping
+                subtotal = order.total_amount.ToString()//
             };
             //Final amount with details  
             var amount = new Amount()
             {
-                currency = "IN",
+                currency = "USD",
+                total = Convert.ToInt32(order.total_amount).ToString(),
                 //total = this.CheckoutModel.total.ToString(), // Total must be equal to sum of tax, shipping and subtotal.  
                 details = details
             };
@@ -569,24 +610,6 @@ namespace GroceryStoreMain.Controllers
         [HttpPost]
         public object ProceedToCheckout(string DeliveryTimeSlot, string SelectedPaymentMode, string CustomerDetails, string IsShipToDiffAddress, string CustomerShippingAdd, int cart_id)
         {
-
-            Models.Order order = new Models.Order();
-            order.c_id = 2;
-            order.dts_id = 1;
-            order.order_date = System.DateTime.Now;
-            order.os_id = 1002;
-            order.ca_id = 2;
-
-            order.total_amount = 12;
-            order.delivery_charge = 0;
-            order.tax = 0;
-            context.Orders.Add(order);
-            context.SaveChanges();
-
-
-
-
-
             var c_id = Convert.ToInt32(Session["id"]);
             Customer customer = JsonSerializer.Deserialize<Customer>(CustomerDetails);
             Delivery_Time_Slot dts = new Delivery_Time_Slot();
@@ -598,13 +621,10 @@ namespace GroceryStoreMain.Controllers
                 customer1.full_name = customer.full_name;
                 customer1.email_id = customer.email_id;
                 customer1.mobile_no = customer.mobile_no;
-
                 if (customer.alternate_mobile_no != null)
                 {
                     customer1.alternate_mobile_no = customer.alternate_mobile_no;
                 }
-
-
 
                 if (customer_Address != null)
                 {
@@ -620,40 +640,39 @@ namespace GroceryStoreMain.Controllers
                 }
                 else
                 {
-                    Customer_Address ca = customer.Customer_Address;
-                    context.Customer_Address.Add(ca);
+                    Customer_Address address = customer.Customer_Address;
+                    context.Customer_Address.Add(address);
                     context.SaveChanges();
-                    customer1.ca_id = ca.ca_id;
+                    customer1.ca_id = address.ca_id;
 
                 }
                 context.Customers.Attach(customer1);
 
             }
 
-            Customer_Address ada = new Customer_Address();
+            Customer_Address ca = new Customer_Address();
             if (IsShipToDiffAddress != null)
             {
-                ada = JsonSerializer.Deserialize<Customer_Address>(CustomerShippingAdd);
-                Customer_Address ca = new Customer_Address();
+                ca = JsonSerializer.Deserialize<Customer_Address>(CustomerShippingAdd);
+                context.Customer_Address.Add(ca);
                 context.SaveChanges();
-                //save address and get address id
             }
 
             Cart cart = context.Carts.FirstOrDefault(c => c.cart_id == cart_id);
             decimal tot = 0;
             cart.Cart_Product_Assoc.ToList().ForEach(cpa => { tot += cpa.Product.price; });
 
-            //Models.Order order = new Models.Order();
-            //order.c_id = c_id;
-            //order.dts_id = Convert.ToInt32(DeliveryTimeSlot);
-            //order.order_date = System.DateTime.Now;
-            //order.os_id = 1002;
-            //order.ca_id = ada.ca_id;
-
-            //order.total_amount = tot;
-            //order.delivery_charge = 0;
-            //order.tax = 0;
-            //context.Orders.Add(order);
+            Models.Order order = new Models.Order();
+            order.c_id = c_id;
+            order.dts_id = Convert.ToInt32(DeliveryTimeSlot);
+            order.order_date = System.DateTime.Now;
+            order.os_id = 1002;//Code for NEW in Order
+            order.ca_id = ca.ca_id > 0 ? ca.ca_id : customer1.ca_id;
+            order.paymentmode = SelectedPaymentMode;
+            order.total_amount = tot;
+            order.delivery_charge = 0;
+            order.tax = 0;
+            context.Orders.Add(order);
             context.SaveChanges();
 
 
@@ -678,6 +697,66 @@ namespace GroceryStoreMain.Controllers
             }
             context.SaveChanges();
 
+            if (SelectedPaymentMode =="PAYPAL")
+            {
+                #region place Payment
+                //getting the apiContext  
+                APIContext apiContext = PaypalConfiguration.GetAPIContext();
+                try
+                {
+                    //A resource representing a Payer that funds a payment Payment Method as paypal  
+                    //Payer Id will be returned when payment proceeds or click to pay  
+                    string payerId = Request.Params["PayerID"];
+                    if (string.IsNullOrEmpty(payerId))
+                    {
+                        //this section will be executed first because PayerID doesn't exist  
+                        //it is returned by the create function call of the payment class  
+                        // Creating a payment  
+                        // baseURL is the url on which paypal sendsback the data.  
+                        string baseURI = Request.Url.Scheme + "://" + Request.Url.Authority + "/Payment/Success?";
+                        //here we are generating guid for storing the paymentID received in session  
+                        //which will be used in the payment execution  
+                        var guid = Convert.ToString((new Random()).Next(100000));
+                        //CreatePayment function gives us the payment approval url  
+                        //on which payer is redirected for paypal account payment  
+                        var createdPayment = this.CreatePayment(apiContext, baseURI + "guid=" + guid, customer1, cart, order);
+                        //get links returned from paypal in response to Create function call  
+                        var links = createdPayment.links.GetEnumerator();
+                        string paypalRedirectUrl = null;
+                        while (links.MoveNext())
+                        {
+                            Links lnk = links.Current;
+                            if (lnk.rel.ToLower().Trim().Equals("approval_url"))
+                            {
+                                //saving the payapalredirect URL to which user will be redirected for payment  
+                                paypalRedirectUrl = lnk.href;
+                            }
+                        }
+                        // saving the paymentID in the key guid  
+                        Session.Add(guid, createdPayment.id);
+                        return Json(new { success = true, url = paypalRedirectUrl });
+                    }
+                    else
+                    {
+                        // This function exectues after receving all parameters for the payment  
+                        var guid = Request.Params["guid"];
+                        var executedPayment = ExecutePayment(apiContext, payerId, Session[guid] as string);
+                        //If executed payment failed then we will show payment failure message to user  
+                        if (executedPayment.state.ToLower() != "approved")
+                        {
+                            return View("FailureView");
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return View("FailureView");
+                }
+                //on successful payment, show success page to user. 
+                #endregion
+            }
+
+            //todo: delete cart ad cpa
 
             return Json(new { success = true, url = "https://localhost:44350/Payment/Success" });
         }
@@ -824,11 +903,11 @@ namespace GroceryStoreMain.Controllers
         {
             var otp = Convert.ToDecimal(otptext);
             var time = DateTime.Now;
-            var result = context.OTP_History.Where(o => o.otp == otp && o.eff_startdtm <= time && o.eff_enddtm >= time);
+            var result = context.OTP_History.FirstOrDefault(o => o.otp == otp && o.eff_startdtm <= time && o.eff_enddtm >= time);
 
-            if (result.Any())
+            if (result != null)
             {
-                var customer = result.FirstOrDefault().Customer;
+                var customer = result.Customer;
                 Session["Username"] = customer.email_id;
                 Session["Name"] = customer.full_name;
                 Session["id"] = customer.c_id;

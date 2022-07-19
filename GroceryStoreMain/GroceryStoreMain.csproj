@@ -399,6 +399,7 @@
     <Compile Include="Models\Order.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\OrderDetails.cs" />
     <Compile Include="Models\Order_Details.cs">
       <DependentUpon>DataModel.tt</DependentUpon>
     </Compile>
@@ -460,10 +461,13 @@
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\CustomerHome\groceries-delivered-to-customer-home-delivery-man-online-food-service-concept-178143028.jpg" />
+    <Content Include="Images\CustomerHome\staff-member-picking-grocery-products-shelf-express-home-delivery-service-local-pick-n-pay-supermarket-cape-town-south-207093785.jpg" />
     <Content Include="Images\grocerystorelogo.jpeg" />
     <Content Include="Images\grocerystorelogo.png" />
     <Content Include="Images\AdminLoginIcon.jpg" />
     <Content Include="applicationhost.config" />
+    <Content Include="Images\Recipe\OIP.jpg" />
     <Content Include="Images\Recipe\recipehome.png" />
     <Content Include="Models\DataModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -510,6 +514,11 @@
     <Content Include="Content\bootstrap-grid.rtl.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Images\CustomerHome\c1ab7707a6a9bbd9.webp" />
+    <Content Include="Images\CustomerHome\ed04b09381eec3f9.webp" />
+    <Content Include="Images\CustomerHome\mainhome1.webp" />
+    <Content Include="Images\CustomerHome\mainhome2.webp" />
+    <Content Include="Images\CustomerHome\t1_hp_fnv_organic-fnv_fnvStorefront_m_250622_560x378_01.webp" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\Charts\chart-area-demo.js" />
     <Content Include="Scripts\Charts\Chart.bundle.js" />
@@ -611,6 +620,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Images\ProductCategories\" />
     <Folder Include="Images\Products\" />
+    <Folder Include="Views\testOrderTable\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -9,7 +9,7 @@
 
         .sidenav {
             height: 100%;
-            width: 300PX;
+            width: 250px;
             position: fixed;
             z-index: 1;
             top: 0;
@@ -22,7 +22,7 @@
             .sidenav a {
                 padding: 6px 6px 6px 32px;
                 text-decoration: none;
-                font-size: 25px;
+                font-size: 20px;
                 color: whitesmoke;
                 display: block;
             }
@@ -33,7 +33,7 @@
                 }
 
         .main {
-            margin-left: 305PX; /* Same as the width of the sidenav */
+            margin-left: 250px; /* Same as the width of the sidenav */
         }
 
         @@media screen and (max-height: 450px) {
@@ -42,7 +42,7 @@
             }
 
                 .sidenav a {
-                    font-size: 18px;
+                    font-size: 13px;
                 }
         }
     </style>
@@ -86,13 +86,13 @@
             </li>
             <li class="nav-item ">
                 <a href="@Url.Action("FAQ","Admin")">
-                    <span class="glyphicon glyphicon-qrcode"></span>
+                    <span class="glyphicon glyphicon-question-sign"></span>
                     Manage FAQ
                 </a>
             </li>
             <li class="nav-item ">
                 <a href="@Url.Action("Users","Admin")">
-                    <span class="glyphicon glyphicon-qrcode"></span>
+                    <span class="glyphicon glyphicon-user"></span>
                     Manage User
                 </a>
             </li>
@@ -105,7 +105,7 @@
             </li>
             <li class="nav-item ">
                 <a href="@Url.Action("OrderList","Admin")">
-                    <span class="glyphicon glyphicon-qrcode"></span>
+                    <span class="glyphicon glyphicon-shopping-cart"></span>
                     Manage Order
                 </a>
             </li>

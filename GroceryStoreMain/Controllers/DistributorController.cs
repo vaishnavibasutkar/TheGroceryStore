@@ -14,18 +14,18 @@ namespace GroceryStoreMain.Controllers
     {
 
         GroceryStoreDBEntities context = new GroceryStoreDBEntities();
-     
+
 
         public ActionResult Home()
         {
             if (Session["Username"] != null)
             {
                 ViewBag.Message = "Your application description page.";
-                ViewBag.TotalOpenOrder = context.Orders.Where(o=>o.os_id==1).Count();
-                ViewBag.TotalConfirmedOrder = context.Orders.Where(o=>o.os_id==2).Count();
-                ViewBag.TotalCancelledOrder = context.Orders.Where(o=>o.os_id==3).Count();
-                ViewBag.TotalCompletedOrder = context.Orders.Where(o=>o.os_id==4).Count();
-               
+                ViewBag.TotalOpenOrder = context.Orders.Where(o => o.os_id == 1).Count();
+                ViewBag.TotalConfirmedOrder = context.Orders.Where(o => o.os_id == 2).Count();
+                ViewBag.TotalCancelledOrder = context.Orders.Where(o => o.os_id == 3).Count();
+                ViewBag.TotalCompletedOrder = context.Orders.Where(o => o.os_id == 4).Count();
+
                 return View();
             }
             else
@@ -58,6 +58,9 @@ namespace GroceryStoreMain.Controllers
             {
                 List<Recipe> recipes = context.Recipes.ToList();
                 List<Recipe_Step> recipe_Steps = context.Recipe_Step.ToList();
+                string UploadPath = ConfigurationManager.AppSettings["RecipeImagePath"].ToString();
+                recipes.Where(r => r.imagepath != null).ToList().ForEach(r => { r.imagepath = Path.Combine("~\\Images\\Recipe", r.imagepath); });
+
                 //List<ProductModel> productModels = new List<ProductModel>();
                 //product.ForEach(p =>
                 //{

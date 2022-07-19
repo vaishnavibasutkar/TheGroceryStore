@@ -50,7 +50,17 @@
                     foreach (var r in Model)
                     {
                         <tr>
-                            <td>Image</td>
+                            <td>
+                                @if (r.imagepath != null)
+                                {
+                                    <img src="@Url.Content(r.imagepath)" height="90" width="100"/>
+                                    @*<img id="recipeimage" src=@Url.Content(Model.imagepath) class="h-80 w-100 border border-primary rounded" height="150" width="100" alt=" " style="border-width: 2px !important; border-style: dashed !important;" />*@
+                                }
+                                else
+                                {
+                            <p>No Image Added.</p>
+                                }
+                            </td>
                             <td>@r.r_id</td>
                             <td>@r.name</td>
                             <td>@r.description</td>

@@ -1,21 +1,21 @@
 ﻿var testobject;
 $(document).ready(function () {
-    $("body").on("change", "#categoryrecipe", function () {
+    var stepnum = parseInt($('#TotalStep').val())+parseInt($('#TotalStep').val())
+    $("body").on("change", "#productcategory", function () {
+        var child = $(this).parent().next('#products').children()
         $('#productrecipe').empty()
-        var selectedCategory = parseInt($(this).find("option:selected").val())
-
-        var options ="<option>---Products---</option>"
+        var selectedCategory = parseInt($(this).parent().find('#productcategory').find("option:selected").attr('id'))
+      
+        var options = "<option>---Products---</option>"
         $('#tag li').each(function () {
             var t = this.id.split(' - ')
-       
-            if (selectedCategory==t[1]) {
-              
-                options += '<option value="' + t[0] + '">' + t[2] + '</option>';
+
+            if (selectedCategory == t[1]) {
+
+                options += '<option id="' + t[0] + '">' + t[2] + '</option>';
             }
         })
-
-        
-        $('#productrecipe').html(options);
+        child.html(options);
     });
 
     $('#AddToCart').click(function (e) {
@@ -98,7 +98,9 @@ $(document).ready(function () {
 
                         if (response.success == true) {
                             $('#closeloginmodel').click();
-                            $('#menulogin').html('  <a href="" class="nav-item nav-link">' + response.Name + '</a>' +
+                            $('#menulogin').html('  <a href="" class="dropdown-toggle btn nav-item nav-link" data-toggle="dropdown">' + response.Name + '</a>' +
+                                '  <div class="dropdown-menu  rounded-0 m-0"><a class="nav-item nav-link" href = "@Url.Action("MyProfile","Customer")" id = "myprofile">'+
+                                'My Profile</a > <a class="nav-item nav-link" href="@Url.Action(" MyOrders","Customer")" id = "orders" > Orders</a ></div >'+
                                 '<a href = @Url.Action("Logout", "Customer") class= "nav-item nav-link" > Logout</a >');
                             $('#sessionUser').val(response.Name);
                         }
@@ -164,17 +166,17 @@ $(document).ready(function () {
     //        contentType: "application/json",
     //        data: JSON.stringify(t),
     //        success: function (data) {
-                      
+
     //        alert(data);
     //    },
     //        error: function (response, xhr, data) {
     //        }
     //            }
     //)
-//});
+    //});
 
 
-    
+
 })
 
 
@@ -466,26 +468,38 @@ function ProceedToCheckoutFromCart(ids) {
 
 //}
 
-function AddRecipeStep() {
-    $.ajax({
-        type: 'post',
-        dataType: 'json',
-        url: '/Recipe/AddNewRecipeDPartial',
-        success: function (partialView) {
-            $('#RecipeSteps').append(partialView);
-        }
-    });
-    //var url = '@Url.Action("addnewrecipedetail", "recipe")';
-    //var ele = $('#RecipeSteps').load(url)
-    //document.getElementById("RecipeSteps").innerHTML += " <div class=card mt-2 mb-2>"+
-    //    "<div id = id_card_step_0 class=card - body pr - 2 pl - 2 pr - md - 5 pl - md - 5> "+
-    //     "   <div class=row > <div class=col-11>                <h4 id=id_step_0 class=handle>@*<i class=fas fa-paragraph></i>*@Step 1</h4>            </div>        </div > "+
-    //     "       <div class=row > <div class=col-md-12>                <label for=id_step_18514name>Instruction</label>                <input id=id_step_18514name class=form-control>       +     </div>        </div> "+
-    //      "          <div class=row pt-2><div class=col-md-12> <div class=jumbotron style=padding: 16px;>                    <div class=row><div class=col-md-12><h4>Ingredients</h4></div>                    </div>                    <div class=row>                        <div class=col-md-12 pr-0 pl-0 pr-md-2 pl-md-2 mt-2>                            <div>                                <div draggable=false class= style=> <hr class=d-md-none><!---->                                    <div class=d-flex>"+
-    //       "             <div class=flex-grow-0 handle align-self-start><button type=button class=btn btn-lg shadow-none pr-0 pl-1 pr-md-2 pl-md-2><i class=fas fa-arrows-alt-v></i></button>  </div>"+
-    //        "            <div class=flex-fill row style=margin-left: 4px; margin-right: 4px;>                                            <div class=col-lg-3 col-md-6 small-padding><input type=number step=any id=amount_0_0 class=form-control></div>                                            <div class=col-lg-3 col-md-6 small-padding>   @Html.DropDownList(pc_id, new SelectList(ViewBag.ProductCategory, pc_Id, Name), htmlAttributes: new { @class = form-control })</div>                                            <div class=col-lg-3 col-md-6 small-padding>  <input type=text class=form-control placeholder=product_unit /> </div>                                            <div class=col-lg-3 col-md-6 small-padding>                                                <input type=text class=form-control placeholder=amount_req /> </div>                                            </div>                                            <div class=flex-grow-0 small-padding>                                                <button type=button class=dropdown-item><i class=fa fa-trash fa-fw></i>  </button>                                            </div>"+
-    //         "       </div>                                </div>                            </div>                        </div>                    </div>                </div>            </div>        </div >    </div ></div >"
-}
+//function AddRecipeStep() {
+//    alert('hi')
+//    var stepnum = parseInt($('#TotalStep').val())
+//    stepnum = stepnum + 1
+
+//    var div = document.createElement("DIV")
+//    div.innerHTML = '<div class="p-3 m-3 bg-gradient-secondary text-black"><h3>Step #' + stepnum+'</h3 ></div>'+
+//                        '<table class="table"><tr><td>Instruction:</td><td><input type=text class="form-control col-6"/></td></tr>'+
+//                            '<tr><td>   @Html.DropDownList("pc_id'+stepnum+'", new SelectList(ViewBag.ProductCategory, "pc_Id","Name"), htmlAttributes: new { @class = "form-control col-6", @id = "categoryrecipe" })</td>'+
+//                                '<td><select id="productrecipe'+stepnum+'" class="form-control col-6"><option>---Products---</option></select></td></tr></table>'
+//    $('#RecipeSteps').append(div)
+//    $('#TotalStep').val(stepnum)
+
+//    //$.ajax({
+//    //    type: 'post',
+//    //    dataType: 'json',
+//    //    url: '/Recipe/AddNewRecipeDPartial',
+//    //    success: function (partialView) {
+//    //        $('#RecipeSteps').append(partialView);
+//    //    }
+//    //});
+//    //var url = '@Url.Action("addnewrecipedetail", "recipe")';
+//    //var ele = $('#RecipeSteps').load(url)
+//    //document.getElementById("RecipeSteps").innerHTML += " <div class=card mt-2 mb-2>"+
+//    //    "<div id = id_card_step_0 class=card - body pr - 2 pl - 2 pr - md - 5 pl - md - 5> "+
+//    //     "   <div class=row > <div class=col-11>                <h4 id=id_step_0 class=handle>@*<i class=fas fa-paragraph></i>*@Step 1</h4>            </div>        </div > "+
+//    //     "       <div class=row > <div class=col-md-12>                <label for=id_step_18514name>Instruction</label>                <input id=id_step_18514name class=form-control>       +     </div>        </div> "+
+//    //      "          <div class=row pt-2><div class=col-md-12> <div class=jumbotron style=padding: 16px;>                    <div class=row><div class=col-md-12><h4>Ingredients</h4></div>                    </div>                    <div class=row>                        <div class=col-md-12 pr-0 pl-0 pr-md-2 pl-md-2 mt-2>                            <div>                                <div draggable=false class= style=> <hr class=d-md-none><!---->                                    <div class=d-flex>"+
+//    //       "             <div class=flex-grow-0 handle align-self-start><button type=button class=btn btn-lg shadow-none pr-0 pl-1 pr-md-2 pl-md-2><i class=fas fa-arrows-alt-v></i></button>  </div>"+
+//    //        "            <div class=flex-fill row style=margin-left: 4px; margin-right: 4px;>                                            <div class=col-lg-3 col-md-6 small-padding><input type=number step=any id=amount_0_0 class=form-control></div>                                            <div class=col-lg-3 col-md-6 small-padding>   @Html.DropDownList(pc_id, new SelectList(ViewBag.ProductCategory, pc_Id, Name), htmlAttributes: new { @class = form-control })</div>                                            <div class=col-lg-3 col-md-6 small-padding>  <input type=text class=form-control placeholder=product_unit /> </div>                                            <div class=col-lg-3 col-md-6 small-padding>                                                <input type=text class=form-control placeholder=amount_req /> </div>                                            </div>                                            <div class=flex-grow-0 small-padding>                                                <button type=button class=dropdown-item><i class=fa fa-trash fa-fw></i>  </button>                                            </div>"+
+//    //         "       </div>                                </div>                            </div>                        </div>                    </div>                </div>            </div>        </div >    </div ></div >"
+//}
 
 function AllIngredientCart(item) {
     var test = $('#sessionUser').val();
@@ -495,8 +509,8 @@ function AllIngredientCart(item) {
     }
     else {
 
-        var RecipeID = $('#SeletedIngrdient').attr('RecipeID')
-        var NoOfServing = $('#NOServing').text();
+        var RecipeID = parseInt( $('#SeletedIngrdient').attr('RecipeID'))
+        var NoOfServing = parseInt($('#NOServing').text())
 
         $.ajax({
             type: 'post',
@@ -505,8 +519,8 @@ function AllIngredientCart(item) {
             data: { RecipeID: RecipeID, NoOfServing: NoOfServing },
             success: function (response) {
                 if (response.Success) {
-                   
-                    $('#tempMessage').append(response.tempMessage)
+
+                    $('#tempMessage').html(response.tempMessage)
                 }
             }
         });
@@ -515,11 +529,10 @@ function AllIngredientCart(item) {
 }
 
 function SelectedIngredientCart() {
-    
-    var NoOfServing = $('#NOServing').text();
+
     
     var selectedIngredient = []
-    
+
     $('input[name="rs"]:checked').each(function () {
         selectedIngredient.push(this.id);
     });
@@ -531,7 +544,7 @@ function SelectedIngredientCart() {
     else {
 
         var RecipeID = $('#SeletedIngrdient').attr('RecipeID')
-        var NoOfServing = $('#NOServing').text();
+        var NoOfServing = parseInt( $('#NOServing').text());
 
         $.ajax({
             type: 'post',
@@ -541,7 +554,7 @@ function SelectedIngredientCart() {
             success: function (response) {
                 if (response.Success) {
 
-                    $('#tempMessage').append(response.tempMessage)
+                    $('#tempMessage').html(response.tempMessage)
                 }
             }
         });
@@ -553,9 +566,9 @@ function readURL(input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-         
+
             $('#recipeimage').attr('src', e.target.result);
-            
+
         }
 
         reader.readAsDataURL(input.files[0]);
@@ -564,4 +577,44 @@ function readURL(input) {
 
 $("#url").change(function () {
     readURL(this);
+
 });
+
+
+
+function SubmitRecipeDetails() {
+    
+    var stepnum = parseInt($('#TotalStep').val())
+    if (stepnum == 0) {
+        stepnum = parseInt($('#recipestepnum').val())
+    }
+    var recipeid = parseInt($('#r_id').val())
+    var recipe = {}
+    recipe.r_id = recipeid
+    recipe.name = $('#name').val()
+    recipe.description = $('#description').val()
+    recipe.comment = $('#comment').val()
+    var Recipe_Steps = []
+    for (var i = 1; i <= stepnum; i++) {
+        var Recipe_Step = {}
+        Recipe_Step.step_number = i
+        Recipe_Step.instruction = $('#instruction' + i).val()
+        Recipe_Step.r_id = recipeid
+        Recipe_Step.p_id = parseInt($('#productrecipe' + i).find("option:selected").attr('id'))
+        Recipe_Step.amount_req = parseInt($('#amountreq' + i).val())
+        Recipe_Steps.push(Recipe_Step)
+    }
+    recipe.recipeStepDetails = Recipe_Steps
+
+    $.ajax({
+        type: 'post',
+        dataType: 'json',
+        url: '/Recipe/UploadRecipe',
+        data: { recipe: JSON.stringify(recipe) },
+        success: function (response) {
+            if (response.success) {
+                window.location.href = response.url;
+            }
+        }
+    });
+}

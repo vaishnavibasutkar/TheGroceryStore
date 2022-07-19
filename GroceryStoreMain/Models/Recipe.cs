@@ -28,6 +28,7 @@ namespace GroceryStoreMain.Models
         public string modified_by { get; set; }
         public System.DateTime modified_dtm { get; set; }
         public string comment { get; set; }
+        public string imagepath { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Recipe_Step> Recipe_Step { get; set; }

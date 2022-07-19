@@ -15,43 +15,41 @@
         <EntityTypeShape EntityType="GroceryStoreDBModel.Discount" Width="1.5" PointX="5.25" PointY="7.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Distributor" Width="1.5" PointX="0.75" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.FAQ" Width="1.5" PointX="10.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDBModel.Feedback" Width="1.5" PointX="8.25" PointY="6.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDBModel.Order" Width="1.5" PointX="3.75" PointY="19.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Order_Details" Width="1.5" PointX="6" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Order_Status" Width="1.5" PointX="1.5" PointY="21.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.OTP_History" Width="1.5" PointX="8.25" PointY="15.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDBModel.Payment" Width="1.5" PointX="8.25" PointY="18.75" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Product" Width="1.5" PointX="3" PointY="5.25" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Product_Category" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDBModel.Recipe" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="GroceryStoreDBModel.Recipe_Step" Width="1.5" PointX="8.25" PointY="1.875" IsExpanded="true" />
         <EntityTypeShape EntityType="GroceryStoreDBModel.Unit_Of_Measurement" Width="1.5" PointX="0.75" PointY="7.875" IsExpanded="true" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Batch_Distributor" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Batch_Product" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Cart_Product_Assoc_Cart_Product_Assoc" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Cart_Product_Assoc_Product" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Customer_Customer" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Feedback_Feedback" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Customer" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_OTP_History_OTP_History" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Payment_Payment" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Customer_Address" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Delivery_Time_Slot" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Discount_Product" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Details_Distributor" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Product_Distributor" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Feedback_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Details_Order" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Order_Status" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Payment_Order" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Details_Product" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Product_Product_Category" ManuallyRouted="false" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Product_Unit_Of_Measurement" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Product" ManuallyRouted="false" />
-        <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Recipe" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="GroceryStoreDBModel.Feedback_test" Width="1.5" PointX="10.375" PointY="4.75" />
+        <EntityTypeShape EntityType="GroceryStoreDBModel.Feedback_test" Width="1.5" PointX="10.375" PointY="4.75" IsExpanded="true" />
         <AssociationConnector Association="GroceryStoreDBModel.FK_Cart_Customer" />
-      </Diagram>
+        <EntityTypeShape EntityType="GroceryStoreDBModel.Payment" Width="1.5" PointX="6" PointY="20.25" />
+        <EntityTypeShape EntityType="GroceryStoreDBModel.Recipe_Step" Width="1.5" PointX="8.25" PointY="0.75" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Product" />
+        <EntityTypeShape EntityType="GroceryStoreDBModel.Recipe" Width="1.5" PointX="11.375" PointY="8" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Recipe_Step_Recipe" />
+        <EntityTypeShape EntityType="GroceryStoreDBModel.Feedback" Width="1.5" PointX="11.25" PointY="12.375" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Feedback_Feedback" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Feedback_Product" />
+        <EntityTypeShape EntityType="GroceryStoreDBModel.Order" Width="1.5" PointX="9" PointY="18.25" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Customer_Address" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Delivery_Time_Slot" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Details_Order" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Order_Order_Status" />
+        <AssociationConnector Association="GroceryStoreDBModel.FK_Payment_Order" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

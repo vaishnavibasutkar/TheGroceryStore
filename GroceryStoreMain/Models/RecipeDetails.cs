@@ -26,7 +26,7 @@ namespace GroceryStoreMain.Models
             this.created_dtm = r.created_dtm;
             this.modified_by = r.modified_by;
             this.modified_dtm = r.modified_dtm;
-
+            this.imagepath = r.imagepath;
             this.recipeStepDetails= context.Recipe_Step.Where(rs=>rs.r_id==this.r_id).ToList();
 
         }
@@ -39,5 +39,8 @@ namespace GroceryStoreMain.Models
         public System.DateTime modified_dtm { get; set; }
         public string comment { get; set; }
         public List<Recipe_Step> recipeStepDetails { get; set; }
+
+        public HttpPostedFileBase ImageFile { get; set; }
+        public string imagepath { get; set; }
     }
 }
